@@ -13,7 +13,7 @@
     <h1>Wellcome Admin</h1><br>
     <h3>List Produk</h3><br>
 
-    <a href="/addproduk">tambah Produk</a>
+    <a href="/">tambah Produk</a>
     <table border="1px">
         <thead>
             <tr>
@@ -42,10 +42,11 @@
     <br>
 
     <h3>List Produsen</h3><br>
-    <a href="/addprodusen">Tambah Produsen</a>
+    <a href="/tambahprodusen">Tambah Produsen</a>
     <table border="1px">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Produsen</th>
                 <th>Lokasi</th>
                 <th></th>
@@ -54,10 +55,15 @@
         <tbody>
             @foreach ($produsen as $petani)
                 <tr>
+                    <td>{{ $petani->id_produsen }}</td>
                     <td>{{ $petani->nama_produsen }}</td>
                     <td>{{ $petani->lokasi }}</td>
                     <td>
-                        <a href="">Hapus</a> |
+                        {{-- <form method="POST" action="{{ url('/hapus/' . $petani->id_produsen) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Hapus</button>
+                        </form> --}}
                         <a href="">Edit</a> |
                     </td>
                 </tr>
