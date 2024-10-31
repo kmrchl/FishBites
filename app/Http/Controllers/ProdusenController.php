@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produsen;
 use Illuminate\Http\Request;
 
 class ProdusenController extends Controller
@@ -25,9 +26,11 @@ class ProdusenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $produsen = Produsen::all();
+
+        return view('home', ['produsen' => $produsen]);
     }
 
     /**

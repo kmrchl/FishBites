@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produk;
+use App\Models\Produsen;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,7 +13,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $show = Produk::all();
+        $produsen = Produsen::all();
+
+        return view('home', ['show' => $show], ['produsen' => $produsen]);
     }
 
     /**
