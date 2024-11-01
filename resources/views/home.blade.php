@@ -13,10 +13,11 @@
     <h1>Wellcome Admin</h1><br>
     <h3>List Produk</h3><br>
 
-    <a href="/">tambah Produk</a>
+    <a href="{{ route('produk.add') }}">tambah Produk</a>
     <table border="1px">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Produk</th>
                 <th>Deskripsi</th>
                 <th>Harga/Kg</th>
@@ -27,14 +28,18 @@
         <tbody>
             @foreach ($show as $produk)
                 <tr>
-                    <td>{{ $prodduk->id _produk }}</td>
+                    <td>{{ $produk->id_produk }}</td>
                     <td>{{ $produk->nama_produk }}</td>
                     <td>{{ $produk->deskripsi }}</td>
                     <td>{{ $produk->harga }}</td>
                     <td>{{ $produk->stok }}</td>
                     <td>
-                        <a href="">Hapus</a> |
-                        <a href="">Edit</a> |
+                        <form method="POST" action="{{ url('/hapusproduk/' . $produk->id_produk) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Hapus</button>
+                        </form> |
+                        <a href="{{ route('produk.edit', $produk->id_produk) }}">Edit</a>
                     </td>
                 </tr>
             @endforeach

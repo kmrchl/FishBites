@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Model
 {
+    use HasFactory;
     protected $table = "admin";
     protected $primaryKey = "id_admin";
-    
+    protected $fillable = ['username', 'password'];
+
 
     public function produk()
     {
