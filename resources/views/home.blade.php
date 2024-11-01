@@ -76,6 +76,36 @@
                 </tr>
             @endforeach
         </tbody>
+    </table> <br>
+
+    <h3>Artikel</h3><br>
+    <a href="/tambahartikel">Tambah Artikel</a><br>
+    <table border="1px">
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Konten</th>
+                <th>Tgl Upload</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($artikel as $post)
+                <tr>
+                    <td>{{ $post->id_artikel }}</td>
+                    <td>{{ $post->judul }}</td>
+                    <td>{{ $post->konten }}</td>
+                    <td>{{ $post->tgl_upload }}</td>
+                    <td>
+                        <form method="POST" action="{{ url('/hapusartikel/' . $post->id_artikel) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">Hapus</button>
+                        </form> |
+                        <a href="{{ route('artikel.edit', $post->id_artikel) }}">Edit</a>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 
 </body>

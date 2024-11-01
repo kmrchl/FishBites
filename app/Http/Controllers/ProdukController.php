@@ -31,22 +31,29 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'id_admin' => 'required|exists:admin,id_admin',
-            'id_produsen' => 'required|exists:produsen,id_produsen',
-            'nama_produk' => 'required|string|max:255',
-            'deskripsi' => 'required|string|max:255',
-            'harga' => 'required|integer',
-            'stok' => 'required|integer',
-        ]);
+        // $validate = $request->validate([
+        //     'id_admin' => 'required|exists:admin,id_admin',
+        //     'id_produsen' => 'required|exists:produsen,id_produsen',
+        //     'nama_produk' => 'required|string|max:255',
+        //     'deskripsi' => 'required|string|max:255',
+        //     'harga' => 'required|integer',
+        //     'stok' => 'required|integer',
+        // ]);
+
+        // Produk::create([
+        //     'id_admin' => $validate['id_admin'],
+        //     'id_produsen' => $validate['id_produsen'],
+        //     'nama_produk' => $validate['nama_produk'],
+        //     'deskripsi' => $validate['deskripsi'],
+        //     'harga' => $validate['harga'],
+        //     'stok' => $validate['stok'],
+        // ]);
 
         Produk::create([
-            'id_admin' => $validate['id_admin'],
-            'id_produsen' => $validate['id_produsen'],
-            'nama_produk' => $validate['nama_produk'],
-            'deskripsi' => $validate['deskripsi'],
-            'harga' => $validate['harga'],
-            'stok' => $validate['stok'],
+            'id_admin' => $request->input('id_admin'), // Pastikan input ada
+            'judul' => $request->input('judul'), // Pastikan input ada
+            'konten' => $request->input('konten'), // Pastikan input ada
+            'tgl_upload' => $request->input('tgl_upload'), // Pastikan input ada
         ]);
 
         return redirect('/');

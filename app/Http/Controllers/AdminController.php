@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artikel;
 use App\Models\Produk;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
@@ -15,8 +16,14 @@ class AdminController extends Controller
     {
         $show = Produk::all();
         $produsen = Produsen::all();
+        $artikel = Artikel::all();
 
-        return view('home', ['show' => $show], ['produsen' => $produsen]);
+        return view('home', [
+            'show' => $show,
+            'produsen' => $produsen,
+            'artikel' => $artikel
+
+        ]);
     }
 
     /**

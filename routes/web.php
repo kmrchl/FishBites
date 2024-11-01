@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProdusenController;
 use App\Models\Produsen;
@@ -26,3 +27,11 @@ Route::post('/produk/add', [ProdukController::class, 'store'])->name('produk.sto
 Route::delete('/hapusproduk/{id_produk}', [ProdukController::class, 'destroy']); //Hapus Produk
 Route::get('/produk/{id_produsen}/edit', [ProdukController::class, 'edit'])->name('produk.edit'); //Mengalihkan ke halaman Edit Produk
 Route::put('/produk/{id_produsen}', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
+
+
+// CRUD ARTIKEL
+Route::get('/tambahartikel', [ArtikelController::class, 'index']); //Menyalurkan ke halaman Tambah
+Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
+Route::delete('/hapus/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
+Route::get('/artikel/{id_artikel}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit');
+Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
