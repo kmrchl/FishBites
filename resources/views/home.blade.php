@@ -27,6 +27,7 @@
         <tbody>
             @foreach ($show as $produk)
                 <tr>
+                    <td>{{ $prodduk->id _produk }}</td>
                     <td>{{ $produk->nama_produk }}</td>
                     <td>{{ $produk->deskripsi }}</td>
                     <td>{{ $produk->harga }}</td>
@@ -59,12 +60,13 @@
                     <td>{{ $petani->nama_produsen }}</td>
                     <td>{{ $petani->lokasi }}</td>
                     <td>
-                        {{-- <form method="POST" action="{{ url('/hapus/' . $petani->id_produsen) }}">
+                        {{-- <a href="/hapus">Hapus</a> --}}
+                        <form method="POST" action="{{ url('/hapus/' . $petani->id_produsen) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Hapus</button>
-                        </form> --}}
-                        <a href="">Edit</a> |
+                        </form>
+                        <a href="{{ route('produsen.edit', $petani->id_produsen) }}">Edit</a>
                     </td>
                 </tr>
             @endforeach

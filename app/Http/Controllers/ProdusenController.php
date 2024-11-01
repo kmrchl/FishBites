@@ -45,12 +45,41 @@ class ProdusenController extends Controller
         return view('home', ['produsen' => $produsen]);
     }
 
+    public function edit($id_produsen)
+    {
+        $produsen = Produsen::find($id_produsen);
+
+        if (!$produsen) {
+            return redirect()->back()->with('error', 'Produsen tidak ditemukan');
+        }
+
+        return view('produsen.edit', compact('produsen')); // Mengirim data ke view edit
+    }
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_produsen)
     {
-        //
+        $produsen = Produsen::find($id_produsen);
+
+        if (!$produsen) {
+            return redirect()->back()->with('error', 'Produsen tidak ditemukan');
+        }
+
+        // Validasi input
+        $request->validate([
+            'nama_produsen' => 'required|string|max:255',
+            'lokasi' => 'required|string|max:255',
+        ]);
+
+        // Update data produsen
+        $produsen->update([
+            'nama_produsen' => $request->nama_produsen,
+            'lokasi' => $request->lokasi,
+        ]);
+
+        return redirect('/');
     }
 
     /**
@@ -59,9 +88,13 @@ class ProdusenController extends Controller
     public function destroy($id_produsen)
     {
         $produsen = Produsen::find($id_produsen);
+        if (!$produsen) {
+            return redirect()->back()->with('error', 'ID tidak ditemukan');
+        }
 
         $produsen->delete();
 
+        // return redirect()->back()->with('success', 'Produsen berhasil dihapus');
         return redirect('/');
     }
 }

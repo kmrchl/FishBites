@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('home');
 // });
 
-route::get('/', [AdminController::class, 'index']);
-Route::post('/addprodusen', [ProdusenController::class, 'store']);
-Route::get('/tambahprodusen', [ProdusenController::class, 'index']);
-Route::delete('/hapus/{id_produsen}', [ProdusenController::class, 'destroy']);
+route::get('/', [AdminController::class, 'index']); //Home
+Route::post('/addprodusen', [ProdusenController::class, 'store']); //Tambah Produsen
+Route::get('/tambahprodusen', [ProdusenController::class, 'index']); //Menyalurkan ke halaman Tambah
+Route::delete('/hapus/{id_produsen}', [ProdusenController::class, 'destroy']); //Hapus Produsen
+Route::get('/produsen/{id_produsen}/edit', [ProdusenController::class, 'edit'])->name('produsen.edit');
+Route::put('/produsen/{id_produsen}', [ProdusenController::class, 'update'])->name('produsen.update');
