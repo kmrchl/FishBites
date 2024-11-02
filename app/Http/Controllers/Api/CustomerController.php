@@ -1,29 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Artikel;
-use App\Models\Produk;
-use App\Models\Produsen;
+use App\Model\Customer;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $show = Produk::all();
-        $produsen = Produsen::all();
-        $artikel = Artikel::all();
-
-        return view('home', [
-            'show' => $show,
-            'produsen' => $produsen,
-            'artikel' => $artikel
-
-        ]);
+        //
     }
 
     /**

@@ -34,7 +34,7 @@
                     <td>{{ $produk->harga }}</td>
                     <td>{{ $produk->stok }}</td>
                     <td>
-                        <form method="POST" action="{{ url('/hapusproduk/' . $produk->id_produk) }}">
+                        <form method="POST" action="{{ url('/api/hapusproduk/' . $produk->id_produk) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Hapus</button>
@@ -66,7 +66,7 @@
                     <td>{{ $petani->lokasi }}</td>
                     <td>
                         {{-- <a href="/hapus">Hapus</a> --}}
-                        <form method="POST" action="{{ url('/hapus/' . $petani->id_produsen) }}">
+                        <form method="POST" action="{{ url('/api/hapus/' . $petani->id_produsen) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Hapus</button>
@@ -96,7 +96,7 @@
                     <td>{{ $post->konten }}</td>
                     <td>{{ $post->tgl_upload }}</td>
                     <td>
-                        <form method="POST" action="{{ url('/hapusartikel/' . $post->id_artikel) }}">
+                        <form method="POST" action="{{ url('/api/hapusartikel/' . $post->id_artikel) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Hapus</button>

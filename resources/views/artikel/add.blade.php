@@ -10,7 +10,7 @@
 <body>
 
     <h2>Tambah Artikel Baru</h2>
-    <form method="POST" action="/artikel/add">
+    <form method="POST" action="/api/artikel/add">
         @csrf
 
         <label for="id_admin">Admin:</label>
@@ -24,7 +24,7 @@
         <input type="text" id="judul" name="judul" required><br><br>
 
         <label for="konten">Konten:</label><br>
-        <textarea id="konten" name="konten" required></textarea><br><br>
+        <textarea id="konten" maxlength="65535" name="konten" required></textarea><br><br>
 
         <label for="tgl_upload">Tanggal Upload</label><br>
         <input type="datetime-local" name="tgl_upload" id="tgl_upload" required><br><br>

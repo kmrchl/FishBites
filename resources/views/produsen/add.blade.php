@@ -10,7 +10,7 @@
 <body>
 
     <h2>Tambah Produsen Baru</h2>
-    <form method="POST" action="/addprodusen">
+    <form method="POST" action="/api/addprodusen">
         @csrf
         <label for="nama_produsen">Produsen:</label><br>
         <input type="text" id="nama_produsen" name="nama_produsen" required><br><br>

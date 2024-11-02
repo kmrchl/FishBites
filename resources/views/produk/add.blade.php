@@ -10,7 +10,7 @@
 <body>
 
     <h2>Tambah Produk Baru</h2>
-    <form method="POST" action="/produk/add">
+    <form method="POST" action="{{ route('produk.store') }}">
         @csrf
         <label for="id_admin">Pilih Admin:</label>
         <select name="id_admin" id="id_admin" required>

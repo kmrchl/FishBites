@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Produk;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProdusenController extends Controller
 {
@@ -23,13 +23,13 @@ class ProdusenController extends Controller
     {
         $validatedData = $request->validate([
             'nama_produsen' => 'required|string|max:255',
-            'lokasi' => 'required|string',
+            'lokasi' => 'required|string'
         ]);
 
         // Buat post baru
-        $produsen = Produsen::create([
+        Produsen::create([
             'nama_produsen' => $validatedData['nama_produsen'],
-            'lokasi' => $validatedData['lokasi'],
+            'lokasi' => $validatedData['lokasi']
         ]);
 
         return redirect('/');
@@ -45,6 +45,10 @@ class ProdusenController extends Controller
         return view('home', ['produsen' => $produsen]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+
     public function edit($id_produsen)
     {
         $produsen = Produsen::find($id_produsen);
@@ -56,9 +60,6 @@ class ProdusenController extends Controller
         return view('produsen.edit', compact('produsen')); // Mengirim data ke view edit
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id_produsen)
     {
         $produsen = Produsen::find($id_produsen);

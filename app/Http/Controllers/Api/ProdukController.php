@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Admin;
 use App\Models\Produk;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ProdukController extends Controller
 {
@@ -17,10 +18,6 @@ class ProdukController extends Controller
         return view('produk.add');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-
     public function create()
     {
         $producers = Produsen::all();
@@ -29,31 +26,27 @@ class ProdukController extends Controller
         return view('produk.add', compact('producers', 'admins'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        // $validate = $request->validate([
-        //     'id_admin' => 'required|exists:admin,id_admin',
-        //     'id_produsen' => 'required|exists:produsen,id_produsen',
-        //     'nama_produk' => 'required|string|max:255',
-        //     'deskripsi' => 'required|string|max:255',
-        //     'harga' => 'required|integer',
-        //     'stok' => 'required|integer',
-        // ]);
-
-        // Produk::create([
-        //     'id_admin' => $validate['id_admin'],
-        //     'id_produsen' => $validate['id_produsen'],
-        //     'nama_produk' => $validate['nama_produk'],
-        //     'deskripsi' => $validate['deskripsi'],
-        //     'harga' => $validate['harga'],
-        //     'stok' => $validate['stok'],
-        // ]);
+        $validate = $request->validate([
+            'id_admin' => 'required|exists:admin,id_admin',
+            'id_produsen' => 'required|exists:produsen,id_produsen',
+            'nama_produk' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:255',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+        ]);
 
         Produk::create([
-            'id_admin' => $request->input('id_admin'), // Pastikan input ada
-            'judul' => $request->input('judul'), // Pastikan input ada
-            'konten' => $request->input('konten'), // Pastikan input ada
-            'tgl_upload' => $request->input('tgl_upload'), // Pastikan input ada
+            'id_admin' => $validate['id_admin'],
+            'id_produsen' => $validate['id_produsen'],
+            'nama_produk' => $validate['nama_produk'],
+            'deskripsi' => $validate['deskripsi'],
+            'harga' => $validate['harga'],
+            'stok' => $validate['stok'],
         ]);
 
         return redirect('/');
@@ -62,9 +55,8 @@ class ProdukController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(string $id)
     {
-
         $show = Produk::all();
 
         return view('home', ['show' => $show]);
@@ -87,7 +79,7 @@ class ProdukController extends Controller
         return view('produk.edit', compact('produk', 'admins', 'produsens')); // Mengirim data ke view edit
     }
 
-    public function update(Request $request, string $id_produk)
+    public function update(Request $request, $id_produk)
     {
         $request->validate([
             'nama_produk' => 'required|string|max:255',
