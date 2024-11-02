@@ -15,6 +15,13 @@ class ArtikelController extends Controller
      */
     public function index()
     {
+        $artikel = Artikel::all();
+
+        return view('artikel.index', ['artikel' => $artikel]);
+    }
+
+    public function add()
+    {
         $admins = Admin::all();
         return view('artikel.add', ['admins' => $admins]);
     }
@@ -55,12 +62,7 @@ class ArtikelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
-    {
-        $artikel = Artikel::all();
-
-        return view('home', ['artikel' => $artikel]);
-    }
+    public function show() {}
 
     /**
      * Update the specified resource in storage.
@@ -83,21 +85,17 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::find($id_artikel);
 
-        // Jika artikel tidak ditemukan, Anda bisa mengarahkan kembali atau memberikan respons error
         if (!$artikel) {
             return redirect('/')->with('error', 'Artikel tidak ditemukan.');
         }
 
-        // Ambil data dari request dan perbarui artikel
         $artikel->id_admin = $request->input('id_admin');
         $artikel->judul = $request->input('judul');
         $artikel->konten = $request->input('konten');
         $artikel->tgl_upload = $request->input('tgl_upload');
 
-        // Simpan perubahan
         $artikel->save();
 
-        // Redirect ke halaman utama atau halaman lain
         return redirect('/');
     }
 

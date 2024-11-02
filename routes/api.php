@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\FaqController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
@@ -30,3 +31,9 @@ Route::put('/produk/{id_produsen}', [ProdukController::class, 'update'])->name('
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
+
+
+// FAQ
+Route::post('/faq/add', [FaqController::class, 'store'])->name('faq.store'); //Tambah FaQ
+Route::delete('/hapusfaq/{id_faq}', [FaqController::class, 'destroy']); //Hapus FaQ
+Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update');

@@ -13,6 +13,13 @@ class ProdusenController extends Controller
      */
     public function index()
     {
+        $produsen = Produsen::all();
+
+        return view('produsen.index', ['produsen' => $produsen]);
+    }
+
+    public function add()
+    {
         return view('produsen.add');
     }
 
@@ -42,7 +49,7 @@ class ProdusenController extends Controller
     {
         $produsen = Produsen::all();
 
-        return view('home', ['produsen' => $produsen]);
+        return view('produsen.index', ['produsen' => $produsen]);
     }
 
     /**

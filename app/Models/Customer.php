@@ -11,4 +11,9 @@ class Customer extends Model
     protected $table = 'customer';
     protected $primaryKey = 'id_customer';
     protected $fillable = ['nama_customer', 'email', 'alamat', 'no_telp'];
+
+    public function ulasan()
+    {
+        return $this->hasMany(Ulasan::class, 'foreign_key', 'local_key');
+    }
 }

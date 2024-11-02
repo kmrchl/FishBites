@@ -25,4 +25,9 @@ class Admin extends Model
     {
         return $this->hasMany(Artikel::class, 'foreign_key', 'local_key');
     }
+
+    public function faq()
+    {
+        return $this->hasMany(Faq::class, 'foreign_key', 'local_key');
+    }
 }

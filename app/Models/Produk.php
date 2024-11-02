@@ -23,4 +23,9 @@ class Produk extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function ulasan()
+    {
+        return $this->hasMany(Ulasan::class);
+    }
 }
