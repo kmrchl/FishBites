@@ -6,6 +6,7 @@ use App\Http\Controllers\api\FaqController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProdusenController;
 
 // Route::get('/user', function (Request $request) {
@@ -37,3 +38,9 @@ Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name(
 Route::post('/faq/add', [FaqController::class, 'store'])->name('faq.store'); //Tambah FaQ
 Route::delete('/hapusfaq/{id_faq}', [FaqController::class, 'destroy']); //Hapus FaQ
 Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update');
+
+
+// CUSTOMER
+Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah FaQ
+Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus FaQ
+Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('cust.update');

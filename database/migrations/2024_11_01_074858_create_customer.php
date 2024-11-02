@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_customer');
             $table->string('nama_customer');
             $table->string('email');
+            $table->string('password');
             $table->string('alamat');
             $table->integer('no_telp');
             $table->timestamps();

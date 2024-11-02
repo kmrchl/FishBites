@@ -44,7 +44,6 @@ class FaqController extends Controller
             'pertanyaan' => $validate['pertanyaan'],
             'jawaban' => $validate['jawaban'],
         ]);
-
         Log::info("FaQ berhasil disimpan.");
 
         // $data = [
