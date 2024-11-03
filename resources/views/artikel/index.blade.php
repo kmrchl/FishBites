@@ -32,7 +32,9 @@
     <ul class="horizontal-list">
         <li><a href="/">Produk</a></li>
         <li><a href="/produsen">Produsen</a></li>
-        <li><a href="/artikel">artikel</a></li>
+        <li><a href="/artikel">Artikel</a></li>
+        <li><a href="/faq">FaQ</a></li>
+        <li><a href="/customer">Customer</a></li>
     </ul>
 
 
