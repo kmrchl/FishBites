@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin : Home</title>
+    <title>Admin : Customer</title>
 
     <style>
         .horizontal-list {
@@ -30,49 +30,48 @@
     <h1>Wellcome Admin</h1><br>
 
     <ul class="horizontal-list">
-        <li><a href="#">Produk</a></li>
+        <li><a href="/">Produk</a></li>
         <li><a href="/produsen">Produsen</a></li>
-        <li><a href="/artikel">artikel</a></li>
+        <li><a href="/artikel">Artikel</a></li>
         <li><a href="/faq">FaQ</a></li>
-        <li><a href="/customer">Customer</a></li>
+        <li><a href="/artikel">Customer</a></li>
     </ul>
 
-    <h3>List Produk</h3><br>
 
-    <a href="{{ route('produk.add') }}">tambah Produk</a>
+    <h3>Artikel</h3><br>
+    <a href="/tambahcust">Tambah Customer</a><br>
     <table border="1px">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Produk</th>
-                <th>Deskripsi</th>
-                <th>Harga/Kg</th>
-                <th>Stok</th>
-                <th></th>
+                <th>Nama</th>
+                <th>Emaail</th>
+                <th>Password</th>
+                <th>Alamat</th>
+                <th>Nomor Telp</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($show as $produk)
+            @foreach ($customer as $cust)
                 <tr>
-                    <td>{{ $produk->id_produk }}</td>
-                    <td>{{ $produk->nama_produk }}</td>
-                    <td>{{ $produk->deskripsi }}</td>
-                    <td>{{ $produk->harga }}</td>
-                    <td>{{ $produk->stok }}</td>
+                    <td>{{ $cust->id_customer }}</td>
+                    <td>{{ $cust->nama_customer }}</td>
+                    <td>{{ $cust->email }}</td>
+                    <td>{{ $cust->password }}</td>
+                    <td>{{ $cust->alamat }}</td>
+                    <td>{{ $cust->no_telp }}</td>
                     <td>
-                        <form method="POST" action="{{ url('/api/hapusproduk/' . $produk->id_produk) }}">
+                        <form method="POST" action="{{ url('/api/hapuscust/' . $cust->id_customer) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Hapus</button>
                         </form> |
-                        <a href="{{ route('produk.edit', $produk->id_produk) }}">Edit</a> |
-                        <a href="">Ulasan</a>
+                        <a href="{{ route('artikel.edit', $cust->id_customer) }}">Edit</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <br>
 
 </body>
 

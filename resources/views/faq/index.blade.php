@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin : Home</title>
+    <title>Admin : FaQ</title>
 
     <style>
         .horizontal-list {
@@ -30,49 +30,44 @@
     <h1>Wellcome Admin</h1><br>
 
     <ul class="horizontal-list">
-        <li><a href="#">Produk</a></li>
+        <li><a href="/">Produk</a></li>
         <li><a href="/produsen">Produsen</a></li>
         <li><a href="/artikel">artikel</a></li>
         <li><a href="/faq">FaQ</a></li>
         <li><a href="/customer">Customer</a></li>
     </ul>
 
-    <h3>List Produk</h3><br>
 
-    <a href="{{ route('produk.add') }}">tambah Produk</a>
+    <h3>FaQ</h3><br>
+    <a href="/tambahfaq">Tambah FaQ</a><br>
     <table border="1px">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Produk</th>
-                <th>Deskripsi</th>
-                <th>Harga/Kg</th>
-                <th>Stok</th>
-                <th></th>
+                <th>Pertanyaan</th>
+                <th>Jawaban</th>
+                <th>Tgl Upload</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($show as $produk)
+            @foreach ($faq as $question)
                 <tr>
-                    <td>{{ $produk->id_produk }}</td>
-                    <td>{{ $produk->nama_produk }}</td>
-                    <td>{{ $produk->deskripsi }}</td>
-                    <td>{{ $produk->harga }}</td>
-                    <td>{{ $produk->stok }}</td>
+                    <td>{{ $question->id_faq }}</td>
+                    <td>{{ $question->pertanyaan }}</td>
+                    <td>{{ $question->jawaban }}</td>
+                    <td>{{ $question->timestamp }}</td>
                     <td>
-                        <form method="POST" action="{{ url('/api/hapusproduk/' . $produk->id_produk) }}">
+                        <form method="POST" action="{{ url('/api/hapusfaq/' . $question->id_faq) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit">Hapus</button>
                         </form> |
-                        <a href="{{ route('produk.edit', $produk->id_produk) }}">Edit</a> |
-                        <a href="">Ulasan</a>
+                        <a href="{{ route('faq.edit', $question->id_faq) }}">Edit</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <br>
 
 </body>
 

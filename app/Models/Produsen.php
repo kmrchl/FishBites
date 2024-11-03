@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Produsen extends Model
 {
     protected $table = "produsen";
+    protected $primaryKey = 'id_produsen';
+    protected $fillable = ['nama_produsen', 'lokasi'];
 
     public function produk()
     {
