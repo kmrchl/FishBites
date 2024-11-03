@@ -41,6 +41,10 @@ Route::get('/tambahfaq', [FaqController::class, 'add']); //Mengalihkan ke halama
 Route::get('/artikel/{id_faq}/edit', [FaqController::class, 'edit'])->name('faq.edit'); //Mengalihkan ke halaman edit
 
 
+// ADMIN
+Route::get('/admin', [AdminController::class, 'add'])->name('admin');
+
+
 // CUSTOMER
 Route::get('/tambahcust', [CustomerController::class, 'add']);
 Route::get('/customer/{id_customer}/edit', [CustomerController::class, 'edit'])->name('cust.edit');

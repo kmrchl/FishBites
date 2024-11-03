@@ -41,6 +41,10 @@ Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update'
 
 
 // CUSTOMER
-Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah FaQ
-Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus FaQ
+Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah Customer
+Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus Customer
 Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('cust.update');
+
+
+// ADMIN
+Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');

@@ -33,10 +33,11 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email',
+            'nama_customer' => 'required|string|max:255',
+            'email' => 'required|email|unique:customer,email',
             'password' => 'required|string|min:8|confirmed',
-            'nomor_telepon' => 'nullable|string',
+            'alamat' => 'required|string|min:3',
+            'no_telp' => 'required|integer',
         ]);
 
         if ($validator->fails()) {
@@ -44,14 +45,12 @@ class CustomerController extends Controller
         }
 
         $customer = Customer::create([
-            'nama' => $request->nama,
+            'nama_customer' => $request->nama_customer,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'nomor_telepon' => $request->nomor_telepon,
+            'alamat' => $request->alamat,
+            'no_telp' => $request->no_telp,
         ]);
-
-        // Kirim email verifikasi
-        $customer->sendEmailVerificationNotification();
 
         return response()->json(['message' => 'Customer created successfully. Please verify your email.'], 201);
     }
