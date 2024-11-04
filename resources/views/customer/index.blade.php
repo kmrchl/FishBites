@@ -35,6 +35,7 @@
         <li><a href="/artikel">Artikel</a></li>
         <li><a href="/faq">FaQ</a></li>
         <li><a href="/artikel">Customer</a></li>
+        <li><a href="/chat">Chatbox</a></li>
     </ul>
 
 

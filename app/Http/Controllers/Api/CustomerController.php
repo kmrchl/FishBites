@@ -37,14 +37,14 @@ class CustomerController extends Controller
             'email' => 'required|email|unique:customer,email',
             'password' => 'required|string|min:8|confirmed',
             'alamat' => 'required|string|min:3',
-            'no_telp' => 'required|integer',
+            'no_telp' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $customer = Customer::create([
+        Customer::create([
             'nama_customer' => $request->nama_customer,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -52,7 +52,7 @@ class CustomerController extends Controller
             'no_telp' => $request->no_telp,
         ]);
 
-        return response()->json(['message' => 'Customer created successfully. Please verify your email.'], 201);
+        return redirect('/customer');
     }
 
     /**
