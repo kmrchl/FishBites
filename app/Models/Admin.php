@@ -30,4 +30,9 @@ class Admin extends Model
     {
         return $this->hasMany(Faq::class, 'foreign_key', 'local_key');
     }
+
+    public function chat()
+    {
+        return $this->hasMany(Chatbox::class, 'foreign_key', 'local_key');
+    }
 }
