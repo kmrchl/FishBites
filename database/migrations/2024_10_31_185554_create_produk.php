@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer("id_admin");
             $table->integer("id_produsen");
             $table->string("nama_produk");
+            $table->string("gambar");
             $table->string("deskripsi");
             $table->integer("harga");
             $table->integer("stok");
