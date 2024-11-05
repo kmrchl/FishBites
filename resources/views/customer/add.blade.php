@@ -32,7 +32,7 @@
         <textarea id="alamat" name="alamat" required></textarea><br><br>
 
         <label for="no_telp">Nomor Telepon</label><br>
-        <input type="integer" id="no_telp" name="no_telp" required></input><br><br>
+        <input type="string" id="no_telp" name="no_telp" required></input><br><br>
 
         <button type="submit">Tambah Customer</button>
     </form>
