@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use Execption;
 use App\Models\Admin;
 use App\Models\Produk;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Exception;
 
 class ProdukController extends Controller
 {
@@ -31,26 +34,51 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
+
+        // Log::info('Store function called'); // Menulis ke log
+
+
+
+
+        $request->validate([
             'id_admin' => 'required|exists:admin,id_admin',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'nama_produk' => 'required|string|max:255',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
             'deskripsi' => 'required|string|max:255',
             'harga' => 'required|integer',
             'stok' => 'required|integer',
         ]);
 
-        Produk::create([
-            'id_admin' => $validate['id_admin'],
-            'id_produsen' => $validate['id_produsen'],
-            'nama_produk' => $validate['nama_produk'],
-            'deskripsi' => $validate['deskripsi'],
-            'harga' => $validate['harga'],
-            'stok' => $validate['stok'],
-        ]);
+        $path = $request->file('gambar')->store('produk', 'public');
 
-        return redirect('/');
+
+        $produk = new Produk();
+        $produk->id_produk = $request->id_produk;
+        $produk->id_produsen = $request->id_produsen;
+        $produk->nama_produk = $request->nama_produk;
+        $produk->gambar = $path;
+        $produk->deskripsi = $request->deskripsi;
+        $produk->harga = $request->harga;
+        $produk->stok = $request->stok;
+        $produk->save();
+
+
+
+        return view('/');
+        // $add = Produk::create([
+        //     'id_admin' => $request['id_admin'],
+        //     'id_produsen' => $request['id_produsen'],
+        //     'nama_produk' => $request['nama_produk'],
+        //     'gambar' => $path,
+        //     'deskripsi' => $request['deskripsi'],
+        //     'harga' => $request['harga'],
+        //     'stok' => $request['stok'],
+        // ]);
     }
+
+    // return redirect('/');
+
 
     /**
      * Display the specified resource.

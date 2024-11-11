@@ -45,6 +45,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Gambar</th>
                 <th>Produk</th>
                 <th>Deskripsi</th>
                 <th>Harga/Kg</th>
@@ -56,6 +57,7 @@
             @foreach ($show as $produk)
                 <tr>
                     <td>{{ $produk->id_produk }}</td>
+                    <td>{{ $produk->gambar }}</td>
                     <td>{{ $produk->nama_produk }}</td>
                     <td>{{ $produk->deskripsi }}</td>
                     <td>{{ $produk->harga }}</td>
