@@ -21,7 +21,7 @@
     <div class="" id="home">
         <nav class="navbar navbar-expand-xl">
             <div class="container h-100">
-                <a class="navbar-brand" href={{ route('dashboard.index') }}>
+                <a class="navbar-brand" href="{{ route('dashboard.index') }}">
                     <img src="img/logo.png" alt="Logo" class="tm-site-logo" style="max-width: 100px; height: 100px;" />
                 </a>
                 <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -9,13 +9,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProdukController extends Controller
-{
+
     /**
      * Display a listing of the resource.
      */
+    {
     public function index()
     {
-        return view('produk.add');
+        $show = Produk::all();
+
+        return view('produk.index', compact('show'));
     }
 
     public function create()
@@ -115,7 +118,7 @@ class ProdukController extends Controller
 
         $produk->delete();
 
-        // return redirect()->back()->with('success', 'Produsen berhasil dihapus');
+        // return redirect()->back()->with('success', 'Produk berhasil dihapus');
         return redirect('/');
     }
 }
