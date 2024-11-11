@@ -112,6 +112,7 @@
                         </div>
                     </div>
 
+<<<<<<< HEAD
                                 </div>
                             </div>
                         </div>
@@ -137,6 +138,16 @@
             </div>
         </div>
     </div>
+=======
+    <ul class="horizontal-list">
+        <li><a href="#">Produk</a></li>
+        <li><a href="/produsen">Produsen</a></li>
+        <li><a href="/artikel">artikel</a></li>
+        <li><a href="/faq">FaQ</a></li>
+        <li><a href="/customer">Customer</a></li>
+        <li><a href="/chat">Customer</a></li>
+    </ul>
+>>>>>>> 483313caa2036edacc723032bb6b40fa8cb5d50c
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->

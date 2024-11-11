@@ -5,6 +5,7 @@ use App\Models\Customer;
 use App\Models\Produsen;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Api\ProdusenController;
 //     return view('home');
 // });
 
+<<<<<<< HEAD
 Route::get('/', function () {
     return view('sign.index');
 });
@@ -26,6 +28,14 @@ route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index
 route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
+=======
+route::get('/', [AdminController::class, 'index']); //Home
+route::get('/produsen', [ProdusenController::class, 'index']); //Produsen
+route::get('/artikel', [ArtikelController::class, 'index']); //Artikel
+route::get('/faq', [FaqController::class, 'index']); //FaQ
+route::get('/customer', [CustomerController::class, 'index']); //Customer
+route::get('/chat', [ChatController::class, 'index'])->name('chat.index'); //Chat
+>>>>>>> 483313caa2036edacc723032bb6b40fa8cb5d50c
 
 // CRUD PRODUSEN
 Route::get('/tambahprodusen', [ProdusenController::class, 'add']); //Menyalurkan ke halaman Tambah
@@ -54,3 +64,8 @@ Route::get('/admin', [AdminController::class, 'add'])->name('admin');
 // CUSTOMER
 Route::get('/tambahcust', [CustomerController::class, 'add']);
 Route::get('/customer/{id_customer}/edit', [CustomerController::class, 'edit'])->name('cust.edit');
+
+
+
+// CHAT 
+Route::get('/chat/{id_customer}', [ChatController::class, 'show'])->name('chat.show');
