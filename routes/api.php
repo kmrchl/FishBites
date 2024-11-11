@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\FaqController;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
@@ -48,3 +49,7 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 // ADMIN
 Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');
+
+
+// CHAT
+Route::post('/chat/{id_customer}', [ChatController::class, 'store'])->name('chat.store'); // Tambah Chat baru

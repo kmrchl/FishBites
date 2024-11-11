@@ -10,14 +10,14 @@ use App\Http\Controllers\Controller;
 
 class FaqController extends Controller
 {
-    /**
+        /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $faq = Faq::all();
+        $faqs = Faq::all();
 
-        return view('faq.index', ['faq' => $faq]);
+        return view('faq.index', compact('faqs'));
     }
 
     /**
