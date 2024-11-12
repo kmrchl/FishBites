@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use Execption;
 use App\Models\Admin;
 use App\Models\Produk;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Exception;
 
 class ProdukController extends Controller
 {
@@ -31,26 +34,51 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
+
         $validate = $request->validate([
             'id_admin' => 'required|exists:admin,id_admin',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'nama_produk' => 'required|string|max:255',
-            'deskripsi' => 'required|string|max:255',
+            'gambar' => 'required|image',
+            'deskripsi' => 'required|string',
             'harga' => 'required|integer',
-            'stok' => 'required|integer',
+            'stok' => 'required|integer'
         ]);
 
-        Produk::create([
-            'id_admin' => $validate['id_admin'],
-            'id_produsen' => $validate['id_produsen'],
-            'nama_produk' => $validate['nama_produk'],
-            'deskripsi' => $validate['deskripsi'],
-            'harga' => $validate['harga'],
-            'stok' => $validate['stok'],
-        ]);
+        // dd($validate);
 
-        return redirect('/');
+        try {
+            // Upload gambar ke folder 'public/gambar_produk'
+            $path = $request->file('gambar')->store('images', 'public');
+
+            // Simpan data produk ke dalam database
+            $produk = Produk::create([
+                'id_admin' => $validate['id_admin'],
+                'id_produsen' => $validate['id_produsen'],
+                'nama_produk' => $validate['nama_produk'],
+                'gambar' => $path,
+                'deskripsi' => $validate['deskripsi'],
+                'harga' => $validate['harga'],
+                'stok' => $validate['stok'],
+            ]);
+
+            Log::info('Produk berhasil disimpan:', ['produk' => $produk]);
+
+            return redirect('/');
+        } catch (\Exception $e) {
+            Log::error('Error saat menyimpan produk:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'Success ?' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan produk',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+
+        // return view('/');
     }
+
+    // return redirect('/');
+
 
     /**
      * Display the specified resource.
@@ -81,8 +109,9 @@ class ProdukController extends Controller
 
     public function update(Request $request, $id_produk)
     {
-        $request->validate([
+        $validate = $request->validate([
             'nama_produk' => 'required|string|max:255',
+            'gambar' => 'required|image',
             'deskripsi' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
@@ -90,10 +119,25 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
         ]);
 
+        // dd($validate);
+
         $produk = Produk::findOrFail($id_produk);
+        if ($request->hasFile('gambar')) {
+            // Ambil file gambar
+            $gambar = $request->file('gambar');
+
+            // Tentukan nama file dan simpan di folder 'images' dalam 'public' disk
+            $fileName = time() . '.' . $gambar->getClientOriginalExtension();
+            $path = $gambar->storeAs('images', $fileName, 'public'); // Menyimpan file di storage/app/public/images/
+
+            // Simpan path gambar relatif di database (tanpa 'storage/')
+            $produk->gambar = 'images/' . $fileName;
+        }
+        // $produk->update($validatedData);
         $produk->update([
             'nama_produk' => $request->nama_produk,
             'nama_produk' => $request->nama_produk,
+            'gambar' => $request->gambar,
             'harga' => $request->harga,
             'stok' => $request->stok,
             'id_produsen' => $request->id_produsen,

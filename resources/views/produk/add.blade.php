@@ -10,7 +10,7 @@
 <body>
 
     <h2>Tambah Produk Baru</h2>
-    <form method="POST" action="{{ route('produk.store') }}">
+    <form method="POST" action="{{ route('produk.store') }}" enctype="multipart/form-data">
         @csrf
         <label for="id_admin">Pilih Admin:</label>
         <select name="id_admin" id="id_admin" required>
@@ -28,6 +28,10 @@
 
         <label for="nama_produk">Nama Produk</label><br>
         <input type="text" id="nama_produk" name="nama_produk" required><br><br>
+
+        <label for="gambar">Upload Gambar</label><br>
+        <input type="file" name="gambar" id="gambar" required> <br><br>
+
 
         <label for="deskripsi">Deskripsi</label><br>
         <input type="text" id="deskripsi" name="deskripsi" required><br><br>
