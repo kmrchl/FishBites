@@ -16,26 +16,17 @@ use App\Http\Controllers\Api\ProdusenController;
 //     return view('home');
 // });
 
-<<<<<<< HEAD
 Route::get('/', function () {
     return view('sign.index');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 route::get('/admin', [AdminController::class, 'index']); //Home
 route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
 route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
-=======
-route::get('/', [AdminController::class, 'index']); //Home
-route::get('/produsen', [ProdusenController::class, 'index']); //Produsen
-route::get('/artikel', [ArtikelController::class, 'index']); //Artikel
-route::get('/faq', [FaqController::class, 'index']); //FaQ
-route::get('/customer', [CustomerController::class, 'index']); //Customer
-route::get('/chat', [ChatController::class, 'index'])->name('chat.index'); //Chat
->>>>>>> 483313caa2036edacc723032bb6b40fa8cb5d50c
 
 // CRUD PRODUSEN
 Route::get('/tambahprodusen', [ProdusenController::class, 'add']); //Menyalurkan ke halaman Tambah
