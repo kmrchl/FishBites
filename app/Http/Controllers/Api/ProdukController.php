@@ -35,46 +35,46 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
 
-        // Log::info('Store function called'); // Menulis ke log
-
-
-
-
-        $request->validate([
+        $validate = $request->validate([
             'id_admin' => 'required|exists:admin,id_admin',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10048',
-            'deskripsi' => 'required|string|max:255',
+            'gambar' => 'required|image',
+            'deskripsi' => 'required|string',
             'harga' => 'required|integer',
-            'stok' => 'required|integer',
+            'stok' => 'required|integer'
         ]);
 
-        $path = $request->file('gambar')->store('produk', 'public');
+        // dd($validate);
 
+        try {
+            // Upload gambar ke folder 'public/gambar_produk'
+            $path = $request->file('gambar')->store('images', 'public');
 
-        $produk = new Produk();
-        $produk->id_produk = $request->id_produk;
-        $produk->id_produsen = $request->id_produsen;
-        $produk->nama_produk = $request->nama_produk;
-        $produk->gambar = $path;
-        $produk->deskripsi = $request->deskripsi;
-        $produk->harga = $request->harga;
-        $produk->stok = $request->stok;
-        $produk->save();
+            // Simpan data produk ke dalam database
+            $produk = Produk::create([
+                'id_admin' => $validate['id_admin'],
+                'id_produsen' => $validate['id_produsen'],
+                'nama_produk' => $validate['nama_produk'],
+                'gambar' => $path,
+                'deskripsi' => $validate['deskripsi'],
+                'harga' => $validate['harga'],
+                'stok' => $validate['stok'],
+            ]);
 
+            Log::info('Produk berhasil disimpan:', ['produk' => $produk]);
 
+            return redirect('/');
+        } catch (\Exception $e) {
+            Log::error('Error saat menyimpan produk:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'Success ?' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan produk',
+                'error' => $e->getMessage()
+            ], 500);
+        }
 
-        return view('/');
-        // $add = Produk::create([
-        //     'id_admin' => $request['id_admin'],
-        //     'id_produsen' => $request['id_produsen'],
-        //     'nama_produk' => $request['nama_produk'],
-        //     'gambar' => $path,
-        //     'deskripsi' => $request['deskripsi'],
-        //     'harga' => $request['harga'],
-        //     'stok' => $request['stok'],
-        // ]);
+        // return view('/');
     }
 
     // return redirect('/');
@@ -109,8 +109,9 @@ class ProdukController extends Controller
 
     public function update(Request $request, $id_produk)
     {
-        $request->validate([
+        $validate = $request->validate([
             'nama_produk' => 'required|string|max:255',
+            'gambar' => 'required|image',
             'deskripsi' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
@@ -118,10 +119,25 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
         ]);
 
+        // dd($validate);
+
         $produk = Produk::findOrFail($id_produk);
+        if ($request->hasFile('gambar')) {
+            // Ambil file gambar
+            $gambar = $request->file('gambar');
+
+            // Tentukan nama file dan simpan di folder 'images' dalam 'public' disk
+            $fileName = time() . '.' . $gambar->getClientOriginalExtension();
+            $path = $gambar->storeAs('images', $fileName, 'public'); // Menyimpan file di storage/app/public/images/
+
+            // Simpan path gambar relatif di database (tanpa 'storage/')
+            $produk->gambar = 'images/' . $fileName;
+        }
+        // $produk->update($validatedData);
         $produk->update([
             'nama_produk' => $request->nama_produk,
             'nama_produk' => $request->nama_produk,
+            'gambar' => $request->gambar,
             'harga' => $request->harga,
             'stok' => $request->stok,
             'id_produsen' => $request->id_produsen,
