@@ -12,13 +12,16 @@ use App\Http\Controllers\Controller;
 use Exception;
 
 class ProdukController extends Controller
+
+/**
+ * Display a listing of the resource.
+ */
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('produk.add');
+        $show = Produk::all();
+
+        return view('produk.index', compact('show'));
     }
 
     public function create()
@@ -39,12 +42,12 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required|image',
+            'gambar' => 'required',
             'deskripsi' => 'required|string',
             'harga' => 'required|integer',
             'stok' => 'required|integer'
         ]);
-
+        // $validate = $request->all();
         // dd($validate);
 
         try {
@@ -64,7 +67,7 @@ class ProdukController extends Controller
 
             Log::info('Produk berhasil disimpan:', ['produk' => $produk]);
 
-            return redirect('/');
+            return redirect('/produk');
         } catch (\Exception $e) {
             Log::error('Error saat menyimpan produk:', ['error' => $e->getMessage()]);
             return response()->json([
@@ -73,8 +76,6 @@ class ProdukController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-
-        // return view('/');
     }
 
     // return redirect('/');
@@ -119,6 +120,7 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
         ]);
 
+        // $validate = $request->all();
         // dd($validate);
 
         $produk = Produk::findOrFail($id_produk);
@@ -144,7 +146,7 @@ class ProdukController extends Controller
             'id_admin' => $request->id_admin,
         ]);
 
-        return redirect('/');
+        return redirect('/produk');
     }
 
     /**
@@ -159,7 +161,7 @@ class ProdukController extends Controller
 
         $produk->delete();
 
-        // return redirect()->back()->with('success', 'Produsen berhasil dihapus');
-        return redirect('/');
+        // return redirect()->back()->with('success', 'Produk berhasil dihapus');
+        return redirect('/produk');
     }
 }

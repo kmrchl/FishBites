@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Models\Produsen;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Admin extends Model
 {
-    use HasFactory;
+    use HasApiTokens, Notifiable, HasFactory;
     protected $table = "admin";
     protected $primaryKey = "id_admin";
     protected $fillable = ['username', 'password'];
