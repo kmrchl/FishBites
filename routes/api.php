@@ -37,7 +37,8 @@ Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name(
 
 // FAQ
 Route::post('/faq/add', [FaqController::class, 'store'])->name('faq.store'); //Tambah FaQ
-Route::delete('/hapusfaq/{id_faq}', [FaqController::class, 'destroy']); //Hapus FaQ
+// Route::delete('/hapusfaq/{id_faq}', [FaqController::class, 'destroy'])->name('faq.hapus'); //Hapus FaQ
+Route::delete('/hapusfaq', [FaqController::class, 'destroy'])->name('faq.hapus'); //Hapus FaQ
 Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update');
 
 
@@ -49,6 +50,7 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 // ADMIN
 Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');
+Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
 
 
 // CHAT

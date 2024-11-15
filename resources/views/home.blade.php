@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fish Bites - Dashboard</title>
-    <link rel="stylesheet" 
-    href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
     <!-- https://fonts.google.com/specimen/Open+Sans -->
     <link rel="stylesheet" href="css/fontawesome.min.css">
     <!-- https://fontawesome.com/ -->
@@ -21,124 +19,119 @@
     <div class="" id="home">
         <nav class="navbar navbar-expand-xl">
             <div class="container h-100">
-                <a class="navbar-brand" href={{ route('dashboard.index') }}>
-                    <img src="img/logo.png" alt="Logo" class="tm-site-logo" style="max-width: 100px; height: 100px;" />
+                <a class="navbar-brand" href="">
+                    <img src="img/logo.png" alt="Logo" class="tm-site-logo"
+                        style="max-width: 100px; height: 100px;" />
                 </a>
-                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <i class="fas fa-bars tm-nav-icon"></i>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto h-100">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('dashboard.index') }}">
-                          <i class="fas fa-tachometer-alt"></i> Dashboard
-                          <span class="sr-only">(current)</span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ route('faq.index') }}">
-                            <i class="fas fa-file-alt"></i> FAQ
-                          </a>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                                <span class="sr-only">(current)</span>
+                            </a>
                         </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('produk.index') }}">
-                          <i class="fas fa-shopping-cart"></i> Products
-                        </a>
-                      </li>
-          
-                      <li class="nav-item">
-                        <a class="nav-link" href="{{ route('artikel.index') }}">
-                          <i class="far fa-user"></i> Article
-                        </a>
-                      </li>
-                      <li class="nav-item dropdown">
-                        <a
-                          class="nav-link dropdown-toggle"
-                          href="#"
-                          id="navbarDropdown"
-                          role="button"
-                          data-toggle="dropdown"
-                          aria-haspopup="true"
-                          aria-expanded="false"
-                        >
-                          <i class="fas fa-cog"></i>
-                          <span> Settings <i class="fas fa-angle-down"></i> </span>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">Profile</a>
-                          <a class="dropdown-item" href="#">Billing</a>
-                          <a class="dropdown-item" href="#">Customize</a>
-                        </div>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/faq">
+                                <i class="fas fa-file-alt"></i> FAQ
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('produk.index') }}">
+                                <i class="fas fa-shopping-cart"></i> Products
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('artikel.index') }}">
+                                <i class="far fa-user"></i> Article
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-cog"></i>
+                                <span> Settings <i class="fas fa-angle-down"></i> </span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="#">Billing</a>
+                                <a class="dropdown-item" href="#">Customize</a>
+                            </div>
+                        </li>
                     </ul>
                     <ul class="navbar-nav">
-                      <li class="nav-item">
-                        <a class="nav-link d-block" href="login.html">
-                          Admin, <b>Logout</b>
-                        </a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="login.html">
+                                Admin, <b>Logout</b>
+                            </a>
+                        </li>
                     </ul>
-                  </div>
                 </div>
-              </nav>
-              <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <p class="text-white mt-5 mb-5">Welcome back, <b>Admin</b></p>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="text-white mt-5 mb-5">Welcome back, <b>Admin</b></p>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="row tm-content-row">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block">
+                        <h2 class="tm-block-title">Terlaris</h2>
+                        <canvas id="lineChart"></canvas>
                     </div>
                 </div>
-                <!-- row -->
-                <div class="row tm-content-row">
-                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                        <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title">Terlaris</h2>
-                            <canvas id="lineChart"></canvas>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block">
+                        <h2 class="tm-block-title">Penjualan Ikan (perbulan/kg)</h2>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+                    <div class="tm-bg-primary-dark tm-block tm-block-taller">
+                        <h2 class="tm-block-title">Storage Information</h2>
+                        <div id="pieChartContainer">
+                            <canvas id="pieChart" class="chartjs-render-monitor" width="200"
+                                height="200"></canvas>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                        <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title">Penjualan Ikan (perbulan/kg)</h2>
-                            <canvas id="barChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                        <div class="tm-bg-primary-dark tm-block tm-block-taller">
-                            <h2 class="tm-block-title">Storage Information</h2>
-                            <div id="pieChartContainer">
-                                <canvas id="pieChart" class="chartjs-render-monitor" width="200" height="200"></canvas>
-                            </div>                        
-                        </div>
-                    </div>
+                </div>
 
-<<<<<<< HEAD
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <div class="col-12 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                        <h2 class="tm-block-title">Orders List</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Order ID</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Mitra</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">Complete Date</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
+                <<<<<<< HEAD </div>
             </div>
         </div>
     </div>
-=======
+    <div class="col-12 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+            <h2 class="tm-block-title">Orders List</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Order ID</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Mitra</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Complete Date</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    =======
     <ul class="horizontal-list">
         <li><a href="#">Produk</a></li>
         <li><a href="/produsen">Produsen</a></li>
@@ -147,7 +140,7 @@
         <li><a href="/customer">Customer</a></li>
         <li><a href="/chat">Customer</a></li>
     </ul>
->>>>>>> 483313caa2036edacc723032bb6b40fa8cb5d50c
+    >>>>>>> 483313caa2036edacc723032bb6b40fa8cb5d50c
 
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
@@ -172,14 +165,14 @@
             lineChart;
         barChart, pieChart;
         // DOM is ready
-        $(function () {
+        $(function() {
             drawLineChart(); // Line Chart
             drawBarChart(); // Bar Chart
             drawPieChart(); // Pie Chart
 
-            $(window).resize(function () {
+            $(window).resize(function() {
                 updateLineChart();
-                updateBarChart();                
+                updateBarChart();
             });
         })
     </script>

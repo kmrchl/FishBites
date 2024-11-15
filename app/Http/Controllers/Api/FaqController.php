@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class FaqController extends Controller
 {
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function index()
@@ -88,7 +88,7 @@ class FaqController extends Controller
         $faq = Faq::find($id_faq);
 
         if (!$faq) {
-            return redirect('/')->with('error', 'FaQ tidak ditemukan.');
+            return redirect('/faq')->with('error', 'FaQ tidak ditemukan.');
         }
 
         $faq->id_admin = $request->input('id_admin');
@@ -97,20 +97,19 @@ class FaqController extends Controller
 
         $faq->save();
 
-        return redirect('/FaQ');
+        return redirect('/faq');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_faq)
+    public function destroy(Request $request)
     {
-        $faq = Faq::find($id_faq);
-        if (!$faq) {
-            return redirect()->back()->with('error', 'ID tidak ditemukan');
+        $ids = $request->input('ids');
+        if ($ids) {
+            Faq::whereIn('id_faq', $ids)->delete();
+            return redirect()->back()->with('success', 'FAQ yang dipilih telah berhasil dihapus.');
         }
-
-        $faq->delete();
 
         // return redirect()->back()->with('success', 'Produsen berhasil dihapus');
         return redirect('/faq');
