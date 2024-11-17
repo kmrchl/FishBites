@@ -17,7 +17,13 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::all();
 
-        return view('artikel.index', ['artikel' => $artikel]);
+        // return view('artikel.index', ['artikel' => $artikel]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Artikel berhasil diambil',
+            // 'redirect_url' => url('artikel.index'),
+            'data' => $artikel
+        ], 201);
     }
 
     public function add()
@@ -56,7 +62,12 @@ class ArtikelController extends Controller
 
         Artikel::create($data);
 
-        return redirect('/');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Artikel berhasil ditambah',
+            'data' => $data
+        ], 201);
+        // return redirect('/');
     }
 
     /**
@@ -111,7 +122,13 @@ class ArtikelController extends Controller
 
         $artikel->delete();
 
+        // return redirect()->back()->with('success', 'Produk berhasil dihapus');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data artikel berhasil dihapus',
+            'data' => $artikel
+        ], 201);
         // return redirect()->back()->with('success', 'Produsen berhasil dihapus');
-        return redirect('/');
+        // return redirect('/');
     }
 }

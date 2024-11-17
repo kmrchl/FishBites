@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AdminController extends Controller
 {
@@ -46,19 +48,22 @@ class AdminController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|string|max:255',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        Admin::create([
+        $data = Admin::create([
             'username' => $request->username,
             'password' => Hash::make($request->password)
         ]);
 
-        return response()->json(['message' => 'Customer created successfully. Please verify your email.'], 201);
+        return response()->json([
+            'message' => 'Customer created successfully.',
+            'data' => $data
+        ], 201);
     }
 
 
@@ -66,33 +71,53 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         // Validasi input
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Cek apakah admin berhasil login
-        // if (Auth::guard('api')->attempt(['username' => $request->username, 'password' => $request->password])) {
-        //     // Ambil data admin yang sudah login
-        //     $admin = Auth::guard('api')->user();  // Mendapatkan admin yang sudah login
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 400);
+        }
 
-        //     // Membuat token untuk admin yang berhasil login
-        //     $token = $admin->createToken('Admin-Token')->plainTextToken;
+        // Mencari admin berdasarkan username
+        $admin = Admin::where('username', $request->username)->first();
 
-        //     // Kembalikan response dengan token dan redirect URL
-        //     return response()->json([
-        //         'status' => 'success',
-        //         'message' => 'Login berhasil!',
-        //         'token' => $token,
-        //         'redirect_url' => url('/home'), // Ganti dengan URL halaman yang dituju
-        //     ], 200);
-        // }
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], 401);
+        }
 
-        // // Jika login gagal
-        // return response()->json([
-        //     'status' => 'error',
-        //     'message' => 'Username atau password salah',
-        // ], 401);
+        // Menghasilkan token JWT
+        try {
+            $token = JWTAuth::attempt(['username' => $request->username, 'password' => $request->password]);
+            if (!$token) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not create token'], 500);
+        }
+
+        // Mengembalikan token JWT
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $token,
+            'redirect_url' => '/admin'
+        ]);
+    }
+
+    public function logout(Request $request)
+    {
+        // Invalidate the token
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json([
+            'message' => 'Logged out successfully',
+            'redirect_url' => '/'
+        ]);
     }
 
     /**

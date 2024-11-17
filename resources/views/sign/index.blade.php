@@ -103,7 +103,7 @@
                         <div class="col-12">
 
 
-                            <form action="/login" method="" class="tm-login-form" id="LoginForm">
+                            <form action="/login" method="POST" class="tm-login-form" id="LoginForm">
                                 @csrf
                                 <div class="form-group">
                                     <label for="username">Username</label>

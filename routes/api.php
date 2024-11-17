@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\KeranjangController;
 use App\Http\Controllers\Api\ProdusenController;
 
 // Route::get('/user', function (Request $request) {
@@ -18,10 +19,10 @@ use App\Http\Controllers\Api\ProdusenController;
 route::get('/api/', [AdminController::class, 'index']); //Home
 route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
 route::get('/api/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
-route::get('/api/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
+route::get('/artikelhome', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/api/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/api/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
-route::get('/api/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
+route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
 
 // PRODUSEN
 Route::post('/addprodusen', [ProdusenController::class, 'store']); //Tambah Produsen
@@ -58,8 +59,14 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 
 Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');
-Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('/login', [AdminController::class, 'login']);
+Route::post('admin/logout', [AdminController::class, 'logout'])->middleware('auth:api');
 
+
+// KERANJANG
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.home');
+Route::post('/keranjang/add', [KeranjangController::class, 'store'])->name('keranjang.add');
+Route::delete('/keranjang/hapus/{id_keranjang}', [KeranjangController::class, 'destroy'])->name('keranjang.hapus');
 
 // CHAT
 Route::post('/chat/{id_customer}', [ChatController::class, 'store'])->name('chat.store'); // Tambah Chat baru

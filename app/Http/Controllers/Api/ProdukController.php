@@ -19,9 +19,15 @@ class ProdukController extends Controller
 {
     public function index()
     {
-        $show = Produk::all();
+        $products = Produk::all();
 
-        return view('produk.index', compact('show'));
+        // Kembalikan response JSON
+        return response()->json([
+            'success' => true,
+            'message' => 'Data produk berhasil diambil',
+            'redirect_url' => url('/produkhome'),
+            'data' => $products
+        ], 201);
     }
 
     public function create()
@@ -42,7 +48,7 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'deskripsi' => 'required|string',
             'harga' => 'required|integer',
             'stok' => 'required|integer'
@@ -67,10 +73,15 @@ class ProdukController extends Controller
 
             Log::info('Produk berhasil disimpan:', ['produk' => $produk]);
 
-            return redirect('/produk');
+            return response()->json([
+                'success' => true,
+                'message' => 'Data produk berhasil diambil',
+                'data' => $produk
+            ], 201);
         } catch (\Exception $e) {
             Log::error('Error saat menyimpan produk:', ['error' => $e->getMessage()]);
             return response()->json([
+
                 'Success ?' => false,
                 'message' => 'Terjadi kesalahan saat menyimpan produk',
                 'error' => $e->getMessage()
@@ -84,11 +95,11 @@ class ProdukController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         $show = Produk::all();
 
-        return view('home', ['show' => $show]);
+        return view('produk.index', ['show' => $show]);
     }
 
     /**
@@ -162,6 +173,11 @@ class ProdukController extends Controller
         $produk->delete();
 
         // return redirect()->back()->with('success', 'Produk berhasil dihapus');
-        return redirect('/produk');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data produk berhasil dihapus',
+            'data' => $produk
+        ], 201);
+        // return redirect('/produk');
     }
 }

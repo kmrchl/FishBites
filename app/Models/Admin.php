@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Models\Produsen;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+// use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class Admin extends Model
 {
@@ -16,6 +18,20 @@ class Admin extends Model
     protected $primaryKey = "id_admin";
     protected $fillable = ['username', 'password'];
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function produk()
     {
@@ -35,5 +51,13 @@ class Admin extends Model
     public function chat()
     {
         return $this->hasMany(Chatbox::class, 'foreign_key', 'local_key');
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 }

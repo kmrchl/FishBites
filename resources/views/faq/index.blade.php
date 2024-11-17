@@ -102,6 +102,8 @@
             checkboxes.forEach(checkbox => checkbox.checked = this.checked);
         });
     </script>
+
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores accusamus deleniti sapiente qui adipisci aliquam ipsum, eaque perspiciatis laboriosam consequuntur praesentium blanditiis natus officia facilis, a, quas tempore vero. Debitis, quaerat pariatur, odit quasi aliquid sunt sit architecto necessitatibus doloremque exercitationem illo incidunt itaque dolor cumque laborum asperiores dolore est eius quibusdam voluptatem minima qui. Consequuntur doloremque consequatur modi tempora, dolore, eum rem voluptas accusantium architecto perspiciatis ipsam sint eos id repellendus cum corporis harum hic exercitationem laboriosam provident omnis nulla cupiditate aliquid molestiae. Dolorum veniam dolor distinctio incidunt natus, quo adipisci, tempora enim ipsa, blanditiis tenetur illum ad impedit commodi at in odio. Culpa, rem aliquid? Eos velit maxime cumque commodi reiciendis voluptatem vero labore corrupti maiores blanditiis quod assumenda itaque beatae, sint ipsum mollitia id nostrum, asperiores obcaecati atque. Reiciendis excepturi officia beatae harum repellat quidem ipsa? Pariatur laboriosam at fuga dolorem dolore inventore, voluptates obcaecati quasi non.
 </body>
 
 </html>

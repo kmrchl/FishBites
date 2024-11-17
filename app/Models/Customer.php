@@ -26,4 +26,9 @@ class Customer extends Model
     {
         return $this->hasMany(Chatbox::class, 'foreign_key', 'local_key');
     }
+
+    public function keranjang()
+    {
+        return $this->hasMany(Keranjang::class, 'keranjang_produk', 'id_customer', 'id_keranjang');
+    }
 }
