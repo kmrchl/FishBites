@@ -119,19 +119,16 @@ class AdminController extends Controller
         // Cek jika admin ditemukan dan password cocok
         if ($admin && Hash::check($request->password, $admin->password)) {
             // Login dengan guard admin
-            Auth::guard('admin')->login($admin);
-            dd(Auth::guard('admin')->user());
+            Auth::guard('web')->login($admin);
+            // dd(Auth::guard('admin')->user());
 
-            // return response()->json([
-            //     'message' => 'Login successful',
-            //     'admin' => $admin,
-            // ], 200);
+            return response()->json([
+                'message' => 'Login successful',
+                'admin' => $admin,
+            ], 200);
+
+            return view('home');
         }
-
-        // // Jika login gagal
-        // return response()->json([
-        //     'message' => 'Unauthorized',
-        // ], 401);
     }
 
     public function logout(Request $request)

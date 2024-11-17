@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'admin'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'admin'),
     ],
 
@@ -28,7 +28,7 @@ return [
     | which utilizes session storage plus the Eloquent user provider.
     |
     | All authentication guards have a user provider, which defines how the
-    | users are actually retrieved out of your database or other storage
+    | admin are actually retrieved out of your database or other storage
     | system used by the application. Typically, Eloquent is utilized.
     |
     | Supported: "session"
@@ -37,29 +37,16 @@ return [
 
     // config/auth.php
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-
-        // Guard untuk Admin
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admins',  // Provider 'admins' yang telah didefinisikan di bagian providers
+            'provider' => 'admins', // Harus sesuai dengan nama provider di bawah
         ],
     ],
 
     'providers' => [
-        // Provider untuk Users
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-
-        // Provider untuk Admin
         'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'driver' => 'eloquent', // Gunakan eloquent
+            'model' => App\Models\Admin::class, // Path ke model Admin
         ],
     ],
 
@@ -75,7 +62,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | All authentication guards have a user provider, which defines how the
-    | users are actually retrieved out of your database or other storage
+    | admin are actually retrieved out of your database or other storage
     | system used by the application. Typically, Eloquent is utilized.
     |
     | If you have multiple user tables or models you may configure multiple
@@ -86,17 +73,7 @@ return [
     |
     */
 
-    'providers' => [
-        'admin' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Admin::class),
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
-    ],
+    //  
 
     /*
     |--------------------------------------------------------------------------
@@ -105,7 +82,7 @@ return [
     |
     | These configuration options specify the behavior of Laravel's password
     | reset functionality, including the table utilized for token storage
-    | and the user provider that is invoked to actually retrieve users.
+    | and the user provider that is invoked to actually retrieve admin.
     |
     | The expiry time is the number of minutes that each reset token will be
     | considered valid. This security feature keeps tokens short-lived so
@@ -132,7 +109,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may define the amount of seconds before a password confirmation
-    | window expires and users are asked to re-enter their password via the
+    | window expires and admin are asked to re-enter their password via the
     | confirmation screen. By default, the timeout lasts for three hours.
     |
     */
