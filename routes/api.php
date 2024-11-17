@@ -26,8 +26,8 @@ route::get('/api/', [AdminController::class, 'index']); //Home
 route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
 route::get('/api/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
 route::get('/artikelhome', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
-route::get('/api/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
-route::get('/api/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
+route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
+route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
 route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
 route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
@@ -50,7 +50,7 @@ Route::put('/produk/{id_produsen}', [ProdukController::class, 'update'])->name('
 Route::post('/kategori/add', [KategoriController::class, 'store']);
 
 // PESANAN
-Route::post('/pesanan/add', [PesananController::class, 'store'])->name('produk.store'); //Menambahkan data ke database
+Route::post('/pesanan/add', [PesananController::class, 'store']); //Menambahkan data ke database
 
 
 
@@ -63,7 +63,6 @@ Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name(
 
 // FAQ
 Route::post('/faq/add', [FaqController::class, 'store'])->name('faq.store'); //Tambah FaQ
-// Route::delete('/hapusfaq/{id_faq}', [FaqController::class, 'destroy'])->name('faq.hapus'); //Hapus FaQ
 Route::delete('/hapusfaq', [FaqController::class, 'destroy'])->name('faq.hapus'); //Hapus FaQ
 Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update');
 
@@ -75,9 +74,9 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 
 // ADMIN
-Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');
+Route::post('/admin/add', [AdminController::class, 'store']);
 Route::post('/login', [AdminController::class, 'login']);
-Route::post('admin/logout', [AdminController::class, 'logout'])->middleware('auth:api');
+Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:web');
 
 
 // KERANJANG

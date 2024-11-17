@@ -66,13 +66,18 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link d-block" href="login.html">
-                                Admin, <b>Logout</b>
-                            </a>
-                        </li>
-                    </ul>
+                    <form action="/logout" method="POST">
+                        @csrf
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <button type="submit" class="nav-link d-block" href="login.html">
+                                    <b>Logout</b>
+                                </button>
+                            </li>
+                        </ul>
+
+                    </form>
                 </div>
             </div>
         </nav>

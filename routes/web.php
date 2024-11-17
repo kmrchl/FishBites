@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProdusenController;
+use Tymon\JWTAuth\Claims\Custom;
 
 // Route::get('/', function () {
 //     return view('home');
@@ -55,12 +56,12 @@ Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
 Route::get('/test-login', function () {
     return Auth::guard('web')->attempt(['username' => 'admin', 'password' => 'password']);
 });
+Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:web');
 
 // CUSTOMER
+Route::post('/cust/login', [CustomerController::class, 'login'])->name('admin.login');
 Route::get('/tambahcust', [CustomerController::class, 'add']);
 Route::get('/customer/{id_customer}/edit', [CustomerController::class, 'edit'])->name('cust.edit');
-
-
 
 // CHAT 
 Route::get('/chat/{id_customer}', [ChatController::class, 'show'])->name('chat.show');

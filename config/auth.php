@@ -41,6 +41,11 @@ return [
             'driver' => 'session',
             'provider' => 'admins', // Harus sesuai dengan nama provider di bawah
         ],
+
+        'cust' => [
+            'driver' => 'session',
+            'provider' => 'custs', // Harus sesuai dengan nama provider di bawah
+        ],
     ],
 
     'providers' => [
@@ -48,11 +53,12 @@ return [
             'driver' => 'eloquent', // Gunakan eloquent
             'model' => App\Models\Admin::class, // Path ke model Admin
         ],
+
+        'custs' => [
+            'driver' => 'eloquent', // Gunakan eloquent
+            'model' => App\Models\Customer::class, // Path ke model Admin
+        ],
     ],
-
-
-
-
 
 
 
@@ -96,7 +102,7 @@ return [
 
     'passwords' => [
         'admin' => [
-            'provider' => 'admin',
+            'provider' => 'admins',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

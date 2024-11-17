@@ -70,44 +70,6 @@ class AdminController extends Controller
     // LOGIN
     public function login(Request $request)
     {
-        // Validasi input
-        // $validator = Validator::make($request->all(), [
-        //     'username' => 'required|string',
-        //     'password' => 'required|string',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'error' => $validator->errors()
-        //     ], 400);
-        // }
-
-        // // Mencari admin berdasarkan username
-        // $admin = Admin::where('username', $request->username)->first();
-
-        // if (!$admin || !Hash::check($request->password, $admin->password)) {
-        //     return response()->json([
-        //         'error' => 'Unauthorized'
-        //     ], 401);
-        // }
-
-        // // Menghasilkan token JWT
-        // try {
-        //     $token = JWTAuth::attempt(['username' => $request->username, 'password' => $request->password]);
-        //     if (!$token) {
-        //         return response()->json(['error' => 'Unauthorized'], 401);
-        //     }
-        // } catch (JWTException $e) {
-        //     return response()->json(['error' => 'Could not create token'], 500);
-        // }
-
-        // // Mengembalikan token JWT
-        // return response()->json([
-        //     'message' => 'Login successful',
-        //     'token' => $token,
-        //     // 'redirect_url' => '/admin'
-        // ]);
-
         $request->validate([
             'username' => 'required|string',
             'password' => 'required',
@@ -119,27 +81,43 @@ class AdminController extends Controller
         // Cek jika admin ditemukan dan password cocok
         if ($admin && Hash::check($request->password, $admin->password)) {
             // Login dengan guard admin
-            Auth::guard('web')->login($admin);
+            Auth::guard('admin')->login($admin);
             // dd(Auth::guard('admin')->user());
 
-            return response()->json([
-                'message' => 'Login successful',
-                'admin' => $admin,
-            ], 200);
-
-            return view('home');
+            if ($request->wantsJson()) {
+                // Jika permintaan adalah API, kembalikan response JSON
+                return response()->json([
+                    'message' => 'Login successful',
+                    'admin' => $admin,
+                    'redirect_url' => '/admin' // URL untuk redirect di browser
+                ], 200);
+            } else {
+                // Jika permintaan dari browser, lakukan redirect
+                return redirect('/admin');
+            }
         }
     }
 
     public function logout(Request $request)
     {
-        // Invalidate the token
-        JWTAuth::invalidate(JWTAuth::getToken());
+        Auth::guard('admin')->logout();
 
-        return response()->json([
-            'message' => 'Logged out successfully',
-            'redirect_url' => '/'
-        ]);
+        // Invalidate session untuk keamanan tambahan
+        $request->session()->invalidate();
+
+        // Regenerate CSRF token agar sesi aman
+        $request->session()->regenerateToken();
+
+        if ($request->wantsJson()) {
+            // Jika permintaan adalah API, kembalikan response JSON
+            return response()->json([
+                'message' => 'Login successful',
+                'redirect_url' => '/' // URL untuk redirect di browser
+            ], 200);
+        } else {
+            // Jika permintaan dari browser, lakukan redirect
+            return redirect('/');
+        }
     }
 
     /**
