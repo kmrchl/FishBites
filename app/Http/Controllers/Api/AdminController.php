@@ -72,27 +72,27 @@ class AdminController extends Controller
         ]);
 
         // Cek apakah admin berhasil login
-        if (Auth::guard('api')->attempt(['username' => $request->username, 'password' => $request->password])) {
-            // Ambil data admin yang sudah login
-            $admin = Auth::guard('api')->user();  // Mendapatkan admin yang sudah login
+        // if (Auth::guard('api')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        //     // Ambil data admin yang sudah login
+        //     $admin = Auth::guard('api')->user();  // Mendapatkan admin yang sudah login
 
-            // Membuat token untuk admin yang berhasil login
-            $token = $admin->createToken('Admin-Token')->plainTextToken;
+        //     // Membuat token untuk admin yang berhasil login
+        //     $token = $admin->createToken('Admin-Token')->plainTextToken;
 
-            // Kembalikan response dengan token dan redirect URL
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Login berhasil!',
-                'token' => $token,
-                'redirect_url' => url('/home'), // Ganti dengan URL halaman yang dituju
-            ], 200);
-        }
+        //     // Kembalikan response dengan token dan redirect URL
+        //     return response()->json([
+        //         'status' => 'success',
+        //         'message' => 'Login berhasil!',
+        //         'token' => $token,
+        //         'redirect_url' => url('/home'), // Ganti dengan URL halaman yang dituju
+        //     ], 200);
+        // }
 
-        // Jika login gagal
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Username atau password salah',
-        ], 401);
+        // // Jika login gagal
+        // return response()->json([
+        //     'status' => 'error',
+        //     'message' => 'Username atau password salah',
+        // ], 401);
     }
 
     /**
