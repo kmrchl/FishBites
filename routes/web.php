@@ -29,7 +29,7 @@ route::get('/customer', [CustomerController::class, 'index'])->name('customer.in
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
 
 // CRUD PRODUSEN
-Route::get('/tambahprodusen', [ProdusenController::class, 'add']); //Menyalurkan ke halaman Tambah
+Route::get('/tambahprodusen', [ProdusenController::class, 'add'])->name('produsen.add'); //Menyalurkan ke halaman Tambah
 Route::get('/produsen/{id_produsen}/edit', [ProdusenController::class, 'edit'])->name('produsen.edit'); //Mengalihkan ke halaman Edit
 
 

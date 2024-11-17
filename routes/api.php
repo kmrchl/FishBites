@@ -14,8 +14,14 @@ use App\Http\Controllers\Api\ProdusenController;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-route::get('/', [AdminController::class, 'index']); //Home
-
+// GET API
+route::get('/api/', [AdminController::class, 'index']); //Home
+route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
+route::get('/api/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
+route::get('/api/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
+route::get('/api/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
+route::get('/api/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
+route::get('/api/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
 
 // PRODUSEN
 Route::post('/addprodusen', [ProdusenController::class, 'store']); //Tambah Produsen
@@ -49,6 +55,8 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 
 // ADMIN
+
+
 Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');
 Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
 

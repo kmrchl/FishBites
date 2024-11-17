@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,37 +13,37 @@
 </head>
 
 <body id="reportsPage">
-<nav class="navbar navbar-expand-xl">
-      <div class="container h-100">
-        <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo" style="max-width: 100px; height: 100px;" />
-        </a>
-        <button
-          class="navbar-toggler ml-auto mr-0"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars tm-nav-icon"></i>
-        </button>
+    <nav class="navbar navbar-expand-xl">
+        <div class="container h-100">
+            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo"
+                    style="max-width: 100px; height: 100px;" />
+            </a>
+            <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars tm-nav-icon"></i>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mx-auto h-100">
-          <li class="nav-item"><a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-tachometer-alt"></i>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto h-100">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard.index') }}"><i
+                                class="fas fa-tachometer-alt"></i>
                             Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('faq.index') }}"><i class="fas fa-file-alt"></i> FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produk.index') }}"><i class="fas fa-shopping-cart"></i>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('faq.index') }}"><i
+                                class="fas fa-file-alt"></i> FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('produk.index') }}"><i
+                                class="fas fa-shopping-cart"></i>
                             Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('artikel.index') }}"><i class="far fa-user"></i>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('artikel.index') }}"><i
+                                class="far fa-user"></i>
                             Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('produsen.index') }}"><i class="far fa-user"></i>
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('produsen.index') }}"><i
+                                class="far fa-user"></i>
                             Produsen</a></li>
-          </ul>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
     <div class="container mt-5">
@@ -72,7 +73,8 @@
                         </table>
                     </div>
 
-                    <a href="{{ route('tambahprodusen') }}" class="btn btn-primary btn-block text-uppercase mb-3">Tambah Produsen</a>
+                    <a href="{{ route('produsen.add') }}" class="btn btn-primary btn-block text-uppercase mb-3">Tambah
+                        Produsen</a>
 
                     <form method="POST" action="{{ url('/api/hapus/' . $petani->id_produsen) }}">
                         @csrf
@@ -87,4 +89,5 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </body>
+
 </html>
