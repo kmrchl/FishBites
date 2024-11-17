@@ -35,24 +35,34 @@ return [
     |
     */
 
+    // config/auth.php
     'guards' => [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
 
-        'api' => [
-            'driver' => 'jwt',
-            'provider' => 'admin',  // Pastikan ini merujuk ke provider yang tepat
+        // Guard untuk Admin
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',  // Provider 'admins' yang telah didefinisikan di bagian providers
         ],
     ],
 
     'providers' => [
+        // Provider untuk Users
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+
+        // Provider untuk Admin
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,  // Model yang Anda gunakan untuk autentikasi admin
+            'model' => App\Models\Admin::class,
         ],
     ],
+
 
 
 

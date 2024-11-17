@@ -18,12 +18,16 @@ class ArtikelController extends Controller
         $artikel = Artikel::all();
 
         // return view('artikel.index', ['artikel' => $artikel]);
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Artikel berhasil diambil',
-            // 'redirect_url' => url('artikel.index'),
-            'data' => $artikel
-        ], 201);
+        if (request()->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Artikel berhasil diambil',
+                'data' => $artikel,
+            ], 200);
+        }
+
+        // Jika tidak, tampilkan tampilan Blade
+        return view('artikel.index', ['artikel' => $artikel]);
     }
 
     public function add()

@@ -3,15 +3,14 @@
 namespace App\Models;
 
 use App\Models\Produsen;
-// use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Contracts\Auth\Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasFactory;
     protected $table = "admin";

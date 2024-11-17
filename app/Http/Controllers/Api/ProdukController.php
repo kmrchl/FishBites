@@ -44,15 +44,26 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
 
+        Log::info('Request data:', $request->all());
+
+        // Lakukan validasi
         $validate = $request->validate([
             'id_admin' => 'required|exists:admin,id_admin',
             'id_produsen' => 'required|exists:produsen,id_produsen',
+            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_produk' => 'required|string|max:255',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'deskripsi' => 'required|string',
             'harga' => 'required|integer',
             'stok' => 'required|integer'
         ]);
+
+        if (empty($validate['id_kategori'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kolom id_kategori wajib diisi.',
+            ], 400);
+        }
         // $validate = $request->all();
         // dd($validate);
 
@@ -64,6 +75,7 @@ class ProdukController extends Controller
             $produk = Produk::create([
                 'id_admin' => $validate['id_admin'],
                 'id_produsen' => $validate['id_produsen'],
+                'id_kategori' => $validate['id_kategori'],
                 'nama_produk' => $validate['nama_produk'],
                 'gambar' => $path,
                 'deskripsi' => $validate['deskripsi'],
@@ -75,14 +87,13 @@ class ProdukController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Data produk berhasil diambil',
+                'message' => 'Data produk berhasil disimpan',
                 'data' => $produk
             ], 201);
         } catch (\Exception $e) {
             Log::error('Error saat menyimpan produk:', ['error' => $e->getMessage()]);
             return response()->json([
-
-                'Success ?' => false,
+                'success' => false,
                 'message' => 'Terjadi kesalahan saat menyimpan produk',
                 'error' => $e->getMessage()
             ], 500);

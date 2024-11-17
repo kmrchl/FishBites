@@ -1,15 +1,21 @@
 <?php
 
+use App\Models\Ulasan;
+use App\Models\Pesanan;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\FaqController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
+use App\Http\Controllers\Api\UlasanController;
 use App\Http\Controllers\Api\ArtikelController;
+use App\Http\Controllers\Api\PesananController;
 use App\Http\Controllers\Api\CustomerController;
-use App\Http\Controllers\Api\KeranjangController;
+use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\ProdusenController;
+use App\Http\Controllers\Api\KeranjangController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -23,6 +29,9 @@ route::get('/artikelhome', [ArtikelController::class, 'index'])->name('artikel.i
 route::get('/api/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/api/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
+route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
+route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
+route::get('/kategori', [KategoriController::class, 'index']); //Pesanan
 
 // PRODUSEN
 Route::post('/addprodusen', [ProdusenController::class, 'store']); //Tambah Produsen
@@ -36,7 +45,17 @@ Route::delete('/hapusproduk/{id_produk}', [ProdukController::class, 'destroy'])-
 Route::put('/produk/{id_produsen}', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
 
 
+
+// KATEGORI
+Route::post('/kategori/add', [KategoriController::class, 'store']);
+
+// PESANAN
+Route::post('/pesanan/add', [PesananController::class, 'store'])->name('produk.store'); //Menambahkan data ke database
+
+
+
 // ARTIKEL
+Route::get('/artikel/get', [ArtikelController::class, 'index']); //Tambah Artikel
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
@@ -56,8 +75,6 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 
 // ADMIN
-
-
 Route::post('/admin/add', [AdminController::class, 'store'])->name('admin.store');
 Route::post('/login', [AdminController::class, 'login']);
 Route::post('admin/logout', [AdminController::class, 'logout'])->middleware('auth:api');
@@ -67,6 +84,11 @@ Route::post('admin/logout', [AdminController::class, 'logout'])->middleware('aut
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.home');
 Route::post('/keranjang/add', [KeranjangController::class, 'store'])->name('keranjang.add');
 Route::delete('/keranjang/hapus/{id_keranjang}', [KeranjangController::class, 'destroy'])->name('keranjang.hapus');
+
+
+// ULASAN
+Route::post('/ulasan/add', [UlasanController::class, 'store']);
+
 
 // CHAT
 Route::post('/chat/{id_customer}', [ChatController::class, 'store'])->name('chat.store'); // Tambah Chat baru
