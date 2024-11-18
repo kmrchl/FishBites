@@ -18,7 +18,13 @@ class CustomerController extends Controller
     {
         $customer = Customer::all();
 
-        return view('customer.index', ['customer' => $customer]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Customer berhasil diambil',
+            'redirect_url' => url('/customer'),
+            'data' => $customer
+        ], 201);
+        // return view('customer.index', ['customer' => $customer]);
     }
 
     /**

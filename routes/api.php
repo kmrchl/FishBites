@@ -27,7 +27,7 @@ route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.ind
 route::get('/api/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
 route::get('/artikelhome', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/api/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
-route::get('/api/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
+route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
 route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
 route::get('/pesanan', [PesananController::class, 'index']); //Pesanan

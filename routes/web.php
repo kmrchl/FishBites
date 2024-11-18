@@ -29,6 +29,9 @@ route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produkhome', [ProdukController::class, 'show'])->name('produk.index'); //Home
 
+
+route::get('/fishbites', [ProdukController::class, 'show'])->name('produk.index'); //Home
+
 // CRUD PRODUSEN
 Route::get('/tambahprodusen', [ProdusenController::class, 'add'])->name('produsen.add'); //Menyalurkan ke halaman Tambah
 Route::get('/produsen/{id_produsen}/edit', [ProdusenController::class, 'edit'])->name('produsen.edit'); //Mengalihkan ke halaman Edit
@@ -62,5 +65,5 @@ Route::get('/customer/{id_customer}/edit', [CustomerController::class, 'edit'])-
 
 
 
-// CHAT 
+// CHAT
 Route::get('/chat/{id_customer}', [ChatController::class, 'show'])->name('chat.show');
