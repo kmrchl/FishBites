@@ -1,50 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Fish Bites - Produsen</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
-</head>
+@section('Admin', 'Mitra')
 
-<body id="reportsPage">
-    <nav class="navbar navbar-expand-xl">
-        <div class="container h-100">
-            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo"
-                    style="max-width: 100px; height: 100px;" />
-            </a>
-            <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars tm-nav-icon"></i>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto h-100">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard.index') }}"><i
-                                class="fas fa-tachometer-alt"></i>
-                            Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('faq.index') }}"><i
-                                class="fas fa-file-alt"></i> FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produk.index') }}"><i
-                                class="fas fa-shopping-cart"></i>
-                            Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('artikel.index') }}"><i
-                                class="far fa-user"></i>
-                            Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('produsen.index') }}"><i
-                                class="far fa-user"></i>
-                            Produsen</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+@section('content')
+
 
     <div class="container mt-5">
         <div class="row tm-content-row justify-content-center">
@@ -86,8 +46,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-</body>
+@endsection
+
 
 </html>

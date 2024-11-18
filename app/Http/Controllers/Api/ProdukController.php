@@ -22,12 +22,14 @@ class ProdukController extends Controller
         $products = Produk::all();
 
         // Kembalikan response JSON
-        return response()->json([
-            'success' => true,
-            'message' => 'Data produk berhasil diambil',
-            'redirect_url' => url('/produkhome'),
-            'data' => $products
-        ], 201);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Data produk berhasil diambil',
+        //     'redirect_url' => url('/produkhome'),
+        //     'data' => $products
+        // ], 201);
+
+        return response()->json($products);
     }
 
     public function create()
@@ -123,11 +125,12 @@ class ProdukController extends Controller
         $admins = Admin::all();
         $produsens = Produsen::all();
 
-        if (!$produk) {
-            return redirect()->back()->with('error', 'Produsen tidak ditemukan');
+        if ($produk) {
+            // Kembalikan view dengan data produk
+            return view('produk.edit', compact('produk', 'admins', 'produsens'));
         }
 
-        return view('produk.edit', compact('produk', 'admins', 'produsens')); // Mengirim data ke view edit
+        return redirect()->route('produk.index')->with('error', 'Produk tidak ditemukan.');
     }
 
     public function update(Request $request, $id_produk)
@@ -177,18 +180,12 @@ class ProdukController extends Controller
     public function destroy($id_produk)
     {
         $produk = Produk::find($id_produk);
-        if (!$produk) {
-            return redirect()->back()->with('error', 'ID tidak ditemukan');
+
+        if ($produk) {
+            $produk->delete(); // Hapus data produk
+            return response()->json(['message' => 'Produk berhasil dihapus.'], 200);
         }
 
-        $produk->delete();
-
-        // return redirect()->back()->with('success', 'Produk berhasil dihapus');
-        return response()->json([
-            'success' => true,
-            'message' => 'Data produk berhasil dihapus',
-            'data' => $produk
-        ], 201);
-        // return redirect('/produk');
+        return response()->json(['message' => 'Produk tidak ditemukan.'], 404);
     }
 }

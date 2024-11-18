@@ -1,50 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Fish Bites - FAQ</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}" />
-</head>
+@section('Admin', 'FaQ')
 
-<body id="reportsPage">
-    <nav class="navbar navbar-expand-xl">
-        <div class="container h-100">
-            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo"
-                    style="max-width: 100px; height: 100px;" />
-            </a>
-            <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars tm-nav-icon"></i>
-            </button>
+@section('content')
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto h-100">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard.index') }}"><i
-                                class="fas fa-tachometer-alt"></i>
-                            Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('faq.index') }}"><i
-                                class="fas fa-file-alt"></i> FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produk.index') }}"><i
-                                class="fas fa-shopping-cart"></i>
-                            Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('artikel.index') }}"><i
-                                class="far fa-user"></i>
-                            Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produsen.index') }}"><i
-                                class="far fa-user"></i>
-                            Produsen</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
     <div class="container mt-5">
         <div class="row tm-content-row justify-content-center">
             <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
@@ -103,7 +62,8 @@
         });
     </script>
 
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores accusamus deleniti sapiente qui adipisci aliquam ipsum, eaque perspiciatis laboriosam consequuntur praesentium blanditiis natus officia facilis, a, quas tempore vero. Debitis, quaerat pariatur, odit quasi aliquid sunt sit architecto necessitatibus doloremque exercitationem illo incidunt itaque dolor cumque laborum asperiores dolore est eius quibusdam voluptatem minima qui. Consequuntur doloremque consequatur modi tempora, dolore, eum rem voluptas accusantium architecto perspiciatis ipsam sint eos id repellendus cum corporis harum hic exercitationem laboriosam provident omnis nulla cupiditate aliquid molestiae. Dolorum veniam dolor distinctio incidunt natus, quo adipisci, tempora enim ipsa, blanditiis tenetur illum ad impedit commodi at in odio. Culpa, rem aliquid? Eos velit maxime cumque commodi reiciendis voluptatem vero labore corrupti maiores blanditiis quod assumenda itaque beatae, sint ipsum mollitia id nostrum, asperiores obcaecati atque. Reiciendis excepturi officia beatae harum repellat quidem ipsa? Pariatur laboriosam at fuga dolorem dolore inventore, voluptates obcaecati quasi non.
-</body>
+
+
+@endsection
 
 </html>

@@ -1,51 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+@section('Admin', 'Produk: Add')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fish Bites - Add Product</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
-</head>
 
-<body>
-    <nav class="navbar navbar-expand-xl">
-        <div class="container h-100">
-            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo"
-                    style="max-width: 100px; height: 100px;" />
-            </a>
-            <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars tm-nav-icon"></i>
-            </button>
+@section('content')
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto h-100">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard.index') }}"><i
-                                class="fas fa-tachometer-alt"></i>
-                            Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('faq.index') }}"><i
-                                class="fas fa-file-alt"></i> FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('produk.index') }}"><i
-                                class="fas fa-shopping-cart"></i>
-                            Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('artikel.index') }}"><i
-                                class="far fa-user"></i>
-                            Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produsen.index') }}"><i
-                                class="far fa-user"></i>
-                            Produsen</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <div class="container tm-mt-big tm-mb-big">
         <div class="row">
@@ -72,8 +30,7 @@
 
                                 <div class="form-group mb-3">
                                     <label for="nama_produk">Nama Produk</label>
-                                    <input id="nama_produk" name="nama_produk" type="text" class="form-control"
-                                        required>
+                                    <input id="nama_produk" name="nama_produk" type="text" class="form-control" required>
                                 </div>
 
                                 <div class="form-group mb-3">
@@ -98,8 +55,7 @@
 
                                 <div class="form-group mb-3">
                                     <label for="stok">Stok/kg</label>
-                                    <input type="number" id="stok" name="stok" class="form-control"
-                                        required>
+                                    <input type="number" id="stok" name="stok" class="form-control" required>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase">Tambah Produk
@@ -114,8 +70,7 @@
 
                             <div class="custom-file mt-3 mb-3">
                                 <input id="fileInput" type="file" style="display:none;" name="gambar" />
-                                <input type="button" class="btn btn-primary btn-block mx-auto"
-                                    value="UPLOAD PRODUCT IMAGE"
+                                <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE"
                                     onclick="document.getElementById('fileInput').click();" />
                             </div>
                         </div>
@@ -126,9 +81,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('jquery-ui-datepicker/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-</body>
 
-</html>
+
+@endsection

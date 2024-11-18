@@ -28,7 +28,7 @@ route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.in
 route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
-route::get('/produkhome', [ProdukController::class, 'show'])->name('produk.index'); //Home
+route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
 
 // CRUD PRODUSEN
 Route::get('/tambahprodusen', [ProdusenController::class, 'add'])->name('produsen.add'); //Menyalurkan ke halaman Tambah
@@ -37,7 +37,7 @@ Route::get('/produsen/{id_produsen}/edit', [ProdusenController::class, 'edit'])-
 
 // // CRUD PRODUK
 Route::get('/produk/create', [ProdukController::class, 'create'])->name('produk.add'); //Mengalihkan ke halaman tambah data
-Route::get('/produk/{id_produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit'); //Mengalihkan ke halaman Edit Produk
+Route::get('/produk/edit/{id_produk}', [ProdukController::class, 'edit'])->name('produk.edit'); //Mengalihkan ke halaman Edit Produk
 
 
 // // CRUD ARTIKEL
@@ -52,7 +52,7 @@ Route::get('/faq/{id_faq}/edit', [FaqController::class, 'edit'])->name('faq.edit
 
 // ADMIN
 // Route::get('/admin', [AdminController::class, 'add'])->name('admin');
-Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+Route::post('/logi', [AdminController::class, 'login'])->name('admin.login');
 Route::get('/test-login', function () {
     return Auth::guard('web')->attempt(['username' => 'admin', 'password' => 'password']);
 });

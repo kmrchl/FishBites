@@ -1,56 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Fish Bites - Products</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="css/fontawesome.min.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/templatemo-style.css">
-</head>
+@section('Admin', 'Produk')
 
-<body id="reportsPage">
-    <nav class="navbar navbar-expand-xl">
-        <div class="container h-100">
-            <a class="navbar-brand" href="{{ route('dashboard.index') }}">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo"
-                    style="max-width: 100px; height: 100px;" />
-            </a>
-            <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fas fa-bars tm-nav-icon"></i>
-            </button>
+@section('content')
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto h-100">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('dashboard.index') }}"><i
-                                class="fas fa-tachometer-alt"></i>
-                            Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('faq.index') }}"><i
-                                class="fas fa-file-alt"></i> FAQ</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('produk.index') }}"><i
-                                class="fas fa-shopping-cart"></i>
-                            Produk</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('artikel.index') }}"><i
-                                class="far fa-user"></i>
-                            Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('produsen.index') }}"><i
-                                class="far fa-user"></i>
-                            Produsen</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
     <div class="container mt-5">
         <div class="row tm-content-row justify-content-center">
             <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-products">
                     <div class="tm-product-table-container">
-                        <table class="table table-hover tm-table-small tm-product-table mx-auto">
+                        <table id="produk-table" class="table table-hover tm-table-small tm-product-table mx-auto">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -63,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($show as $produk)
+                                {{-- @foreach ($show as $produk)
                                     <tr>
                                         <td class="tm-product-name">{{ $produk->id_produk }}</td>
                                         <td>{{ $produk->nama_produk }}</td>
@@ -83,7 +44,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @endforeach --}}
                             </tbody>
                         </table>
                     </div>
@@ -95,8 +56,75 @@
         </div>
     </div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-</body>
+    <script>
+        $(document).ready(function() {
+            // URL API
+            const apiUrl = '/api/produk'; // Ganti dengan URL API Anda
 
-</html>
+            // AJAX request
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: function(response) {
+                    const tbody = $('#produk-table tbody');
+                    tbody.empty(); // Kosongkan tabel sebelum menambahkan data
+
+                    // Looping data produk
+                    response.forEach((produk) => {
+                        const row = `
+                            <tr>
+                                <td>${produk.id_produk}</td>
+                                <td>${produk.nama_produk}</td>
+                                <td>${produk.deskripsi}</td>
+                                <td>${produk.harga}</td>
+                                <td>${produk.stok}</td>
+                                <td>
+                                    <button class="edit-btn" data-id_produk="${produk.id_produk}">Edit</button>
+                                    <button class="delete-btn" data-id_produk="${produk.id_produk}">Hapus</button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.append(row); // Tambahkan baris ke tabel
+                    });
+                    // Event listener untuk tombol Edit
+                    $('.edit-btn').on('click', function() {
+                        const idProduk = $(this).data('id_produk');
+                        alert('Edit produk dengan ID: ' + idProduk);
+
+                        //Mengarahkan ke form Edit 
+                        $('.edit-btn').on('click', function() {
+                            const idProduk = $(this).data('id_produk');
+                            const editUrl = `/produk/edit/${idProduk}`; // URL form edit
+
+                            // Redirect ke halaman edit
+                            window.location.href = editUrl;
+                        });
+                    });
+
+                    // Event listener untuk tombol Hapus
+                    $('.delete-btn').on('click', function() {
+                        if (confirm('Yakin ingin menghapus produk ini?')) {
+                            $.ajax({
+                                url: `${apiUrl}/${idProduk}`, // Endpoint hapus produk
+                                method: 'DELETE',
+                                success: function() {
+                                    alert('Produk berhasil dihapus.');
+                                    location
+                                        .reload(); // Reload halaman untuk memuat ulang data
+                                },
+                                error: function() {
+                                    alert('Gagal menghapus produk.');
+                                }
+                            });
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Terjadi kesalahan:', error);
+                    alert('Gagal memuat data produk.');
+                }
+            });
+        });
+    </script>
+
+@endsection
