@@ -16,8 +16,7 @@
                     </div>
                     <div class="row tm-edit-product-row">
                         <div class="col-xl-6 col-lg-6 col-md-12">
-                            <form method="POST" action="{{ route('produk.store') }}" class="tm-edit-product-form"
-                                enctype="multipart/form-data">
+                            <form id="produk-form" class="tm-edit-product-form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="id_admin">Admin</label>
@@ -36,6 +35,16 @@
                                 <div class="form-group mb-3">
                                     <label for="deskripsi">Deskripsi</label>
                                     <textarea id="deskripsi" name="deskripsi" class="form-control" rows="3" required></textarea>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="id_kategori">Kategori</label>
+                                    <select name="id_kategori" class="form-control" id="id_kategori" required>
+                                        @foreach ($kategori as $kat)
+                                            <option value="{{ $kat->id_kategori }}">
+                                                {{ $kat->kategori }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group mb-3">
@@ -81,6 +90,39 @@
         </div>
     </div>
 
+    <script>
+        $(document).ready(function() {
+            $('#produk-form').on('submit', function(e) {
+                e.preventDefault(); // Mencegah refresh halaman
 
+                const formData = new FormData(this); // Membuat FormData untuk menangani file
+
+                $.ajax({
+                    url: '/api/produk/add', // Ganti dengan URL API Anda
+                    method: 'POST',
+                    data: formData,
+                    processData: false, // Jangan proses data karena menggunakan FormData
+                    contentType: false, // Jangan tentukan jenis konten karena menggunakan FormData
+                    success: function(response) {
+                        alert('Produk berhasil ditambahkan.');
+                        $('#produk-form', function() {
+                            const editUrl = `/produk`; // URL ke Index Produk
+                            // Redirect ke halaman edit
+                            window.location.href = editUrl;
+                        }); // Reset form setelah berhasil
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Terjadi kesalahan:', error);
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            const errors = xhr.responseJSON.errors;
+                            alert('Error: ' + Object.values(errors).join(', '));
+                        } else {
+                            alert('Gagal menambahkan produk.');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

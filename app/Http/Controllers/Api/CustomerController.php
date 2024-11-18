@@ -20,17 +20,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::all();
 
-        if ($request->wantsJson()) {
-            // Jika permintaan adalah API, kembalikan response JSON
-            return response()->json([
-                'message' => 'Data Customer berhasil diambil',
-                'data' => $customer,
-                'redirect_url' => '/customer' // URL untuk redirect di browser
-            ], 200);
-        } else {
-            // Jika permintaan dari browser, lakukan redirect
-            return view('customer.index', ['customer' => $customer]);
-        }
+        return response()->json($customer);
     }
 
     /**
@@ -116,9 +106,13 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $customer = Customer::all();
+
+        return view('customer.index', [
+            'customer' => $customer
+        ]);
     }
 
     /**

@@ -24,8 +24,8 @@ use App\Http\Controllers\Api\KeranjangController;
 // GET API
 route::get('/api/', [AdminController::class, 'index']); //Home
 route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
-route::get('/api/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
-route::get('/artikelhome', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
+route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
+route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'index'])->name('produk.index'); //Home
@@ -42,7 +42,7 @@ Route::put('/produsen/{id_produsen}', [ProdusenController::class, 'update'])->na
 // PRODUK
 Route::post('/produk/add', [ProdukController::class, 'store'])->name('produk.store'); //Menambahkan data ke database
 Route::delete('/hapusproduk/{id_produk}', [ProdukController::class, 'destroy'])->name('produk.hapus'); //Hapus Produk
-Route::put('/produk/{id_produsen}', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
+Route::put('/produk/{id_produk}', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
 
 
 

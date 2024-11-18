@@ -24,10 +24,10 @@ Route::get('/', function () {
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
-route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
-route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
-route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
-route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
+route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
+route::get('/artikel', [ArtikelController::class, 'show'])->name('artikel.index'); //Home
+route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
+route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
 
 // CRUD PRODUSEN
@@ -42,12 +42,12 @@ Route::get('/produk/edit/{id_produk}', [ProdukController::class, 'edit'])->name(
 
 // // CRUD ARTIKEL
 Route::get('/artikel/create', [ArtikelController::class, 'add'])->name('artikel.create'); //Menyalurkan ke halaman Tambah
-Route::get('/artikel/{id_artikel}/edit', [ArtikelController::class, 'edit'])->name('artikel.edit'); //Mengalihkan ke halaman edit
+Route::get('/artikel/edit/{id_artikel}', [ArtikelController::class, 'edit'])->name('artikel.edit'); //Mengalihkan ke halaman edit
 
 
 // CRUD FaQ
 Route::get('/tambahfaq', [FaqController::class, 'add'])->name('faq.add'); //Mengalihkan ke halaman Tambah
-Route::get('/faq/{id_faq}/edit', [FaqController::class, 'edit'])->name('faq.edit'); //Mengalihkan ke halaman edit
+Route::get('/faq/edit/{id_faq}', [FaqController::class, 'edit'])->name('faq.edit'); //Mengalihkan ke halaman edit
 
 
 // ADMIN

@@ -16,8 +16,8 @@ class FaqController extends Controller
     public function index()
     {
         $faqs = Faq::all();
-
-        return view('faq.index', compact('faqs'));
+        return response()->json($faqs);
+        // return view('faq.index', compact('faqs'));
     }
 
     /**
@@ -61,9 +61,11 @@ class FaqController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $faq = Faq::all();
+
+        return view('faq.index', ['show' => $faq]);
     }
 
     /**

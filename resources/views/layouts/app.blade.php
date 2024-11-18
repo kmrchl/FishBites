@@ -47,7 +47,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/faq">
+                                <a class="nav-link" href="{{ route('faq.index') }}">
                                     <i class="fas fa-file-alt"></i> FAQ
                                 </a>
                             </li>

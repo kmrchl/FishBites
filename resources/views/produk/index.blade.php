@@ -89,7 +89,7 @@
                     // Event listener untuk tombol Edit
                     $('.edit-btn').on('click', function() {
                         const idProduk = $(this).data('id_produk');
-                        alert('Edit produk dengan ID: ' + idProduk);
+                        // alert('Edit produk dengan ID: ' + idProduk);
 
                         //Mengarahkan ke form Edit 
                         $('.edit-btn').on('click', function() {
@@ -103,9 +103,10 @@
 
                     // Event listener untuk tombol Hapus
                     $('.delete-btn').on('click', function() {
+                        const idProduk = $(this).data('id_produk');
                         if (confirm('Yakin ingin menghapus produk ini?')) {
                             $.ajax({
-                                url: `${apiUrl}/${idProduk}`, // Endpoint hapus produk
+                                url: `/api/hapusproduk/${idProduk}`, // Endpoint hapus produk
                                 method: 'DELETE',
                                 success: function() {
                                     alert('Produk berhasil dihapus.');

@@ -9,6 +9,7 @@ use App\Models\Produsen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use Exception;
 
 class ProdukController extends Controller
@@ -36,8 +37,9 @@ class ProdukController extends Controller
     {
         $producers = Produsen::all();
         $admins = Admin::all();
+        $kategori = Kategori::all();
 
-        return view('produk.add', compact('producers', 'admins'));
+        return view('produk.add', compact('producers', 'admins', 'kategori'));
     }
 
     /**
@@ -124,10 +126,11 @@ class ProdukController extends Controller
         $produk = Produk::find($id_produk);
         $admins = Admin::all();
         $produsens = Produsen::all();
+        $kategori = Kategori::all();
 
         if ($produk) {
             // Kembalikan view dengan data produk
-            return view('produk.edit', compact('produk', 'admins', 'produsens'));
+            return view('produk.edit', compact('produk', 'admins', 'produsens', 'kategori'));
         }
 
         return redirect()->route('produk.index')->with('error', 'Produk tidak ditemukan.');
@@ -143,6 +146,7 @@ class ProdukController extends Controller
             'stok' => 'required|numeric',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'id_admin' => 'required|exists:admin,id_admin',
+            'id_kategori' => 'required|exists:kategori,id_kategori',
         ]);
 
         // $validate = $request->all();
@@ -169,6 +173,7 @@ class ProdukController extends Controller
             'stok' => $request->stok,
             'id_produsen' => $request->id_produsen,
             'id_admin' => $request->id_admin,
+            'id_kategori' => $request->id_kategori,
         ]);
 
         return redirect('/produk');
