@@ -15,6 +15,10 @@ use Tymon\JWTAuth\Claims\Custom;
 //     return view('home');
 // });
 
+Route::get('/Fishbites', function () {
+    return view('index');
+});
+
 Route::get('/', function () {
     return view('sign.index');
 });
