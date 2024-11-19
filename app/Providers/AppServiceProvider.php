@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 use App\Models\Admin;
+use Illuminate\Container\Attributes\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {

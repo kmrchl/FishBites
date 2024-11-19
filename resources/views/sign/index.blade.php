@@ -25,67 +25,6 @@
                     aria-label="Toggle navigation">
                     <i class="fas fa-bars tm-nav-icon"></i>
                 </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto h-100">
-                        <!-- Menghapus item menu dari navbar
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">
-                  <i class="fas fa-tachometer-alt"></i> Dashboard
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="far fa-file-alt"></i>
-                  <span> Reports <i class="fas fa-angle-down"></i> </span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Daily Report</a>
-                  <a class="dropdown-item" href="#">Weekly Report</a>
-                  <a class="dropdown-item" href="#">Yearly Report</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="products.html">
-                  <i class="fas fa-shopping-cart"></i> Products
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="article.html">
-                  <i class="far fa-user"></i> Article
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-cog"></i>
-                  <span> Settings <i class="fas fa-angle-down"></i> </span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Profile</a>
-                  <a class="dropdown-item" href="#">Billing</a>
-                  <a class="dropdown-item" href="#">Customize</a>
-                </div>
-              </li>
-              -->
-                    </ul>
-                </div>
             </div>
         </nav>
     </div>
@@ -103,21 +42,21 @@
                         <div class="col-12">
 
 
-                            <form action="/login" method="POST" class="tm-login-form" id="LoginForm">
+                            <form id="loginForm">
                                 @csrf
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="username" class="form-control validate" id="username"
-                                        name="username" required>
+                                    <input type="username" class="form-control validate" id="username" name="username"
+                                        required>
                                 </div>
                                 <div class="form-group mt-3">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control validate" id="password"
-                                        name="password" required>
+                                    <input type="password" class="form-control validate" id="password" name="password"
+                                        required>
                                 </div>
                                 <div class="mt-4">
-                                    <input type="submit" class="btn btn-primary btn-block text-uppercase"
-                                        value="Sign In">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-block text-uppercase">Login</button>
                                 </div>
                             </form>
                         </div>
@@ -126,67 +65,39 @@
             </div>
         </div>
     </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="/vendors/sweetalert/sweetalert.min.js"></script>
-    {{-- <script>
-        $(document).ready(function() {
-            $('#form').validate({
-                rules: {
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    password: {
-                        required: true
-                    }
-                },
-                messages: {
-                    email: {
-                        required: 'Email harus diisi',
-                        email: 'Harus sesuai format email'
-                    },
-                    password: {
-                        required: 'Password harus diisi'
-                    }
-                },
-                errorClass: "text-danger",
-                submitHandler: function() {
-                    $.ajax({
-                        url: "{{ url('/api/signin') }}",
-                        method: 'POST',
-                        type: 'POST',
-                        data: {
-                            email: $('#email').val(),
-                            password: $('#password').val(),
-                            _token: '{{ csrf_token() }}'
-                        },
-                        dataType: 'json',
-                        success: function(res) {
-                            if (res)
-                                window.location = "{{ url('/dashboard') }}";
-                            else {
-                                swal({
-                                    title: 'Gagal',
-                                    text: 'Pengguna tidak terdaftar',
-                                    icon: 'error'
-                                });
-                            }
-                        },
-                        error: function(err) {
-                            console.log(err);
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#loginForm').on('submit', function(e) {
+            e.preventDefault();
 
-                            swal({
-                                title: 'Gagal',
-                                text: err.responseJSON.message,
-                                icon: 'error'
-                            });
-                        }
-                    });
+            var username = $('#username').val();
+            var password = $('#password').val();
+
+            $.ajax({
+                url: '/api/login',
+                type: 'POST',
+                data: {
+                    username: username,
+                    password: password,
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content')
+                },
+                success: function(response) {
+                    localStorage.setItem('token', response.token);
+                    alert('Selamat datang kembali ' + response.admin);
+                    window.location.href = '/admin';
+                },
+                error: function(xhr, status, error) {
+                    alert('Login failed: ' + xhr.responseJSON.error);
                 }
             });
         });
-    </script> --}}
+    </script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="/vendors/sweetalert/sweetalert.min.js"></script>
 </body>
 
 </html>

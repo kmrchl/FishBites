@@ -61,7 +61,7 @@ class AdminController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Customer created successfully.',
+            'message' => 'Admin created successfully.',
             'data' => $data
         ], 201);
     }
@@ -70,54 +70,54 @@ class AdminController extends Controller
     // LOGIN
     public function login(Request $request)
     {
-        $request->validate([
+        // Validasi input
+        $validator = Validator::make($request->all(), [
             'username' => 'required|string',
-            'password' => 'required',
+            'password' => 'required|string',
         ]);
 
-        // Cari admin berdasarkan username
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        // Mencari admin berdasarkan username
         $admin = Admin::where('username', $request->username)->first();
 
-        // Cek jika admin ditemukan dan password cocok
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            // Login dengan guard admin
-            Auth::guard('admin')->login($admin);
-            // dd(Auth::guard('admin')->user());
-
-            if ($request->wantsJson()) {
-                // Jika permintaan adalah API, kembalikan response JSON
-                return response()->json([
-                    'message' => 'Login successful',
-                    'admin' => $admin,
-                    'redirect_url' => '/admin' // URL untuk redirect di browser
-                ], 200);
-            } else {
-                // Jika permintaan dari browser, lakukan redirect
-                return redirect('/admin');
-            }
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
         }
-    }
 
+        // Membuat token
+        $token = $admin->createToken('Admin Token')->plainTextToken;
+
+        return response()->json([
+            'Message' => 'Login Berhasil. Selamat datang!',
+            'token' => $token,
+            'admin' => $admin->username
+        ]);
+    }
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
+        // Cek apakah token valid
+        if ($request->user()) {
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();
+            });
 
-        // Invalidate session untuk keamanan tambahan
-        $request->session()->invalidate();
-
-        // Regenerate CSRF token agar sesi aman
-        $request->session()->regenerateToken();
-
-        if ($request->wantsJson()) {
-            // Jika permintaan adalah API, kembalikan response JSON
-            return response()->json([
-                'message' => 'Login successful',
-                'redirect_url' => '/' // URL untuk redirect di browser
-            ], 200);
-        } else {
-            // Jika permintaan dari browser, lakukan redirect
-            return redirect('/');
+            return response()->json(['message' => 'Logged out successfully']);
         }
+
+        try {
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();
+            });
+
+            return response()->json(['message' => 'Logged out successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+        return response()->json(['error' => 'Not authenticated'], 401);
     }
 
     /**

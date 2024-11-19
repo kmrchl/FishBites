@@ -139,14 +139,14 @@ class ProdukController extends Controller
     public function update(Request $request, $id_produk)
     {
         $validate = $request->validate([
-            'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required|image',
-            'deskripsi' => 'required|string|max:255',
-            'harga' => 'required|numeric',
-            'stok' => 'required|numeric',
             'id_produsen' => 'required|exists:produsen,id_produsen',
             'id_admin' => 'required|exists:admin,id_admin',
             'id_kategori' => 'required|exists:kategori,id_kategori',
+            'nama_produk' => 'required|string|max:255',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'deskripsi' => 'required|string|max:255',
+            'harga' => 'required|numeric',
+            'stok' => 'required|numeric',
         ]);
 
         // $validate = $request->all();

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('Admin', 'Fishbites')</title>
     <!-- Tambahkan link CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
     <!-- https://fonts.google.com/specimen/Open+Sans -->
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="css/templatemo-style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
 </head>
@@ -80,7 +80,7 @@
 
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <button type="submit" class="nav-link d-block" href="login.html">
+                                    <button id="logoutButton" type="submit" class="nav-link d-block">
                                         <b>Logout</b>
                                     </button>
                                 </li>
@@ -101,6 +101,34 @@
         </footer>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#logoutButton').on('click', function(e) {
+            e.preventDefault();
+            let token = localStorage.getItem('token');
+            if (!token) {
+                alert('Token not found, please login again.');
+                window.location.href = '/';
+                return;
+            }
+
+            $.ajax({
+                url: '/api/logout', // Endpoint logout
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem(
+                        'token') // Menggunakan token yang disimpan
+                },
+                success: function(response) {
+                    alert(response.message);
+                    window.location.href = '/';
+                },
+                error: function(xhr, status, error) {
+                    alert('Logout failed: ' + xhr.responseJSON.error);
+                }
+            });
+        });
+    </script>
 
     <script>
         Chart.defaults.global.defaultFontColor = 'white';

@@ -1,8 +1,5 @@
 <?php
 
-
-use App\Models\Customer;
-use App\Models\Produsen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FaqController;
@@ -52,10 +49,10 @@ Route::get('/faq/edit/{id_faq}', [FaqController::class, 'edit'])->name('faq.edit
 
 // ADMIN
 // Route::get('/admin', [AdminController::class, 'add'])->name('admin');
-Route::post('/logi', [AdminController::class, 'login'])->name('admin.login');
-Route::get('/test-login', function () {
-    return Auth::guard('web')->attempt(['username' => 'admin', 'password' => 'password']);
-});
+Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+// Route::get('/test-login', function () {
+//     return Auth::guard('web')->attempt(['username' => 'admin', 'password' => 'password']);
+// });
 Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:web');
 
 // CUSTOMER

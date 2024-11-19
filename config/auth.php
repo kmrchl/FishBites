@@ -37,26 +37,21 @@ return [
 
     // config/auth.php
     'guards' => [
-        'admin' => [
+        'web' => [
             'driver' => 'session',
-            'provider' => 'admins', // Harus sesuai dengan nama provider di bawah
+            'provider' => 'users',
         ],
 
-        'cust' => [
-            'driver' => 'session',
-            'provider' => 'custs', // Harus sesuai dengan nama provider di bawah
+        'admin' => [
+            'driver' => 'session',  // Gunakan session jika menggunakan autentikasi berbasis sesi
+            'provider' => 'admins',
         ],
     ],
 
     'providers' => [
         'admins' => [
-            'driver' => 'eloquent', // Gunakan eloquent
-            'model' => App\Models\Admin::class, // Path ke model Admin
-        ],
-
-        'custs' => [
-            'driver' => 'eloquent', // Gunakan eloquent
-            'model' => App\Models\Customer::class, // Path ke model Admin
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, // Pastikan ini model Admin
         ],
     ],
 
