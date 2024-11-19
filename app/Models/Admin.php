@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Models\Produsen;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Admin extends Authenticatable
 {
@@ -19,18 +20,22 @@ class Admin extends Authenticatable
     public $incrementing = true;
 
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password'
     ];
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
+    // public function getJWTIdentifier()
+    // {
+    //     return $this->getKey();
+    // }
 
-    public function getJWTCustomClaims()
+    // public function getJWTCustomClaims()
+    // {
+    //     return [];
+    // }
+
+    public function tokens()
     {
-        return [];
+        return $this->morphMany(PersonalAccessToken::class, 'tokenable', 'tokenable_type', 'tokenable_id', 'id_admin');
     }
 
     public function produk()

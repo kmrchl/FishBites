@@ -14,7 +14,7 @@ class Customer extends Model
     protected $table = 'customer';
     protected $primaryKey = 'id_customer';
     protected $fillable = ['nama_customer', 'email', 'password', 'alamat', 'no_telp'];
-    protected $hidden = 'password';
+    protected $hidden = ['password'];
 
 
     public function ulasan()

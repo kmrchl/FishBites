@@ -15,7 +15,7 @@ class ProdusenController extends Controller
     {
         $produsen = Produsen::all();
 
-        return view('produsen.index', ['produsen' => $produsen]);
+        return response()->json($produsen);
     }
 
     public function add()

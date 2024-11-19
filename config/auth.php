@@ -37,22 +37,23 @@ return [
 
     // config/auth.php
     'guards' => [
-        'admin' => [
+        'web' => [
             'driver' => 'session',
-            'provider' => 'admins', // Harus sesuai dengan nama provider di bawah
+            'provider' => 'users',
+        ],
+
+        'admin' => [
+            'driver' => 'session',  // Gunakan session jika menggunakan autentikasi berbasis sesi
+            'provider' => 'admins',
         ],
     ],
 
     'providers' => [
         'admins' => [
-            'driver' => 'eloquent', // Gunakan eloquent
-            'model' => App\Models\Admin::class, // Path ke model Admin
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class, // Pastikan ini model Admin
         ],
     ],
-
-
-
-
 
 
 
@@ -96,7 +97,7 @@ return [
 
     'passwords' => [
         'admin' => [
-            'provider' => 'admin',
+            'provider' => 'admins',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
             'throttle' => 60,

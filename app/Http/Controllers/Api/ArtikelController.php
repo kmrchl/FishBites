@@ -17,17 +17,7 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::all();
 
-        // return view('artikel.index', ['artikel' => $artikel]);
-        if (request()->expectsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Data Artikel berhasil diambil',
-                'data' => $artikel,
-            ], 200);
-        }
-
-        // Jika tidak, tampilkan tampilan Blade
-        return view('artikel.index', ['artikel' => $artikel]);
+        return response()->json($artikel);
     }
 
     public function add()
@@ -77,7 +67,15 @@ class ArtikelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show() {}
+    public function show()
+    {
+
+        $artikel = Artikel::all();
+
+
+        // Jika tidak, tampilkan tampilan Blade
+        return view('artikel.index', ['artikel' => $artikel]);
+    }
 
     /**
      * Update the specified resource in storage.

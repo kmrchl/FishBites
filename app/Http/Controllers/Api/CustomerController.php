@@ -3,22 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Customer;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Claims\Custom;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $customer = Customer::all();
 
-        return view('customer.index', ['customer' => $customer]);
+        return response()->json($customer);
     }
 
     /**
@@ -32,35 +34,85 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        Log::info('Request data:', $request->all());
+
+        // Lakukan validasi
+        $validate = $request->validate([
             'nama_customer' => 'required|string|max:255',
-            'email' => 'required|email|unique:customer,email',
-            'password' => 'required|string|min:8|confirmed',
-            'alamat' => 'required|string|min:3',
-            'no_telp' => 'required',
+            'email' => 'required|string|unique:customer,email',
+            'password' => 'required|string|min:8',
+            'alamat' => 'required|string|max:255',
+            'no_telp' => 'required|string'
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+
+        try {
+            // Simpan data customer ke dalam database
+            $customer = Customer::create([
+                'nama_customer' => $validate['nama_customer'],
+                'email' => $validate['email'],
+                'password' => Hash::make($validate['password']),
+                'alamat' => $validate['alamat'],
+                'no_telp' => $validate['no_telp'],
+            ]);
+
+            Log::info('Customer berhasil disimpan:', ['customer' => $customer]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data customer berhasil disimpan',
+                'data' => $customer
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Error saat menyimpan customer:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan customer',
+                'error' => $e->getMessage()
+            ], 500);
         }
+    }
 
-        Customer::create([
-            'nama_customer' => $request->nama_customer,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required',
         ]);
 
-        return redirect('/customer');
+        // Cari customer berdasarkan email
+        $customer = Customer::where('email', $request->email)->first();
+
+        // Cek jika customer ditemukan dan password cocok
+        if ($customer && Hash::check($request->password, $customer->password)) {
+            // Login dengan guard customer
+            Auth::guard('cust')->login($customer);
+            // dd(Auth::guard('customer')->user());
+
+            if ($request->wantsJson()) {
+                // Jika permintaan adalah API, kembalikan response JSON
+                return response()->json([
+                    'message' => 'Login successful',
+                    'customer' => $customer,
+                    'redirect_url' => '/customer' // URL untuk redirect di browser
+                ], 200);
+            } else {
+                // Jika permintaan dari browser, lakukan redirect
+                return redirect('/customer');
+            }
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $customer = Customer::all();
+
+        return view('customer.index', [
+            'customer' => $customer
+        ]);
     }
 
     /**
@@ -74,8 +126,20 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id_customer)
     {
-        //
+        $customer = Customer::find($id_customer);
+        if (!$customer) {
+            return redirect()->back()->with('error', 'ID tidak ditemukan');
+        }
+
+        $customer->delete();
+
+        // return redirect()->back()->with('success', 'Produk berhasil dihapus');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data customer berhasil dihapus',
+            'data' => $customer
+        ], 201);
     }
 }
