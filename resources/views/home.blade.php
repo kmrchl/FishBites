@@ -71,6 +71,45 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
     <script src="js/tooplate-scripts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Tangkap token login dari localStorage
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                alert('Token login tidak ditemukan. Silakan login terlebih dahulu.');
+                window.location.href = '/login';
+            }
+
+            // Event handler untuk tombol Logout
+            $('#logout-btn').on('click', function(e) {
+                e.preventDefault();
+
+                // Lakukan permintaan logout
+                $.ajax({
+                    url: '/api/logout', // Endpoint logout API
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Kirim token melalui header
+                    },
+                    success: function(response) {
+                        alert('Logout berhasil.');
+                        // Hapus token dari localStorage
+                        localStorage.removeItem('login_token');
+                        // Redirect ke halaman login
+                        window.location.href = '/login';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error saat logout:', error);
+                        alert('Gagal logout. Silakan coba lagi.');
+                    },
+                });
+            });
+        });
+    </script>
+
+
     <script>
         Chart.defaults.global.defaultFontColor = 'white';
         let ctxLine,

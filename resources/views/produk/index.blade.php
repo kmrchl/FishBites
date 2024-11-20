@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($show as $produk)
+                                @foreach ($show as $produk)
                                     <tr>
                                         <td class="tm-product-name">{{ $produk->id_produk }}</td>
                                         <td>{{ $produk->nama_produk }}</td>
@@ -44,7 +44,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             // URL API
             const apiUrl = '/api/produk'; // Ganti dengan URL API Anda
@@ -89,16 +89,10 @@
                     // Event listener untuk tombol Edit
                     $('.edit-btn').on('click', function() {
                         const idProduk = $(this).data('id_produk');
-                        // alert('Edit produk dengan ID: ' + idProduk);
+                        const editUrl = `/produk/edit/${idProduk}`; // URL form edit
 
-                        //Mengarahkan ke form Edit 
-                        $('.edit-btn').on('click', function() {
-                            const idProduk = $(this).data('id_produk');
-                            const editUrl = `/produk/edit/${idProduk}`; // URL form edit
-
-                            // Redirect ke halaman edit
-                            window.location.href = editUrl;
-                        });
+                        // Redirect ke halaman edit
+                        window.location.href = editUrl;
                     });
 
                     // Event listener untuk tombol Hapus
@@ -126,6 +120,6 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
 @endsection

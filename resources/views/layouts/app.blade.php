@@ -80,7 +80,7 @@
 
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <button id="logoutButton" type="submit" class="nav-link d-block">
+                                    <button id="logout-btn" type="submit" class="nav-link d-block">
                                         <b>Logout</b>
                                     </button>
                                 </li>
@@ -102,33 +102,42 @@
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $('#logoutButton').on('click', function(e) {
-            e.preventDefault();
-            let token = localStorage.getItem('token');
+    {{-- <script>
+        $(document).ready(function() {
+            // Tangkap token login dari localStorage
+            const token = localStorage.getItem('token');
+
             if (!token) {
-                alert('Token not found, please login again.');
-                window.location.href = '/';
+                alert('Token login tidak ditemukan. Silakan login terlebih dahulu.');
                 return;
             }
 
-            $.ajax({
-                url: '/api/logout', // Endpoint logout
-                type: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem(
-                        'token') // Menggunakan token yang disimpan
-                },
-                success: function(response) {
-                    alert(response.message);
-                    window.location.href = '/';
-                },
-                error: function(xhr, status, error) {
-                    alert('Logout failed: ' + xhr.responseJSON.error);
-                }
+            // Event handler untuk tombol Logout
+            $('#logout-btn').on('click', function(e) {
+                e.preventDefault();
+
+                // Lakukan permintaan logout
+                $.ajax({
+                    url: '/api/logout', // Endpoint logout API
+                    method: 'POST',
+                    headers: {
+                        Authorization: Bearer < token > , // Kirim token melalui header
+                    },
+                    success: function(response) {
+                        alert('Logout berhasil.');
+                        // Hapus token dari localStorage
+                        localStorage.removeItem('token');
+                        // Redirect ke halaman login
+                        window.location.href = '/';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error saat logout:', error);
+                        alert('Gagal logout. Silakan coba lagi.');
+                    },
+                });
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         Chart.defaults.global.defaultFontColor = 'white';
@@ -171,6 +180,22 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
     <script src="js/tooplate-scripts.js"></script>
+    <script>
+        $('#logout-btn').on('click', function() {
+            localStorage.removeItem('token'); // Hapus token
+            window.location.href = '/login'; // Redirect ke halaman login
+        });
+    </script>
+    <script>
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+            },
+        });
+    </script>
 </body>
 
 </html>

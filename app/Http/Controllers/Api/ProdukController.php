@@ -143,7 +143,7 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
             'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'deskripsi' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
@@ -154,26 +154,21 @@ class ProdukController extends Controller
 
         $produk = Produk::findOrFail($id_produk);
         if ($request->hasFile('gambar')) {
-            // Ambil file gambar
             $gambar = $request->file('gambar');
-
-            // Tentukan nama file dan simpan di folder 'images' dalam 'public' disk
             $fileName = time() . '.' . $gambar->getClientOriginalExtension();
-            $path = $gambar->storeAs('images', $fileName, 'public'); // Menyimpan file di storage/app/public/images/
-
-            // Simpan path gambar relatif di database (tanpa 'storage/')
+            $path = $gambar->storeAs('images', $fileName, 'public');
             $produk->gambar = 'images/' . $fileName;
         }
         // $produk->update($validatedData);
         $produk->update([
-            'nama_produk' => $request->nama_produk,
-            'nama_produk' => $request->nama_produk,
-            'gambar' => $request->gambar,
-            'harga' => $request->harga,
-            'stok' => $request->stok,
             'id_produsen' => $request->id_produsen,
             'id_admin' => $request->id_admin,
             'id_kategori' => $request->id_kategori,
+            'nama_produk' => $request->nama_produk,
+            'gambar' => $path,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
         ]);
 
         return redirect('/produk');

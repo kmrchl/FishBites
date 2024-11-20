@@ -17,14 +17,15 @@
                     <div class="row tm-edit-product-row">
                         <div class="col-xl-6 col-lg-6 col-md-12">
                             <!-- Update the form action and method -->
-                            <form id_produk="edit-produk-form" class="tm-edit-product-form" enctype="multipart/form-data">
+                            <form id="edit-produk-form" class="tm-edit-product-form" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
+                                {{-- <input type="hidden" name="id_produk" id="id_produk" value="{{ $produk->id_produk }}"> --}}
 
                                 <!-- Admin Selection -->
                                 <div class="form-group mb-3">
                                     <label for="id_admin">Admin</label>
-                                    <select name="id_admin" id_produk="id_admin" class="custom-select tm-select-accounts"
+                                    <select name="id_admin" id="id_admin" class="custom-select tm-select-accounts"
                                         required>
                                         @foreach ($admins as $admin)
                                             <option value="{{ $admin->id_admin }}"
@@ -38,21 +39,21 @@
                                 <!-- Product Name -->
                                 <div class="form-group mb-3">
                                     <label for="name">Nama Produk</label>
-                                    <input id_produk="name" name="nama_produk" type="text" class="form-control validate"
+                                    <input id="name" name="nama_produk" type="text" class="form-control validate"
                                         value="{{ old('nama_produk', $produk->nama_produk) }}" required />
                                 </div>
 
                                 <!-- Description -->
                                 <div class="form-group mb-3">
                                     <label for="deskripsi">Deskripsi</label>
-                                    <textarea id_produk="deskripsi" name="deskripsi" class="form-control validate" rows="3" required>{{ old('deskripsi', $produk->deskripsi) }}</textarea>
+                                    <textarea id="deskripsi" name="deskripsi" class="form-control validate" rows="3" required>{{ old('deskripsi', $produk->deskripsi) }}</textarea>
                                 </div>
 
                                 <!-- Producer Selection -->
                                 <div class="form-group mb-3">
                                     <label for="id_kategori">Kategori</label>
-                                    <select name="id_kategori" id_produk="id_kategori"
-                                        class="custom-select tm-select-accounts" required>
+                                    <select name="id_kategori" id="id_kategori" class="custom-select tm-select-accounts"
+                                        required>
                                         @foreach ($kategori as $kat)
                                             <option value="{{ $kat->id_kategori }}"
                                                 {{ $produk->id_kategori == $kat->id_kategori ? 'selected' : '' }}>
@@ -64,8 +65,8 @@
 
                                 <div class="form-group mb-3">
                                     <label for="id_produsen">Produsen</label>
-                                    <select name="id_produsen" id_produk="id_produsen"
-                                        class="custom-select tm-select-accounts" required>
+                                    <select name="id_produsen" id="id_produsen" class="custom-select tm-select-accounts"
+                                        required>
                                         @foreach ($produsens as $produsen)
                                             <option value="{{ $produsen->id_produsen }}"
                                                 {{ $produk->id_produsen == $produsen->id_produsen ? 'selected' : '' }}>
@@ -115,6 +116,7 @@
     </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $('#edit-produk-form').on('submit', function(e) {
             e.preventDefault(); // Mencegah refresh halaman
@@ -123,7 +125,7 @@
             const formData = new FormData(this); // Gunakan FormData untuk menangani file
 
             $.ajax({
-                url: `/api/produk/${idProduk}`,
+                url: `/api/produk/update/${idProduk}`,
                 method: 'PUT',
                 data: formData,
                 processData: false, // Jangan proses data karena menggunakan FormData

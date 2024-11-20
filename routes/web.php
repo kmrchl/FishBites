@@ -12,7 +12,24 @@ use App\Http\Controllers\Api\ProdusenController;
 use Tymon\JWTAuth\Claims\Custom;
 
 
-Route::get('/Fishbites', function () {
+Route::group(['middleware' => 'guest'], function (): void {
+
+    Route::get('/login', function () {
+        return view('sign.index'); // Ini merender halaman login
+    })->name('login');
+});
+
+Route::group(['middleware' => 'auth:sanctum'], function (): void {
+    // Halaman lainnya...
+});
+route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
+route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
+route::get('/artikel', [ArtikelController::class, 'show'])->name('artikel.index'); //Home
+route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
+route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
+route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
+
+Route::get('/', function () {
     return view('index');
 });
 Route::get('/ikantawar', function () {
@@ -20,17 +37,8 @@ Route::get('/ikantawar', function () {
 });
 
 
-Route::get('/', function () {
-    return view('sign.index');
-});
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
-route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
-route::get('/artikel', [ArtikelController::class, 'show'])->name('artikel.index'); //Home
-route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
-route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
-route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
 
 // CRUD PRODUSEN
 Route::get('/tambahprodusen', [ProdusenController::class, 'add'])->name('produsen.add'); //Menyalurkan ke halaman Tambah

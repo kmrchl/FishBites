@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\KeranjangController;
 // })->middleware('auth:sanctum');
 
 // GET API
-route::get('/api/', [AdminController::class, 'index']); //Home
+// route::get('/api/login', [AdminController::class, 'index'])->name('api.login'); //Home
 route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
 route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
 route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
@@ -42,7 +42,7 @@ Route::put('/produsen/{id_produsen}', [ProdusenController::class, 'update'])->na
 // PRODUK
 Route::post('/produk/add', [ProdukController::class, 'store'])->name('produk.store'); //Menambahkan data ke database
 Route::delete('/hapusproduk/{id_produk}', [ProdukController::class, 'destroy'])->name('produk.hapus'); //Hapus Produk
-Route::put('/produk/update/{id_produk}', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
+Route::put('/produk/update/{id_produk}  ', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
 
 
 
@@ -76,11 +76,12 @@ Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('
 
 // ADMIN
 Route::post('/admin/add', [AdminController::class, 'store']);
-Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
-Route::middleware('auth:sanctum')->get('/login', function (Request $request) {
-    return $request->user();
-});
-Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::middleware('auth:sanctum')->post('/logout', [AdminController::class, 'logout']);
+// Route::middleware('auth:sanctum')->get('/admin/login', function (Request $request) {
+//     return $request->user();
+// })->name('admin.login');
+// Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:sanctum');
 
 
 // KERANJANG

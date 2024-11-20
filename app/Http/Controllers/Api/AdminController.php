@@ -7,11 +7,12 @@ use App\Models\Produk;
 use App\Models\Artikel;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AdminController extends Controller
@@ -84,11 +85,12 @@ class AdminController extends Controller
         $admin = Admin::where('username', $request->username)->first();
 
         if (!$admin || !Hash::check($request->password, $admin->password)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+            return response()->json(['error' => 'Password Salah'], 401);
         }
 
         // Membuat token
-        $token = $admin->createToken('Admin Token')->plainTextToken;
+        $token = $admin->createToken('token')->plainTextToken;
+        Log::info('Generated Token: ' . $token);
 
         return response()->json([
             'Message' => 'Login Berhasil. Selamat datang!',
@@ -97,28 +99,23 @@ class AdminController extends Controller
         ]);
     }
 
+
+
     public function logout(Request $request)
     {
-        // Cek apakah token valid
-        if ($request->user()) {
-            $request->user()->tokens->each(function ($token) {
-                $token->delete();
-            });
-
-            return response()->json(['message' => 'Logged out successfully']);
-        }
-
         try {
-            $request->user()->tokens->each(function ($token) {
-                $token->delete();
-            });
+            // Pastikan pengguna terautentikasi
+            if ($request->user()) {
+                // Hapus token aktif
+                $request->user()->currentAccessToken()->delete();
 
-            return response()->json(['message' => 'Logged out successfully']);
+                return response()->json(['message' => 'Logged out successfully'], 200);
+            }
+
+            return response()->json(['error' => 'Not authenticated'], 401);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        return response()->json(['error' => 'Not authenticated'], 401);
     }
 
     /**
