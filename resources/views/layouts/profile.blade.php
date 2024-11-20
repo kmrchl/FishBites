@@ -66,30 +66,6 @@
         <!-- BACK TO TOP SECTION -->
         <a href="#0" class="cd-top">Top</a>
 
-        <!-- BANNER ROTATOR SECTION -->
-        <div id="slides" class="section banner" data-slide="1">
-            <ul class="slides-container">
-                <li> <!-- Item Banner #1 -->
-                    <img src="assets/images/foto home.png" alt="">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <div class="caption-wrapper ">
-                                    <div class="slide-caption">
-                                        <a href="/index">
-                                            <h1 class="wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.6s">Fish
-                                                Bites</h1>
-                                        </a>
-                                        <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.6s">Dapatkan
-                                            ikan segar setiap harinya langsung di depan pintu mu.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
 
         <!-- NAVBAR SECTION -->
         <div class="navbar navbar-default main-menu">
