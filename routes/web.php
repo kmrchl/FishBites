@@ -30,9 +30,6 @@ Route::get('/blog', [CompanyController::class, 'blog']);
 Route::get('/blog-detail', [CompanyController::class, 'blogDetail']);  // Pastikan sesuai dengan nama method
 
 
-
-
-
 Route::get('/', function () {
     return view('sign.index');
 });
