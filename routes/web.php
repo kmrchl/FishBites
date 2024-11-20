@@ -12,6 +12,14 @@ use App\Http\Controllers\Api\ProdusenController;
 use Tymon\JWTAuth\Claims\Custom;
 
 
+Route::get('/Fishbites', function () {
+    return view('index');
+});
+Route::get('/ikantawar', function () {
+    return view('ikantawar');
+});
+
+
 Route::get('/', function () {
     return view('sign.index');
 });
