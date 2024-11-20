@@ -9,6 +9,7 @@ use App\Models\Produsen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Kategori;
 use Exception;
 
 class ProdukController extends Controller
@@ -22,20 +23,23 @@ class ProdukController extends Controller
         $products = Produk::all();
 
         // Kembalikan response JSON
-        return response()->json([
-            'success' => true,
-            'message' => 'Data produk berhasil diambil',
-            'redirect_url' => url('/produkhome'),
-            'data' => $products
-        ], 201);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Data produk berhasil diambil',
+        //     'redirect_url' => url('/produkhome'),
+        //     'data' => $products
+        // ], 201);
+
+        return response()->json($products);
     }
 
     public function create()
     {
         $producers = Produsen::all();
         $admins = Admin::all();
+        $kategori = Kategori::all();
 
-        return view('produk.add', compact('producers', 'admins'));
+        return view('produk.add', compact('producers', 'admins', 'kategori'));
     }
 
     /**
@@ -122,24 +126,27 @@ class ProdukController extends Controller
         $produk = Produk::find($id_produk);
         $admins = Admin::all();
         $produsens = Produsen::all();
+        $kategori = Kategori::all();
 
-        if (!$produk) {
-            return redirect()->back()->with('error', 'Produsen tidak ditemukan');
+        if ($produk) {
+            // Kembalikan view dengan data produk
+            return view('produk.edit', compact('produk', 'admins', 'produsens', 'kategori'));
         }
 
-        return view('produk.edit', compact('produk', 'admins', 'produsens')); // Mengirim data ke view edit
+        return redirect()->route('produk.index')->with('error', 'Produk tidak ditemukan.');
     }
 
     public function update(Request $request, $id_produk)
     {
         $validate = $request->validate([
+            'id_produsen' => 'required|exists:produsen,id_produsen',
+            'id_admin' => 'required|exists:admin,id_admin',
+            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required|image',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'deskripsi' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
-            'id_produsen' => 'required|exists:produsen,id_produsen',
-            'id_admin' => 'required|exists:admin,id_admin',
         ]);
 
         // $validate = $request->all();
@@ -166,6 +173,7 @@ class ProdukController extends Controller
             'stok' => $request->stok,
             'id_produsen' => $request->id_produsen,
             'id_admin' => $request->id_admin,
+            'id_kategori' => $request->id_kategori,
         ]);
 
         return redirect('/produk');
@@ -177,18 +185,12 @@ class ProdukController extends Controller
     public function destroy($id_produk)
     {
         $produk = Produk::find($id_produk);
-        if (!$produk) {
-            return redirect()->back()->with('error', 'ID tidak ditemukan');
+
+        if ($produk) {
+            $produk->delete(); // Hapus data produk
+            return response()->json(['message' => 'Produk berhasil dihapus.'], 200);
         }
 
-        $produk->delete();
-
-        // return redirect()->back()->with('success', 'Produk berhasil dihapus');
-        return response()->json([
-            'success' => true,
-            'message' => 'Data produk berhasil dihapus',
-            'data' => $produk
-        ], 201);
-        // return redirect('/produk');
+        return response()->json(['message' => 'Produk tidak ditemukan.'], 404);
     }
 }

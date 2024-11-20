@@ -61,7 +61,7 @@ class AdminController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Customer created successfully.',
+            'message' => 'Admin created successfully.',
             'data' => $data
         ], 201);
     }
@@ -71,75 +71,53 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         // Validasi input
-        // $validator = Validator::make($request->all(), [
-        //     'username' => 'required|string',
-        //     'password' => 'required|string',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json([
-        //         'error' => $validator->errors()
-        //     ], 400);
-        // }
-
-        // // Mencari admin berdasarkan username
-        // $admin = Admin::where('username', $request->username)->first();
-
-        // if (!$admin || !Hash::check($request->password, $admin->password)) {
-        //     return response()->json([
-        //         'error' => 'Unauthorized'
-        //     ], 401);
-        // }
-
-        // // Menghasilkan token JWT
-        // try {
-        //     $token = JWTAuth::attempt(['username' => $request->username, 'password' => $request->password]);
-        //     if (!$token) {
-        //         return response()->json(['error' => 'Unauthorized'], 401);
-        //     }
-        // } catch (JWTException $e) {
-        //     return response()->json(['error' => 'Could not create token'], 500);
-        // }
-
-        // // Mengembalikan token JWT
-        // return response()->json([
-        //     'message' => 'Login successful',
-        //     'token' => $token,
-        //     // 'redirect_url' => '/admin'
-        // ]);
-
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'username' => 'required|string',
-            'password' => 'required',
+            'password' => 'required|string',
         ]);
 
-        // Cari admin berdasarkan username
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        // Mencari admin berdasarkan username
         $admin = Admin::where('username', $request->username)->first();
 
-        // Cek jika admin ditemukan dan password cocok
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            // Login dengan guard admin
-            Auth::guard('web')->login($admin);
-            // dd(Auth::guard('admin')->user());
-
-            return response()->json([
-                'message' => 'Login successful',
-                'admin' => $admin,
-            ], 200);
-
-            return view('home');
+        if (!$admin || !Hash::check($request->password, $admin->password)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
         }
-    }
 
-    public function logout(Request $request)
-    {
-        // Invalidate the token
-        JWTAuth::invalidate(JWTAuth::getToken());
+        // Membuat token
+        $token = $admin->createToken('Admin Token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Logged out successfully',
-            'redirect_url' => '/'
+            'Message' => 'Login Berhasil. Selamat datang!',
+            'token' => $token,
+            'admin' => $admin->username
         ]);
+    }
+    public function logout(Request $request)
+    {
+        // Cek apakah token valid
+        if ($request->user()) {
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();
+            });
+
+            return response()->json(['message' => 'Logged out successfully']);
+        }
+
+        try {
+            $request->user()->tokens->each(function ($token) {
+                $token->delete();
+            });
+
+            return response()->json(['message' => 'Logged out successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+        return response()->json(['error' => 'Not authenticated'], 401);
     }
 
     /**
