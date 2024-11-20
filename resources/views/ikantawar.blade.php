@@ -49,19 +49,19 @@
 
                         <div class="row">
                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                <div class="blog-item wow fadeInDown">
-                                    <div class="gambar">
+                                <div class="blog-item wow fadeInDown" id="dataIkanTawar">
+                                    <!-- <div class="gambar">
                                         <img src="assets/images/blog-1.jpg" alt="" class="img-responsive" />
                                     </div>
-                                    <div class="item-body">
-                                        <div class="meta">ikan Air Tawar</div>
+                                    <div class="item-body"> -->
+                                        <!-- <div class="meta">ikan Air Tawar</div>
                                         <p class="lead">
                                             <a href="#" title="">Gurame Fresh Frozen</a>
                                         </p>
                                         <p>
                                             <a href="/ikantawardetail" title="" class="readmore">Lihat
                                                 Detail</a>
-                                        </p>
+                                        </p> -->
                                     </div>
                                 </div>
                             </div>
@@ -85,9 +85,76 @@
             </div>
 
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        $(document).ready(function() {
+            // URL API
+            const apiUrl = '/api/produk'; // Ganti dengan URL API Anda
+
+            // AJAX request
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: function(response) {
+                    const tbody = $('#dataIkanTawar');
+                    tbody.empty(); // Kosongkan tabel sebelum menambahkan data
+
+                    // Looping data produk
+                    response.forEach((produk) => {
+                        const row = `
+                                <div class="gambar">
+                                        <img src="assets/images/${produk.gambar}" alt="" class="img-responsive" />
+                                    </div>
+                                    <div class="item-body">
+                                <div class="meta">${produk.id_kategori}</div>
+                                        <p class="lead">
+                                            <a href="#" title="">${produk.nama_produk}</a>
+                                        </p>
+                                        <p>
+                                            <a href="/ikantawardetail" title="" class="readmore">Lihat
+                                                Detail</a>
+                                        </p>
+                                    </div>
+                        `;
+                        tbody.append(row); // Tambahkan baris ke tabel
+                    });
+                    // Event listener untuk tombol Edit
+                    $('.edit-btn').on('click', function() {
+                        const idProduk = $(this).data('id_produk');
+                        const editUrl = /produk/edit/${idProduk}; // URL form edit
+
+                        // Redirect ke halaman edit
+                        window.location.href = editUrl; // Arahkan ke halaman edit produk
+                    });
+
+                    // Event listener untuk tombol Hapus
+                    $('.delete-btn').on('click', function() {
+                        const idProduk = $(this).data('id_produk');
+                        if (confirm('Yakin ingin menghapus produk ini?')) {
+                            $.ajax({
+                                url: /api/hapusproduk/${idProduk}, // Endpoint hapus produk
+                                method: 'DELETE',
+                                success: function() {
+                                    alert('Produk berhasil dihapus.');
+                                    location
+                                        .reload(); // Reload halaman untuk memuat ulang data
+                                },
+                                error: function() {
+                                    alert('Gagal menghapus produk.');
+                                }
+                            });
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Terjadi kesalahan:', error);
+                    alert('Gagal memuat data produk.');
+                }
+            });
+        });
+    </script>
 
 
     </body>
-
     </html>
 @endsection
