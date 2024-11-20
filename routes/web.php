@@ -11,9 +11,6 @@ use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProdusenController;
 use Tymon\JWTAuth\Claims\Custom;
 
-// Route::get('/', function () {
-//     return view('home');
-// });
 
 Route::get('/', function () {
     return view('sign.index');
