@@ -75,32 +75,31 @@ class CustomerController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required',
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
         ]);
 
-        // Cari customer berdasarkan email
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+
+        // Mencari customer berdasarkan email
         $customer = Customer::where('email', $request->email)->first();
 
-        // Cek jika customer ditemukan dan password cocok
-        if ($customer && Hash::check($request->password, $customer->password)) {
-            // Login dengan guard customer
-            Auth::guard('cust')->login($customer);
-            // dd(Auth::guard('customer')->user());
-
-            if ($request->wantsJson()) {
-                // Jika permintaan adalah API, kembalikan response JSON
-                return response()->json([
-                    'message' => 'Login successful',
-                    'customer' => $customer,
-                    'redirect_url' => '/customer' // URL untuk redirect di browser
-                ], 200);
-            } else {
-                // Jika permintaan dari browser, lakukan redirect
-                return redirect('/customer');
-            }
+        if (!$customer || !Hash::check($request->password, $customer->password)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
         }
+
+        // Membuat token
+        $token = $customer->createToken('cust_token')->plainTextToken;
+
+        return response()->json([
+            'Message' => 'Login Berhasil. Selamat datang!' . $customer->nama_customer,
+            'token' => $token,
+            'customer' => $customer->nama_customer
+        ]);
     }
 
     /**

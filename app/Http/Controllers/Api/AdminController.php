@@ -96,6 +96,7 @@ class AdminController extends Controller
             'admin' => $admin->username
         ]);
     }
+
     public function logout(Request $request)
     {
         // Cek apakah token valid

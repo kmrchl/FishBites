@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Customer;
 use App\Models\Produsen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class ProdusenController extends Controller
 {
@@ -28,18 +31,59 @@ class ProdusenController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nama_produsen' => 'required|string|max:255',
+        $validate = $request->validate([
+            'nama_produsen' => 'required|string',
             'lokasi' => 'required|string'
         ]);
 
-        // Buat post baru
-        Produsen::create([
-            'nama_produsen' => $validatedData['nama_produsen'],
-            'lokasi' => $validatedData['lokasi']
+        Log::info('Request data:', ['produsen' => $request->all()]);
+
+        try {
+            // Simpan data produsen ke database
+            $produsen = Produsen::create($validate);
+
+            Log::info('produsen berhasil disimpan:', ['produsen' => $produsen]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data produsen berhasil disimpan',
+                'data' => $produsen
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Error saat menyimpan produsen:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan produsen',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function login(Request $request)
+    {
+        // Validasi data login
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'password' => 'required|string',
         ]);
 
-        return redirect('/');
+        // Mencari customer berdasarkan email
+        $customer = Customer::where('username', $request->username)->first();
+
+        // Memeriksa kredensial
+        if (!$customer || !Hash::check($request->password, $customer->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        // Membuat token setelah login
+        $token = $customer->createToken('auth_token')->plainTextToken;
+
+        // Mengirim response JSON
+        return response()->json([
+            'message' => 'Login successful',
+            'customer' => $customer,
+            'token' => $token,
+        ], 200);
     }
 
     /**

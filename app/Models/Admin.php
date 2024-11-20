@@ -34,7 +34,7 @@ class Admin extends Authenticatable
     // }
 
     public function tokens()
-    {
+    {   
         return $this->morphMany(PersonalAccessToken::class, 'tokenable', 'tokenable_type', 'tokenable_id', 'id_admin');
     }
 

@@ -34,7 +34,7 @@ route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
 route::get('/kategori', [KategoriController::class, 'index']); //Pesanan
 
 // PRODUSEN
-Route::post('/addprodusen', [ProdusenController::class, 'store']); //Tambah Produsen
+Route::post('/produsen/add', [ProdusenController::class, 'store']); //Tambah Produsen
 Route::delete('/hapus/{id_produsen}', [ProdusenController::class, 'destroy']); //Hapus Produsen
 Route::put('/produsen/{id_produsen}', [ProdusenController::class, 'update'])->name('produsen.update');
 
@@ -68,6 +68,7 @@ Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update'
 
 
 // CUSTOMER
+Route::post('/cust/login', [CustomerController::class, 'login'])->name('cust.login'); //Tambah Customer
 Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah Customer
 Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus Customer
 Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('cust.update');
