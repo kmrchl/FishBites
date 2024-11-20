@@ -1,58 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Basic Page Needs
-    ================================================== -->
-    <meta charset="utf-8">
-    <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fish Bites</title>
-    <meta name="description" content="Iodium | Iodium- minimal onepage personal/portofolio Template. It is built using bootstrap 3.3.2 framework, works totally responsive, easy to customise, well commented codes and seo friendly.">
-    <meta name="keywords" content="minimal, onepage, personal, portfolio, bootstrap">
-    <meta name="author" content="rudhisasmito.com"> 
-	
-	<!-- ==============================================
-	Favicons
-	=============================================== -->
-	<link rel="shortcut icon" href="assets/images/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
-	
-	<!-- ==============================================
-	CSS
-	=============================================== -->
-	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-	<link href="assets/css/font-awesome.min.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-	<link rel="stylesheet" href="assets/css/superslides.css">
-	<link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-	
-	<!-- ==============================================
-	Google Fonts
-	=============================================== -->
-	<link href='http://fonts.googleapis.com/css?family=Raleway:400,700,900' rel='stylesheet' type='text/css'>
-	<link href="https://fonts.cdnfonts.com/css/readex-pro" rel="stylesheet">
+@extends('layouts.profile')
 
+@section('title', 'Ikan Laut Detail')
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
-
-	
-	<!-- Custom Stylesheet -->
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	
-	<!-- COLOR SKINS -->
-	<link rel="stylesheet" type="text/css" href="null" id="color-skins">
-	
-    
-    <script type="text/javascript" src="assets/js/modernizr.min.js"></script>
-
-	 <!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
+@section('content')
 
 <body>
 	
@@ -63,32 +13,6 @@
 	
 	<!-- BACK TO TOP SECTION -->
 	<a href="#0" class="cd-top">Top</a>
-
-	<!-- NAVBAR SECTION -->
-	<div class="navbar navbar-default main-menu">
-	  <div class="aksen-top"></div>
-      <div class="container">
-		 <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/index"></a>
-        </div>
-        <div class="navbar-collapse collapse">
-		<ul class="nav navbar-nav navbar-right">
-			 <li  rel="home" ><a href="/index">HOME</a></li>
-			 <li  rel="about"><a href="/index#about">ABOUT US</a></li>
-			 <li  rel="team" ><a href="/index#product">PRODUCT</a></li>
-			 <li  rel="news" ><a href="/index#blog">NEWS</a></li>
-			 <li  rel="testimonials" ><a href="/index#testimony">TESTIMONIALS</a></li>
-			 <li  rel="contact" ><a href="/index#contact">CONTACT</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-  
 	
 	<!-- PAGE HEADER SECTION -->
 	<div class="single-header">
@@ -97,7 +21,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="pull-left">
 						<div class="title">
-							<h1 class="lead wow fadeInDown">IKAN LAUT</h1>
+							<h1 class="lead wow fadeInDown">IKAN Laut<h1>
 							<!-- <h2 class="sublead wow fadeInDown" data-wow-delay="500ms">"Nama produknya"</h2> -->
 						</div>
 					</div>
@@ -114,8 +38,8 @@
         
     </div>
 	
-	<!-- IKAN LAUT DETAIL -->
-	<div  class="section blog">
+	<!-- BLOG SECTION -->
+	<div id="" class="section product" data-slide="">
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -124,9 +48,6 @@
 							<!-- Gambar di sebelah kiri -->
 							<div class="col-xs-12 col-sm-4">
 								<div class="gambar">
-									<!-- <div class="date">
-										24<span>Jan 2014</span>
-									</div> -->
 									<img src="assets/images/blog-2.jpg" alt="" class="img-responsive" />
 									<p class="harga">Harga: Rp 50.000</p>
 								</div>
@@ -136,13 +57,11 @@
 							<div class="col-xs-12 col-sm-8">
 								<div class="item-body">
 									<p class="lead">
-										<a href="#" title="">Kepiting Merah</a>
+										<a href="#" title="">Pelet Ikan Lele, Bawal, Nila</a>
 									</p>
-									<p>Gurame adalah ikan air tawar berkualitas tinggi yang ditangkap langsung oleh petani lokal dari perairan bersih di pedesaan. Ikan ini dikenal akan dagingnya yang lembut dan lezat, dengan tekstur yang cocok untuk berbagai hidangan khas Indonesia.</p>
+									<p>Pelet buatan petani lokal asal kota Bandung.</p>
 									<p>Kondisi dan Spesifikasi :
-										1. Gurame fresh frozen, siap dimasak
-										2. Ukuran/Berat: 1 kg utuh per ekor
-										3. Sudah bersih dari sisik dan isi perut, siap diolah</p>
+										1 karung, Pakan kering, Berbentuk bola-bola.</p>
 								</div>
 							</div>
 						</div>
@@ -174,6 +93,7 @@
 							</div>
 						</div>
 
+						<!-- ELEMENT SECTION -->
 						<!-- ELEMENT SECTION -->
 						<div id="element" class="section element">
 							<div class="container">
@@ -226,89 +146,8 @@
 		</div>
 		
 	</div>
-
-	<!-- FOOTER SECTION -->
-	<div id="footer" class="section footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInDown" data-wow-delay="300ms">
-					<h3>Contact</h3>
-					<p><span>Phone</span>+62 0000 0000</p>
-					<p><span>Fax</span>+62 0000 0000</p>
-					<p><span>Email</span> fishbitesind@gmail.com</p>
-				</div>
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInDown" data-wow-delay="600ms">
-					<h3>Address</h3>
-					<p>Jl. Kumbang No.14</p>
-					<p>Babakan, Kec. Bogor Tengah</p>
-					<p>Kota Bogor - Indonesia</p>
-				</div>
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInDown" data-wow-delay="900ms">
-					<h3>Follow Us</h3>
-					<div class="sosmed">
-					<p>
-					<a href="#" title=""><span class="fa fa-facebook"></span></a>
-					<a href="#" title=""><span class="fa fa-instagram"></span></a>
-					<a href="#" title=""><span class="fa fa-youtube"></span></a>
-
-					</p>
-					
-					</div>
-				</div>
-				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 wow fadeInDown" data-wow-delay="1200ms">
-					<h3>Contact</h3>
-					<p>Lorem ipsum dolor sit amet, libero turpis non cras ligula, id commodo, aenean est in volutpat amet sodales, porttitor bibendum facilisi suspendisse.</p>
-				</div>
-				
-			</div>
-		</div>
-		
-		<div class="copyright">
-			<div class="container">
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<p></p>
-					</div>
-				</div>
-			</div>
-			
-		</div>
-		
-	</div>	
-
-
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.superslides.js"></script>
-    <script type="text/javascript" src="assets/js/wow.min.js"></script>
-    <script type='text/javascript' src='https://maps.google.com/maps/api/js?sensor=false&#038;ver=4.1.5'></script>
-    <script type="text/javascript" src="assets/js/waypoints.min.js"></script>
-    <script type="text/javascript" src="assets/js/counter.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.counterup.min.js"></script>
-    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="assets/js/jquery.knob.js"></script>
-    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
-    
-    <script type="text/javascript" src="assets/js/script.js"></script>
-	<script type="text/javascript" src="assets/js/navigasi.js"></script>
-    
-    
-    <script>
-    jQuery( "#theme-panel .panel-btn" ).click(function(){
-        jQuery( "#theme-panel" ).toggleClass( "panel-close", "panel-open", 1000 );
-        jQuery( "#theme-panel" ).toggleClass( "panel-open", "panel-close", 1000 );
-        return false;
-    });
-    
-    jQuery('.color-switch').click(function(){
-        var title = jQuery(this).attr('title');		
-        var href = 'css/colors/'+title+'.css';
-        
-        //var color =  $(this).css('background-color') ;
-        //$('.dial').attr('data-fgcolor', color);
-        jQuery('#color-skins').attr('href', href);	
-        return false;
-    });	
-    </script>
     
     </body>
     </html>
+
+	@endsection

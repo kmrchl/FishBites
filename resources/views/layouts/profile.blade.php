@@ -81,12 +81,12 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li data-slide="1" rel="home"><a href="/index">HOME</a></li>
-                        <li data-slide="2" rel="about"><a href="#about">ABOUT US</a></li>
-                        <li data-slide="3" rel="team"><a href="#product">PRODUCT</a></li>
-                        <li data-slide="4" rel="news"><a href="#blog">NEWS</a></li>
-                        <li data-slide="5" rel="testimonials"><a href="#testimony">TESTIMONIALS</a></li>
-                        <li data-slide="6" rel="contact"><a href="#contact">CONTACT</a></li>
+                        <li data-slide="1" rel="slides"><a href="/index#slides">HOME</a></li>
+                        <li data-slide="2" rel="about"><a href="/index#about">ABOUT US</a></li>
+                        <li data-slide="3" rel="team"><a href="/index#product">PRODUCT</a></li>
+                        <li data-slide="4" rel="news"><a href="/index#blog">NEWS</a></li>
+                        <li data-slide="5" rel="testimonials"><a href="/index#testimony">TESTIMONIALS</a></li>
+                        <li data-slide="6" rel="contact"><a href="/index#contact">CONTACT</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

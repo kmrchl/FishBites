@@ -1,6 +1,6 @@
 @extends('layouts.profile')
-@section('title', 'Ikan Tawar')
 
+@section('title', 'Ikan Tawar')
 
 @section('content')
 
@@ -42,7 +42,7 @@
         </div>
 
         <!-- BLOG SECTION -->
-        <div id="blog" class="section product" data-slide="5">
+        <div id="" class="section product" data-slide="">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -59,7 +59,7 @@
                                             <a href="#" title="">Gurame Fresh Frozen</a>
                                         </p>
                                         <p>
-                                            <a href="{{ url('/ikantawar-detail') }}" title="" class="readmore">Lihat
+                                            <a href="/ikantawardetail" title="" class="readmore">Lihat
                                                 Detail</a>
                                         </p>
                                     </div>
@@ -79,10 +79,7 @@
                                     <li><a href="#" aria-label="Next"><span aria-hidden="true">Next</span></a></li>
                                 </ul>
                             </nav>
-
                         </div>
-
-
                     </div>
                 </div>
             </div>

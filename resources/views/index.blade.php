@@ -4,6 +4,8 @@
 
 @section('content')
 
+<body>
+
     <!-- BANNER ROTATOR SECTION -->
     <div id="slides" class="section banner" data-slide="1">
         <ul class="slides-container">
@@ -123,7 +125,7 @@
                                     <img src="assets/images/ikan laut.png" alt="" class="img-responsive" />
                                 </div>
                                 <div class="item-body">
-                                    <a href="{{ url('/ikanlaut') }}">
+                                    <a href="/ikanlaut">
                                         <h2>IKAN LAUT SEGAR</h2>
                                     </a>
                                     <h3>Ikan laut segar yang baru ditangkap untuk memastikan kualitas terbaik di meja
@@ -140,7 +142,7 @@
                                     <img src="assets/images/ikan tawar.png" alt="" class="img-responsive" />
                                 </div>
                                 <div class="item-body">
-                                    <a href="{{ url('/ikantawar') }}">
+                                    <a href="/ikantawar">
                                         <h2>IKAN AIR TAWAR SEGAR</h2>
                                     </a>
                                     <h3>Menawarkan ikan air tawar segar langsung dari perairan jernih untuk menikmati
@@ -157,7 +159,7 @@
                                     <img src="assets/images/bibit ikan.png" alt="" class="img-responsive" />
                                 </div>
                                 <div class="item-body">
-                                    <a href="{{ url('/bibitpakan') }}">
+                                    <a href="/bibitpakan">
                                         <h2>BIBIT DAN PAKAN IKAN</h2>
                                     </a>
                                     <h3>Bibit ikan budidaya serta pakan berkualitas tinggi, siap menghasilkan panen
@@ -198,7 +200,7 @@
                                 <div class="item-body">
                                     <!-- <div class="meta">by Jackie Lord / 20 Comments</div> -->
                                     <p class="lead">
-                                        <a href="{{ url('/blog-detail') }}" title="">Vel donec et scelerisque
+                                        <a href="#" title="">Vel donec et scelerisque
                                             vestibulum. Condimentum aliquam, mollit magna velit</a>
                                     </p>
                                     <p>Tempor vestibulum turpis id ligula mi mattis. Eget arcu vitae mauris amet odio.
@@ -206,7 +208,7 @@
                                         dapibus magna nulla nonummy commodo accumsan morbi, praesent volutpat vel id
                                         maecenas</p>
                                     <p>
-                                        <a href="{{ url('/blog-detail') }}" title="" class="readmore">Read
+                                        <a href="{{url('/blog-detail')}}" title="" class="readmore">Read
                                             More</a>
                                     </p>
                                 </div>
@@ -232,8 +234,7 @@
                                         dapibus magna nulla nonummy commodo accumsan morbi, praesent volutpat vel id
                                         maecenas</p>
                                     <p>
-                                        <a href="{{ url('/blog-detail') }}" title="" class="readmore">Read
-                                            More</a>
+                                        <a href="/blogDetail" title="" class="readmore">Read More</a>
                                     </p>
                                 </div>
                             </div>
@@ -250,7 +251,7 @@
                                 <div class="item-body">
                                     <!-- <div class="meta">by Jackie Lord / 20 Comments</div> -->
                                     <p class="lead">
-                                        <a href="{{ url('/blog-detail') }}" title="">Vel donec et scelerisque
+                                        <a href="/blogDetail" title="">Vel donec et scelerisque
                                             vestibulum. Condimentum aliquam, mollit magna velit</a>
                                     </p>
                                     <p>Tempor vestibulum turpis id ligula mi mattis. Eget arcu vitae mauris amet odio.
@@ -258,7 +259,7 @@
                                         dapibus magna nulla nonummy commodo accumsan morbi, praesent volutpat vel id
                                         maecenas</p>
                                     <p>
-                                        <a href="{{ url('/blog-detail') }}" title="" class="readmore">Read
+                                        <a href="/blogDetail" title="" class="readmore">Read
                                             More</a>
                                     </p>
                                 </div>
@@ -267,7 +268,7 @@
 
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="loadmore wow fadeInDown">
-                                <a href="{{ url('/blog') }}" class="btn btn-default btn-primary">Load More</a>
+                                <a href="/blog" class="btn btn-default btn-primary">Load More</a>
                             </div>
                         </div>
 
