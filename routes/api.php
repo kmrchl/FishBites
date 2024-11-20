@@ -28,7 +28,7 @@ route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.in
 route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/faq', [FaqController::class, 'index'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'index'])->name('customer.index'); //Home
-Route::get('/produk/{id_kategori}', [ProdukController::class, 'getProdukByKategori']); //Home
+Route::get('/produk', [ProdukController::class, 'getProdukByKategori']); //Home
 route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
 route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
 route::get('/kategori', [KategoriController::class, 'index']); //Pesanan
