@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProdusenController;
+use App\Http\Controllers\CompanyController;
 use Tymon\JWTAuth\Claims\Custom;
 
 
@@ -35,6 +36,15 @@ Route::get('/', function () {
 Route::get('/ikantawar', function () {
     return view('ikantawar');
 });
+Route::get('/index', [CompanyController::class, 'index']);
+Route::get('/ikantawar', [CompanyController::class, 'ikantawar']);
+Route::get('/ikantawardetail', [CompanyController::class, 'ikantawardetail']);
+Route::get('/ikanlaut', [CompanyController::class, 'ikanlaut']);
+Route::get('/ikanlautdetail', [CompanyController::class, 'ikanlautdetail']);
+Route::get('/bibitpakan', [CompanyController::class, 'bibitpakan']);
+Route::get('/bibitpakandetail', [CompanyController::class, 'bibitpakandetail']);
+Route::get('/blog', [CompanyController::class, 'blog']);
+Route::get('/blog-detail', [CompanyController::class, 'blogDetail']);  // Pastikan sesuai dengan nama method
 
 
 
