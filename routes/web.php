@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Artikel;
+use Tymon\JWTAuth\Claims\Custom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FaqController;
@@ -7,22 +9,22 @@ use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\ProdusenController;
-use App\Http\Controllers\CompanyController;
-use Tymon\JWTAuth\Claims\Custom;
-
+use App\Models\Produk;
 
 Route::group(['middleware' => 'guest'], function (): void {
+
+    Route::get('/', [CompanyController::class, 'index'])->name('home');
 
     Route::get('/login', function () {
         return view('sign.index'); // Ini merender halaman login
     })->name('login');
 });
 
-Route::group(['middleware' => 'auth:sanctum'], function (): void {
-    // Halaman lainnya...
-});
+Route::middleware(['auth:sanctum'])->group(function () {});
+
 route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
 route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
 route::get('/artikel', [ArtikelController::class, 'show'])->name('artikel.index'); //Home
@@ -30,25 +32,8 @@ route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
 route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
 
-Route::get('/', function () {
-    return view('index');
-});
-Route::get('/ikantawar', function () {
-    return view('ikantawar');
-});
-Route::get('/index', [CompanyController::class, 'index']);
-Route::get('/ikantawar', [CompanyController::class, 'ikantawar']);
-Route::get('/ikantawardetail', [CompanyController::class, 'ikantawardetail']);
-Route::get('/ikanlaut', [CompanyController::class, 'ikanlaut']);
-Route::get('/ikanlautdetail', [CompanyController::class, 'ikanlautdetail']);
-Route::get('/bibitpakan', [CompanyController::class, 'bibitpakan']);
-Route::get('/bibitpakandetail', [CompanyController::class, 'bibitpakandetail']);
-Route::get('/blog', [CompanyController::class, 'blog']);
-Route::get('/blog-detail', [CompanyController::class, 'blogDetail']);  // Pastikan sesuai dengan nama method
 
 
-
-// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // CRUD PRODUSEN
 Route::get('/tambahprodusen', [ProdusenController::class, 'add'])->name('produsen.add'); //Menyalurkan ke halaman Tambah
@@ -85,3 +70,24 @@ Route::get('/customer/{id_customer}/edit', [CustomerController::class, 'edit'])-
 
 // CHAT 
 Route::get('/chat/{id_customer}', [ChatController::class, 'show'])->name('chat.show');
+
+
+
+//======================================================================================
+//================================                ======================================
+//====                             COMPANY PROFILE                                 =====
+//================================                ======================================
+//======================================================================================
+
+Route::group(['middleware' => 'guest'], function (): void {
+
+    // Route::get('/index', [CompanyController::class, 'index']);
+    Route::get('/ikantawar/{id_kategori}', [CompanyController::class, 'ikantawar'])->name('produk.ikantawar');
+    Route::get('/produk/detail/{id_produk}', [ProdukController::class, 'showProdukById']);
+    Route::get('/ikanlaut/{id_kategori}', [CompanyController::class, 'ikanlaut'])->name('produk.ikanlaut');
+    Route::get('/ikanlautdetail', [CompanyController::class, 'ikanlautdetail']);
+    Route::get('/bibitpakan/{id_kategori}', [CompanyController::class, 'bibitpakan']);
+    Route::get('/bibitpakandetail', [CompanyController::class, 'bibitpakandetail']);
+    Route::get('/blog', [CompanyController::class, 'blog']);
+    Route::get('/blog-detail', [CompanyController::class, 'blogDetail']);
+});

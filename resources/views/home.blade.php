@@ -73,6 +73,30 @@
     <script src="js/tooplate-scripts.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetch('/admin', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            // Token tidak ada, arahkan kembali ke login
+            window.location.href = '/login';
+        }
+    </script>
+    <script>
         $(document).ready(function() {
             // Tangkap token login dari localStorage
             const token = localStorage.getItem('token');

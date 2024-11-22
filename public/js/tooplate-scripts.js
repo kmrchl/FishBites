@@ -162,9 +162,9 @@ function drawPieChart() {
           }
         ],
         labels: [
-          "Used Storage (18.240GB)",
-          "System Storage (6.500GB)",
-          "Available Storage (9.150GB)"
+          "Ikan Tawar",
+          "Ikan Laut",
+          "Budidaya Ikan"
         ]
       },
       options: optionsPie

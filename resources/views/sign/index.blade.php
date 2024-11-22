@@ -8,9 +8,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Fish Bites - Login Admin</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="css/fontawesome.min.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
 </head>
 
 <body>
@@ -87,6 +87,9 @@
                         password: $('#password').val()
 
                     }),
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    },
                     beforeSend: function(xhr) {
                         const csrfToken = document.head.querySelector(
                             'meta[name="csrf-token"]');
@@ -98,8 +101,9 @@
                         if (response.token) {
                             // Simpan token di localStorage
                             localStorage.setItem('token', response.token);
+                            alert('Selamat datang kembali');
                             setTimeout(function() {
-                                window.location.href = '/admin';
+                                window.location.href = 'admin';
                             }, 500); // Delay 500ms
                         }
                     },

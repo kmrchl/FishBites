@@ -33,6 +33,31 @@ class ProdukController extends Controller
         return response()->json($products);
     }
 
+    public function showProdukById(Request $request, $id_produk)
+    {
+        $produk = Produk::with('kategori')->findOrFail($id_produk);
+        return view('profil.detail-produk', compact('produk'));
+    }
+
+
+    public function getProdukByKategori($id_kategori)
+    {
+        $produk = Produk::where('id_kategori', $id_kategori)->get();
+
+        if ($produk->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada produk untuk kategori ini',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $produk,
+        ], 200);
+        return view('profile.ikantawar');
+    }
+
     public function create()
     {
         $producers = Produsen::all();
@@ -75,6 +100,7 @@ class ProdukController extends Controller
             // Upload gambar ke folder 'public/gambar_produk'
             $path = $request->file('gambar')->store('images', 'public');
 
+
             // Simpan data produk ke dalam database
             $produk = Produk::create([
                 'id_admin' => $validate['id_admin'],
@@ -104,8 +130,10 @@ class ProdukController extends Controller
         }
     }
 
-    // return redirect('/');
 
+
+
+    // return redirect('/');
 
     /**
      * Display the specified resource.

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_artikel');
             $table->integer('id_admin');
             $table->string('judul');
+            $table->string('gambar');
             $table->text('konten');
-            $table->dateTime('tgl_upload');
             $table->timestamps();
         });
     }

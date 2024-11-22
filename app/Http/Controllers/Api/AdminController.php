@@ -84,19 +84,21 @@ class AdminController extends Controller
         // Mencari admin berdasarkan username
         $admin = Admin::where('username', $request->username)->first();
 
-        if (!$admin || !Hash::check($request->password, $admin->password)) {
-            return response()->json(['error' => 'Password Salah'], 401);
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            // Generate token untuk API (jika menggunakan Sanctum)
+            $token = $admin->createToken('API Token')->plainTextToken;
+
+            // Kirimkan token ke frontend untuk disimpan
+            return response()->json([
+                'success' => true,
+                'token' => $token,
+                'admin' => $admin->username
+            ]);
+            Log::info('Admin dashboard accessed');
         }
 
-        // Membuat token
-        $token = $admin->createToken('token')->plainTextToken;
-        Log::info('Generated Token: ' . $token);
-
-        return response()->json([
-            'Message' => 'Login Berhasil. Selamat datang!',
-            'token' => $token,
-            'admin' => $admin->username
-        ]);
+        // Jika login gagal, berikan respon error
+        return response()->json(['error' => 'Invalid credentials'], 401);
     }
 
 

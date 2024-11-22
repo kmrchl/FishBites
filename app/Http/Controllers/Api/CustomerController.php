@@ -39,17 +39,23 @@ class CustomerController extends Controller
         // Lakukan validasi
         $validate = $request->validate([
             'nama_customer' => 'required|string|max:255',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'email' => 'required|string|unique:customer,email',
             'password' => 'required|string|min:8',
             'alamat' => 'required|string|max:255',
             'no_telp' => 'required|string'
         ]);
+        // $validate = $request->all();
+        // dd($validate);
 
 
         try {
+            $path = $request->file('foto')->store('foto', 'public');
+
             // Simpan data customer ke dalam database
             $customer = Customer::create([
                 'nama_customer' => $validate['nama_customer'],
+                'foto' => $path,
                 'email' => $validate['email'],
                 'password' => Hash::make($validate['password']),
                 'alamat' => $validate['alamat'],
@@ -64,6 +70,7 @@ class CustomerController extends Controller
                 'data' => $customer
             ], 201);
         } catch (\Exception $e) {
+
             Log::error('Error saat menyimpan customer:', ['error' => $e->getMessage()]);
             return response()->json([
                 'success' => false,

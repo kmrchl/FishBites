@@ -39,21 +39,16 @@ class FaqController extends Controller
             'jawaban' => 'required|string|max:65535',
         ]);
 
-        Faq::create([
+        $artikel = Faq::create([
             'id_admin' => $validate['id_admin'],
             'pertanyaan' => $validate['pertanyaan'],
             'jawaban' => $validate['jawaban'],
         ]);
         Log::info("FaQ berhasil disimpan.");
 
-        // $data = [
-        //     'id_admin' => $request->input('id_admin'),
-        //     'judul' => $request->input('judul'),
-        //     'konten' => $request->input('konten'),
-        //     'tgl_upload' => $request->input('tgl_upload'),
-        // ];
-
-        // Artikel::create($data);
+        return response()->json([
+            'artikel' => $artikel
+        ]);
 
         return redirect('/faq');
     }

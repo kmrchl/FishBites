@@ -13,11 +13,24 @@ class ArtikelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $artikel = Artikel::all();
 
-        return response()->json($artikel);
+        return response()->json([
+            'artikel' => $artikel
+        ]);
+    }
+
+    public function showArtikelById(Request $request, $id_artikel)
+    {
+        $artikel = Artikel::with('kategori')->findOrFail($id_artikel);
+
+        return response()->json([
+            'message' => 'Data berhasil diambil',
+            'artikel' => $artikel
+        ]);
+        return view('profil.detail-artikel', compact('artikel'));
     }
 
     public function add()
@@ -31,37 +44,53 @@ class ArtikelController extends Controller
      */
     public function store(Request $request)
     {
-        // $validate = $request->validate([
-        //     'id_admin' => 'required|exists:admin,id_admin',
-        //     'judul' => 'required|string|max:255',
-        //     'konten' => 'required|string|max:65535',
-        //     'tgl_upload' => 'required|date_format:Y-m-d H:i:s',
-        // ]);
 
-        // Artikel::create([
-        //     'id_admin' => $validate['id_admin'],
-        //     'judul' => $validate['judul'],
-        //     'konten' => $validate['konten'],
-        //     'tgl_upload' => $validate['tgl_upload'],
-        // ]);
+        Log::info('Request data:', $request->all());
 
-        // Log::info("Artikel berhasil disimpan.");
+        // Lakukan validasi
+        $validate = $request->validate([
+            'id_admin' => 'required|exists:admin,id_admin',
+            'judul' => 'required|string|max:255',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'konten' => 'required|string'
+        ]);
 
-        $data = [
-            'id_admin' => $request->input('id_admin'),
-            'judul' => $request->input('judul'),
-            'konten' => $request->input('konten'),
-            'tgl_upload' => $request->input('tgl_upload'),
-        ];
+        if (empty($validate['id_admin'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Kolom id_admin wajib diisi.',
+            ], 400);
+        }
+        // $validate = $request->all();
+        // dd($validate);
 
-        Artikel::create($data);
+        try {
+            // Upload gambar ke folder 'public/gambar_produk'
+            $path = $request->file('gambar')->store('images', 'public');
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Artikel berhasil ditambah',
-            'data' => $data
-        ], 201);
-        // return redirect('/');
+            // Simpan data artikel ke dalam database
+            $artikel = Artikel::create([
+                'id_admin' => $validate['id_admin'],
+                'judul' => $validate['judul'],
+                'gambar' => $path,
+                'konten' => $validate['konten']
+            ]);
+
+            Log::info('Produk berhasil disimpan:', ['artikel' => $artikel]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data artikel berhasil disimpan',
+                'data' => $artikel
+            ], 201);
+        } catch (\Exception $e) {
+            Log::error('Error saat menyimpan artikel:', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat menyimpan artikel',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -71,10 +100,12 @@ class ArtikelController extends Controller
     {
 
         $artikel = Artikel::all();
+        return view('profile.index', [
+            'artikel' => $artikel
+        ]);
 
 
         // Jika tidak, tampilkan tampilan Blade
-        return view('artikel.index', ['artikel' => $artikel]);
     }
 
     /**

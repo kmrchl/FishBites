@@ -5,7 +5,8 @@ use App\Models\Pesanan;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\FaqController;
+use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
@@ -17,9 +18,9 @@ use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\ProdusenController;
 use App\Http\Controllers\Api\KeranjangController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+// Route::group(['middleware' => 'guest'], function (): void {
+//     Route::get('/', [CompanyController::class, 'index']);
+// });
 
 // GET API
 // route::get('/api/login', [AdminController::class, 'index'])->name('api.login'); //Home
@@ -32,6 +33,8 @@ route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
 route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
 route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
 route::get('/kategori', [KategoriController::class, 'index']); //Pesanan
+
+
 
 // PRODUSEN
 Route::post('/produsen/add', [ProdusenController::class, 'store']); //Tambah Produsen
@@ -47,6 +50,7 @@ Route::put('/produk/update/{id_produk}  ', [ProdukController::class, 'update'])-
 
 
 // KATEGORI
+Route::get('/kategori', [KategoriController::class, 'index']);
 Route::post('/kategori/add', [KategoriController::class, 'store']);
 
 // PESANAN
