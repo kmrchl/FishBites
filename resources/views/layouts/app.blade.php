@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('Admin', 'Fishbites')</title>
     <!-- Tambahkan link CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
     <!-- https://fonts.google.com/specimen/Open+Sans -->
@@ -17,10 +17,9 @@
     <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
-    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
 </head>
 
 <body id="reportsPage">

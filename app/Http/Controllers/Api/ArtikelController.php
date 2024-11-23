@@ -24,7 +24,7 @@ class ArtikelController extends Controller
 
     public function showArtikelById(Request $request, $id_artikel)
     {
-        $artikel = Artikel::with('kategori')->findOrFail($id_artikel);
+        $artikel = Artikel::findOrFail($id_artikel);
 
         return response()->json([
             'message' => 'Data berhasil diambil',

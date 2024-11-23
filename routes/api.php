@@ -63,6 +63,7 @@ Route::get('/artikel/get', [ArtikelController::class, 'index']); //Tambah Artike
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
+Route::get('/artikel/detail/{id_artikel}', [ArtikelController::class, 'showArtikelById'])->name('artikel.detail');
 
 
 // FAQ
