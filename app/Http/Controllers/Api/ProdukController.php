@@ -33,6 +33,31 @@ class ProdukController extends Controller
         return response()->json($products);
     }
 
+    public function showProdukById(Request $request, $id_produk)
+    {
+        $produk = Produk::with('kategori')->findOrFail($id_produk);
+        return view('profil.detail-produk', compact('produk'));
+    }
+
+
+    public function getProdukByKategori($id_kategori)
+    {
+        $produk = Produk::where('id_kategori', $id_kategori)->get();
+
+        if ($produk->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak ada produk untuk kategori ini',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $produk,
+        ], 200);
+        return view('profile.ikantawar');
+    }
+
     public function create()
     {
         $producers = Produsen::all();
@@ -75,6 +100,7 @@ class ProdukController extends Controller
             // Upload gambar ke folder 'public/gambar_produk'
             $path = $request->file('gambar')->store('images', 'public');
 
+
             // Simpan data produk ke dalam database
             $produk = Produk::create([
                 'id_admin' => $validate['id_admin'],
@@ -104,8 +130,10 @@ class ProdukController extends Controller
         }
     }
 
-    // return redirect('/');
 
+
+
+    // return redirect('/');
 
     /**
      * Display the specified resource.
@@ -143,7 +171,7 @@ class ProdukController extends Controller
             'id_admin' => 'required|exists:admin,id_admin',
             'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_produk' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'deskripsi' => 'required|string|max:255',
             'harga' => 'required|numeric',
             'stok' => 'required|numeric',
@@ -154,26 +182,21 @@ class ProdukController extends Controller
 
         $produk = Produk::findOrFail($id_produk);
         if ($request->hasFile('gambar')) {
-            // Ambil file gambar
             $gambar = $request->file('gambar');
-
-            // Tentukan nama file dan simpan di folder 'images' dalam 'public' disk
             $fileName = time() . '.' . $gambar->getClientOriginalExtension();
-            $path = $gambar->storeAs('images', $fileName, 'public'); // Menyimpan file di storage/app/public/images/
-
-            // Simpan path gambar relatif di database (tanpa 'storage/')
+            $path = $gambar->storeAs('images', $fileName, 'public');
             $produk->gambar = 'images/' . $fileName;
         }
         // $produk->update($validatedData);
         $produk->update([
-            'nama_produk' => $request->nama_produk,
-            'nama_produk' => $request->nama_produk,
-            'gambar' => $request->gambar,
-            'harga' => $request->harga,
-            'stok' => $request->stok,
             'id_produsen' => $request->id_produsen,
             'id_admin' => $request->id_admin,
             'id_kategori' => $request->id_kategori,
+            'nama_produk' => $request->nama_produk,
+            'gambar' => $path,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
+            'stok' => $request->stok,
         ]);
 
         return redirect('/produk');

@@ -5,7 +5,8 @@ use App\Models\Pesanan;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\FaqController;
+use App\Http\Controllers\Api\FaqController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProdukController;
@@ -17,12 +18,12 @@ use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\ProdusenController;
 use App\Http\Controllers\Api\KeranjangController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+// Route::group(['middleware' => 'guest'], function (): void {
+//     Route::get('/', [CompanyController::class, 'index']);
+// });
 
 // GET API
-route::get('/api/', [AdminController::class, 'index']); //Home
+// route::get('/api/login', [AdminController::class, 'index'])->name('api.login'); //Home
 route::get('/api/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
 route::get('/produsen', [ProdusenController::class, 'index'])->name('produsen.index'); //Home
 route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
@@ -36,6 +37,8 @@ route::get('/cust/profile', [CustomerController::class, 'getByEmail']);
 route::get('/profile', [CustomerController::class, 'getByEmail']);
 
 
+
+
 // PRODUSEN
 Route::post('/produsen/add', [ProdusenController::class, 'store']); //Tambah Produsen
 Route::delete('/hapus/{id_produsen}', [ProdusenController::class, 'destroy']); //Hapus Produsen
@@ -45,11 +48,12 @@ Route::put('/produsen/{id_produsen}', [ProdusenController::class, 'update'])->na
 // PRODUK
 Route::post('/produk/add', [ProdukController::class, 'store'])->name('produk.store'); //Menambahkan data ke database
 Route::delete('/hapusproduk/{id_produk}', [ProdukController::class, 'destroy'])->name('produk.hapus'); //Hapus Produk
-Route::put('/produk/update/{id_produk}', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
+Route::put('/produk/update/{id_produk}  ', [ProdukController::class, 'update'])->name('produk.update'); //Menyimpan pengubahan data
 
 
 
 // KATEGORI
+Route::get('/kategori', [KategoriController::class, 'index']);
 Route::post('/kategori/add', [KategoriController::class, 'store']);
 Route::get('/kategoriid', [KategoriController::class, 'kategori']);
 
@@ -82,11 +86,12 @@ Route::get('/customer/{id_customer}', [CustomerController::class, 'getUserDetail
 
 // ADMIN
 Route::post('/admin/add', [AdminController::class, 'store']);
-Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
-Route::middleware('auth:sanctum')->get('/login', function (Request $request) {
-    return $request->user();
-});
-Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+Route::middleware('auth:sanctum')->post('/logout', [AdminController::class, 'logout']);
+// Route::middleware('auth:sanctum')->get('/admin/login', function (Request $request) {
+//     return $request->user();
+// })->name('admin.login');
+// Route::post('/logout', [AdminController::class, 'logout'])->middleware('auth:sanctum');
 
 
 // KERANJANG

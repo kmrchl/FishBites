@@ -6,20 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('Admin', 'Fishbites')</title>
     <!-- Tambahkan link CSS -->
-    {{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
     <!-- https://fonts.google.com/specimen/Open+Sans -->
-    <link rel="stylesheet" href="css/fontawesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
     <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('jquery-ui-datepicker/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
+    <link rel="icon" href="{{ asset('logo.png') }}" type="image/x-icon">
 </head>
 
 <body id="reportsPage">
@@ -29,7 +30,7 @@
             <nav class="navbar navbar-expand-xl">
                 <div class="container h-100">
                     <a class="navbar-brand" href="">
-                        <img src="img/logo.png" alt="Logo" class="tm-site-logo"
+                        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="tm-site-logo"
                             style="max-width: 100px; height: 100px;" />
                     </a>
                     <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
@@ -80,7 +81,7 @@
 
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <button id="logoutButton" type="submit" class="nav-link d-block">
+                                    <button id="logout-btn" type="submit" class="nav-link d-block">
                                         <b>Logout</b>
                                     </button>
                                 </li>
@@ -102,33 +103,42 @@
 
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $('#logoutButton').on('click', function(e) {
-            e.preventDefault();
-            let token = localStorage.getItem('token');
+    {{-- <script>
+        $(document).ready(function() {
+            // Tangkap token login dari localStorage
+            const token = localStorage.getItem('token');
+
             if (!token) {
-                alert('Token not found, please login again.');
-                window.location.href = '/';
+                alert('Token login tidak ditemukan. Silakan login terlebih dahulu.');
                 return;
             }
 
-            $.ajax({
-                url: '/api/logout', // Endpoint logout
-                type: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem(
-                        'token') // Menggunakan token yang disimpan
-                },
-                success: function(response) {
-                    alert(response.message);
-                    window.location.href = '/';
-                },
-                error: function(xhr, status, error) {
-                    alert('Logout failed: ' + xhr.responseJSON.error);
-                }
+            // Event handler untuk tombol Logout
+            $('#logout-btn').on('click', function(e) {
+                e.preventDefault();
+
+                // Lakukan permintaan logout
+                $.ajax({
+                    url: '/api/logout', // Endpoint logout API
+                    method: 'POST',
+                    headers: {
+                        Authorization: Bearer < token > , // Kirim token melalui header
+                    },
+                    success: function(response) {
+                        alert('Logout berhasil.');
+                        // Hapus token dari localStorage
+                        localStorage.removeItem('token');
+                        // Redirect ke halaman login
+                        window.location.href = '/';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error saat logout:', error);
+                        alert('Gagal logout. Silakan coba lagi.');
+                    },
+                });
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         Chart.defaults.global.defaultFontColor = 'white';
@@ -158,19 +168,35 @@
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('jquery-ui-datepicker/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <!-- Tambahkan script JS -->
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- https://jquery.com/download/ -->
-    <script src="js/moment.min.js"></script>
+    <script src="{{ asset('js/moment.min.js') }}"></script>
     <!-- https://momentjs.com/ -->
-    <script src="js/Chart.min.js"></script>
+    <script src="{{ asset('js/Chart.min.js') }}"></script>
     <!-- http://www.chartjs.org/docs/latest/ -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <!-- https://getbootstrap.com/ -->
-    <script src="js/tooplate-scripts.js"></script>
+    <script src="{{ asset('js/tooplate-scripts.js') }}"></script>
+    <script>
+        $('#logout-btn').on('click', function() {
+            localStorage.removeItem('token'); // Hapus token
+            window.location.href = '/login'; // Redirect ke halaman login
+        });
+    </script>
+    <script>
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+            },
+        });
+    </script>
 </body>
 
 </html>

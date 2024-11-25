@@ -16,19 +16,19 @@
     <!-- ==============================================
  Favicons
  =============================================== -->
-    <link rel="shortcut icon" href="assets/images/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="{{ asset('assets/images/apple-touch-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('/images/apple-touch-icon.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('/images/apple-touch-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('/images/apple-touch-icon-114x114.png') }}">
 
     <!-- ==============================================
  CSS
  =============================================== -->
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/superslides.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.css') }}">
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/superslides.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.carousel.css') }}">
 
     <!-- ==============================================
  Google Fonts
@@ -41,27 +41,27 @@
 
 
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 
     <!-- COLOR SKINS -->
     <link rel="stylesheet" type="text/css" href="null" id="color-skins">
 
 
-    <script type="text/javascript" src="assets/js/modernizr.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('Admin', 'Fishbites')</title>
+    <title>@yield('User', 'Fishbites')</title>
 </head>
 
 <body>
 
     <header>
         <!-- Load page -->
-        <div class="animationload">
+        {{-- <div class="animationload">
             <div class="loader"></div>
-        </div>
+        </div> --}}
 
         <!-- BACK TO TOP SECTION -->
         <a href="#0" class="cd-top">Top</a>
@@ -77,16 +77,16 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/index"></a>
+                    <a class="navbar-brand" href="/"></a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li data-slide="1" rel="home"><a href="/index">HOME</a></li>
-                        <li data-slide="2" rel="about"><a href="#about">ABOUT US</a></li>
-                        <li data-slide="3" rel="team"><a href="#product">PRODUCT</a></li>
-                        <li data-slide="4" rel="news"><a href="#blog">NEWS</a></li>
-                        <li data-slide="5" rel="testimonials"><a href="#testimony">TESTIMONIALS</a></li>
-                        <li data-slide="6" rel="contact"><a href="#contact">CONTACT</a></li>
+                        <li data-slide="1" rel="slides"><a href="/#slides">HOME</a></li>
+                        <li data-slide="2" rel="about"><a href="/#about">ABOUT US</a></li>
+                        <li data-slide="3" rel="team"><a href="/#product">PRODUCT</a></li>
+                        <li data-slide="4" rel="news"><a href="/#blog">NEWS</a></li>
+                        <li data-slide="5" rel="testimonials"><a href="/#testimony">TESTIMONIALS</a></li>
+                        <li data-slide="6" rel="contact"><a href="/#contact">CONTACT</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

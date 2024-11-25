@@ -5,11 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Fish Bites - Login Admin</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" />
-    <link rel="stylesheet" href="css/fontawesome.min.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/templatemo-style.css') }}">
 </head>
 
 <body>
@@ -66,38 +67,60 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
-        $('#loginForm').on('submit', function(e) {
-            e.preventDefault();
+        $(document).ready(function() {
+            $('#loginForm').on('submit', function(event) {
+                event.preventDefault(); // Cegah submit form secara default
 
-            var username = $('#username').val();
-            var password = $('#password').val();
+                const username = $('#username').val();
+                const password = $('#password').val();
 
-            $.ajax({
-                url: '/api/login',
-                type: 'POST',
-                data: {
-                    username: username,
-                    password: password,
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                        'content')
-                },
-                success: function(response) {
-                    localStorage.setItem('token', response.token);
-                    alert('Selamat datang kembali ' + response.admin);
-                    window.location.href = '/admin';
-                },
-                error: function(xhr, status, error) {
-                    alert('Login failed: ' + xhr.responseJSON.error);
-                }
+                $.ajax({
+                    url: '/api/admin/login',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        username: $('#username').val(),
+                        password: $('#password').val()
+
+                    }),
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                    },
+                    beforeSend: function(xhr) {
+                        const csrfToken = document.head.querySelector(
+                            'meta[name="csrf-token"]');
+                        if (csrfToken) {
+                            xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken.content);
+                        }
+                    },
+                    success: function(response) {
+                        if (response.token) {
+                            // Simpan token di localStorage
+                            localStorage.setItem('token', response.token);
+                            alert('Selamat datang kembali');
+                            setTimeout(function() {
+                                window.location.href = 'admin';
+                            }, 500); // Delay 500ms
+                        }
+                    },
+                    error: function(xhr) {
+                        const error = xhr.responseJSON?.error ||
+                            'Login gagal. Silakan coba lagi.';
+                        $('#errorMessage').text(error).show();
+                    },
+                });
+
             });
         });
     </script>
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="/vendors/sweetalert/sweetalert.min.js"></script>
+    {{-- <script src="/vendors/sweetalert/sweetalert.min.js"></script> --}}
 </body>
 
 </html>

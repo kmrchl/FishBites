@@ -15,7 +15,7 @@ class Customer extends Authenticatable
     use Notifiable, HasApiTokens, HasFactory;
     protected $table = 'customer';
     protected $primaryKey = 'id_customer';
-    protected $fillable = ['nama_customer', 'email', 'password', 'alamat', 'no_telp'];
+    protected $fillable = ['nama_customer', 'foto', 'email', 'password', 'alamat', 'no_telp'];
     protected $hidden = ['password'];
     public $incrementing = true;
 
