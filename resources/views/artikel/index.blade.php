@@ -32,72 +32,39 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            // URL API
-            const apiUrl = '/api/artikel'; // Ganti dengan URL API Anda
+        $.ajax({
+            url: apiUrl,
+            method: 'GET',
+            success: function(response) {
+                console.log(response); // Log response untuk memverifikasi data
+                const tbody = $('#artikel-table tbody');
+                tbody.empty(); // Kosongkan tabel sebelum menambahkan data
 
-            // AJAX request
-            $.ajax({
-                url: apiUrl,
-                method: 'GET',
-                success: function(response) {
-                    const tbody = $('#artikel-table tbody');
-                    tbody.empty(); // Kosongkan tabel sebelum menambahkan data
-
-                    // Looping data artikel
+                // Pastikan data berbentuk array
+                if (Array.isArray(response)) {
                     response.forEach((artikel) => {
                         const row = `
-                            <tr>
-                                <td>${artikel.judul}</td>
-                                <td>${artikel.konten}</td>
-                                <td>${artikel.tgl_upload}</td>
-                                <td>
-                                    <button class="edit-btn" data-id_artikel="${artikel.id_artikel}">Edit</button>
-                                    <button class="delete-btn" data-id_artikel="${artikel.id_artikel}">Hapus</button>
-                                </td>
-                            </tr>
-                        `;
+                    <tr>
+                        <td>${artikel.judul}</td>
+                        <td>${artikel.konten}</td>
+                        <td>${artikel.tgl_upload}</td>
+                        <td>
+                            <button class="edit-btn" data-id_artikel="${artikel.id_artikel}">Edit</button>
+                            <button class="delete-btn" data-id_artikel="${artikel.id_artikel}">Hapus</button>
+                        </td>
+                    </tr>
+                `;
                         tbody.append(row); // Tambahkan baris ke tabel
                     });
-                    // Event listener untuk tombol Edit
-                    $('.edit-btn').on('click', function() {
-                        const idArtikel = $(this).data('id_artikel');
-                        alert('Edit Artikel dengan ID: ' + idArtikel);
-
-                        //Mengarahkan ke form Edit 
-                        $('.edit-btn').on('click', function() {
-                            const idArtikel = $(this).data('id_artikel');
-                            const editUrl =
-                                `/artikel/edit/${idArtikel}`; // URL form edit
-
-                            // Redirect ke halaman edit
-                            window.location.href = editUrl;
-                        });
-                    });
-
-                    // Event listener untuk tombol Hapus
-                    $('.delete-btn').on('click', function() {
-                        if (confirm('Yakin ingin menghapus Artikel ini?')) {
-                            $.ajax({
-                                url: `${apiUrl}/${idArtikel}`, // Endpoint hapus artikel
-                                method: 'DELETE',
-                                success: function() {
-                                    alert('Artikel berhasil dihapus.');
-                                    location
-                                        .reload(); // Reload halaman untuk memuat ulang data
-                                },
-                                error: function() {
-                                    alert('Gagal menghapus Artikel.');
-                                }
-                            });
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Terjadi kesalahan:', error);
-                    alert('Gagal memuat data artikel.');
+                } else {
+                    console.error('Data tidak valid:', response);
+                    alert('Data artikel tidak ditemukan');
                 }
-            });
+            },
+            error: function(xhr, status, error) {
+                console.error('Terjadi kesalahan:', error);
+                alert('Gagal memuat data artikel.');
+            }
         });
     </script>
 

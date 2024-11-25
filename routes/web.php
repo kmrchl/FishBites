@@ -23,17 +23,13 @@ Route::group(['middleware' => 'guest'], function (): void {
     })->name('login');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
-
-    route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
-    route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
-    route::get('/artikel', [ArtikelController::class, 'show'])->name('artikel.index'); //Home
-    route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
-    route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
-    route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
-
-
-});
+Route::middleware(['auth:sanctum'])->group(function () {});
+route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
+route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
+route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
+route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
+route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
+route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
 
 
 
