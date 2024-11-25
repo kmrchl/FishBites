@@ -17,11 +17,11 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::all();
 
-        return response()->json($artikel);
+        // return response()->json($artikel);
 
-        // return view('artikel.index', [
-        //     'artikel' => $artikel
-        // ]);
+        return view('artikel.index', [
+            'artikel' => $artikel
+        ]);
     }
 
     public function showArtikelById(Request $request, $id_artikel)
@@ -147,17 +147,16 @@ class ArtikelController extends Controller
 
     public function getArtikelDetail($id)
     {
-    // Mencari artikel berdasarkan id
+        // Mencari artikel berdasarkan id
         $artikel = Artikel::find($id);
 
-    // Jika artikel ditemukan, kembalikan sebagai response JSON
+        // Jika artikel ditemukan, kembalikan sebagai response JSON
         if ($artikel) {
-        return response()->json($artikel);
-        
+            return response()->json($artikel);
         } else {
-        // Jika artikel tidak ditemukan, kirimkan response 404
-        return response()->json(['message' => 'Artikel tidak ditemukan'], 404);
-    }
+            // Jika artikel tidak ditemukan, kirimkan response 404
+            return response()->json(['message' => 'Artikel tidak ditemukan'], 404);
+        }
     }
 
     /**

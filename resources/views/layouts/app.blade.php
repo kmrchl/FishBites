@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('produk.index') }}">
+                                <a class="nav-link" href="{{ route('produk.show') }}">
                                     <i class="fas fa-shopping-cart"></i> Products
                                 </a>
                             </li>
@@ -69,7 +69,7 @@
                                     <span> Settings <i class="fas fa-angle-down"></i> </span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="">Kategori</a>
+                                    <a class="dropdown-item" href="{{ route('kategori.index') }}">Kategori</a>
                                     <a class="dropdown-item" href="{{ route('produsen.index') }}">Mitra</a>
                                     <a class="dropdown-item" href="{{ route('customer.index') }}">Customer</a>
                                 </div>

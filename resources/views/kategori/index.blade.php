@@ -1,9 +1,11 @@
 @extends('layouts.app')
-@section('Admin', 'Customer')
 
+@section('Admin', 'Kategori')
 
 
 @section('content')
+
+
     <div class="container mt-5">
         <div class="row tm-content-row justify-content-center">
             <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
@@ -13,28 +15,22 @@
                             <thead>
                                 <tr>
                                     <th scope="col">&nbsp;</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Alamat</th>
-                                    <th scope="col">No. Telp</th>
+                                    <th scope="col">Kategori</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($customer as $cust)
+                                @foreach ($kategori as $kat)
                                     <tr>
                                         <th scope="row"><input type="checkbox" /></th>
-                                        <td>{{ $cust->nama_customer }}</td>
-                                        <td>{{ $cust->email }}</td>
-                                        <td>{{ $cust->alamat }}</td>
-                                        <td>{{ $cust->no_telp }}</td>
+                                        <td>{{ $kat->kategori }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
 
-                    {{-- <a href="{{ route('kategori.add') }}" class="btn btn-primary btn-block text-uppercase mb-3">Tambah
-                        Kategori</a> --}}
+                    <a href="{{ route('kategori.add') }}" class="btn btn-primary btn-block text-uppercase mb-3">Tambah
+                        Kategori</a>
 
                     {{-- <form method="POST" action="{{ url('/api/kategori/hapus/' . $kat->id_kategori) }}">
                         @csrf
@@ -46,5 +42,7 @@
         </div>
     </div>
 
-
 @endsection
+
+
+</html>

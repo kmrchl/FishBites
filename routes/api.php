@@ -54,8 +54,8 @@ Route::put('/produk/update/{id_produk}  ', [ProdukController::class, 'update'])-
 
 // KATEGORI
 Route::get('/kategori', [KategoriController::class, 'index']);
-Route::post('/kategori/add', [KategoriController::class, 'store']);
-Route::get('/kategoriid', [KategoriController::class, 'kategori']);
+Route::post('/kategori/add', [KategoriController::class, 'store'])->name('kategori.store');
+Route::get('/kategori/hapus/{id_kategori}', [KategoriController::class, 'destroy']);
 
 // PESANAN
 Route::post('/pesanan/add', [PesananController::class, 'store']); //Menambahkan data ke database
