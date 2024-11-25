@@ -32,6 +32,9 @@ route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
 route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
 route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
 route::get('/kategori', [KategoriController::class, 'index']); //Pesanan
+route::get('/cust/profile', [CustomerController::class, 'getByEmail']);
+route::get('/profile', [CustomerController::class, 'getByEmail']);
+
 
 // PRODUSEN
 Route::post('/produsen/add', [ProdusenController::class, 'store']); //Tambah Produsen
@@ -48,6 +51,7 @@ Route::put('/produk/update/{id_produk}', [ProdukController::class, 'update'])->n
 
 // KATEGORI
 Route::post('/kategori/add', [KategoriController::class, 'store']);
+Route::get('/kategoriid', [KategoriController::class, 'kategori']);
 
 // PESANAN
 Route::post('/pesanan/add', [PesananController::class, 'store']); //Menambahkan data ke database
@@ -59,6 +63,7 @@ Route::get('/artikel/get', [ArtikelController::class, 'index']); //Tambah Artike
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
+route::get('artikel/{id_kategori}', [ArtikelController::class, 'getArtikelDetail']);//Home
 
 
 // FAQ
@@ -71,7 +76,8 @@ Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update'
 Route::post('/cust/login', [CustomerController::class, 'login'])->name('cust.login'); //Tambah Customer
 Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah Customer
 Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus Customer
-Route::put('/cust/{id_customer}', [CustomerController::class, 'update'])->name('cust.update');
+Route::put('customer/{id}', [CustomerController::class, 'update']);
+Route::get('/customer/{id_customer}', [CustomerController::class, 'getUserDetails']);
 
 
 // ADMIN
