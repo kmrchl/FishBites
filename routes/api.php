@@ -64,15 +64,10 @@ Route::post('/pesanan/add', [PesananController::class, 'store']); //Menambahkan 
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
-<<<<<<< HEAD
-<<<<<<< HEAD
 Route::get('/artikel/detail/{id_artikel}', [ArtikelController::class, 'showArtikelById'])->name('artikel.detail');
-=======
-route::get('artikel/{id_kategori}', [ArtikelController::class, 'getArtikelDetail']);//Home
->>>>>>> 64e30b936efee8d41350e66e2224e4c9bc794a28
-=======
+
 route::get('artikel/{id_kategori}', [ArtikelController::class, 'getArtikelDetail']); //Home
->>>>>>> 9baa34067bfeb42bf111ec422a82a16ab4d5e8b8
+route::get('artikel/{id_kategori}', [ArtikelController::class, 'getArtikelDetail']); //Home
 
 
 // FAQ
@@ -85,17 +80,13 @@ Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update'
 Route::post('/cust/login', [CustomerController::class, 'login'])->name('cust.login'); //Tambah Customer
 Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah Customer
 Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus Customer
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 Route::put('customer/{id}', [CustomerController::class, 'update']);
 Route::get('/customer/{id_customer}', [CustomerController::class, 'getUserDetails']);
-=======
 Route::put('/cust/edit/{id_customer}', [CustomerController::class, 'update'])->name('cust.update'); //Edit Customer
->>>>>>> master
-=======
+
 Route::put('customer/{id}', [CustomerController::class, 'update']);
 Route::get('/customer/{id_customer}', [CustomerController::class, 'getUserDetails']);
->>>>>>> 9baa34067bfeb42bf111ec422a82a16ab4d5e8b8
 
 
 // ADMIN
