@@ -41,10 +41,9 @@ class CustomerController extends Controller
         // Lakukan validasi
         $validate = $request->validate([
             'nama_customer' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'email' => 'required|string|unique:customer,email',
             'password' => 'required|string|min:8',
-            'no_telp' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
             'no_telp' => 'required|string'
         ]);
         // $validate = $request->all();
@@ -52,15 +51,13 @@ class CustomerController extends Controller
 
 
         try {
-            $path = $request->file('foto')->store('foto', 'public');
 
             // Simpan data customer ke dalam database
             $customer = Customer::create([
                 'nama_customer' => $validate['nama_customer'],
-                'foto' => $path,
                 'email' => $validate['email'],
                 'password' => Hash::make($validate['password']),
-                'no_telp' => $validate['no_telp'],
+                'alamat' => $validate['alamat'],
                 'no_telp' => $validate['no_telp'],
             ]);
 
@@ -69,7 +66,13 @@ class CustomerController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Data customer berhasil disimpan',
-                'data' => $customer
+                'data' => [
+                    'nama_customer' => $validate['nama_customer'],
+                    'email' => $validate['email'],
+                    'password' => $validate['password'],
+                    'alamat' => $validate['alamat'],
+                    'no_telp' => $validate['no_telp'],
+                ]
             ], 201);
         } catch (\Exception $e) {
 
@@ -126,55 +129,45 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id_customer)
+    public function update(Request $request, $id_customer)
     {
-        $request->merge($request->all()); // Memastikan data form-data bisa diakses
-        $customer = Customer::findOrFail($id_customer);
-
-        Log::info('Request Data:', $request->all()); //Log data input
-        Log::info('Customer Found:', $customer->toArray());
-
-
-        $validate = $request->validate([
+        // Validasi data yang diterima
+        $validatedData = $request->validate([
             'nama_customer' => 'required|string|max:255',
-            'foto' => 'nullable|file|image|mimes:jpeg,png,jpg,gif,svg',
-            'email' => 'required|string|email|unique:customer,email,' . $id_customer . ',id_customer',
-            'password' => 'nullable|string|min:8',
+            'email' => 'required|email|unique:customer,email,' . $id_customer . ',id_customer',
             'alamat' => 'required|string|max:255',
-            'no_telp' => 'required|string'
+            'no_telp' => 'required|string|max:15',
         ]);
 
-        $path = $customer->foto; // Default foto tetap sama
-        if ($request->hasFile('foto')) {
-            // Validasi ulang file
-            $request->validate([
-                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg'
-            ]);
+        // Cari pelanggan berdasarkan ID
+        $customer = Customer::find($id_customer);
 
-            // Hapus file lama jika ada
-            if ($customer->foto && Storage::exists('foto/' . $customer->foto)) {
-                Storage::delete('foto/' . $customer->foto);
-            }
-
-            // Simpan file baru
-            $fileName = time() . '.' . $request->foto->getClientOriginalExtension();
-            $path = $request->foto->storeAs('foto', $fileName, 'foto');
+        // Jika pelanggan tidak ditemukan
+        if (!$customer) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
         }
 
+        // Update data profil pelanggan
         $customer->update([
-            'nama_customer' => $validate['nama_customer'] ?? $customer->nama_customer,
-            'foto' => $path,
-            'email' => $validate['email'] ?? $customer->email,
-            'password' => $request->filled('password') ? Hash::make($validate['password']) : $customer->password,
-            'alamat' => $validate['alamat'] ?? $customer->alamat,
-            'no_telp' => $validate['no_telp'] ?? $customer->no_telp,
+            'nama_customer' => $validatedData['nama_customer'],
+            'email' => $validatedData['email'], // Email baru
+            'alamat' => $validatedData['alamat'],
+            'no_telp' => $validatedData['no_telp'],
         ]);
 
+        // Kembalikan respon berhasil
         return response()->json([
-            'success' => true,
-            'message' => 'Data customer berhasil diupdate',
-            'data' => $customer
-        ], 200);
+            'message' => 'Profile updated successfully',
+            'data' => [
+                'id' => $customer->id_customer,
+                'nama_customer' => $customer->nama_customer,
+                'email' => $customer->email, // Email yang baru diperbarui
+                'alamat' => $customer->alamat,
+                'no_telp' => $customer->no_telp,
+            ],
+        ]);
     }
 
 
