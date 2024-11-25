@@ -31,22 +31,22 @@ class CustomerController extends Controller
 
         $customer = Customer::where('email', $email)->first();
 
-        if(!$customer) {
+        if (!$customer) {
             return response()->json([
-                        'message'=>'User not found'
-                    ],404);
-                }
+                'message' => 'User not found'
+            ], 404);
+        }
 
-                return response()->json([
-                    'id' => $customer->id_customer,
-                    'email' => $customer->email,
-                    'nama_customer' => $customer->nama_customer,
-                    'alamat' => $customer->alamat,
-                    'no_hp' => $customer->no_telp,
-                    
-                    // Sesuaikan dengan kolom tabel Anda
-                ]);
-            }
+        return response()->json([
+            'id' => $customer->id_customer,
+            'email' => $customer->email,
+            'nama_customer' => $customer->nama_customer,
+            'alamat' => $customer->alamat,
+            'no_hp' => $customer->no_telp,
+
+            // Sesuaikan dengan kolom tabel Anda
+        ]);
+    }
 
 
     public function getUserDetails($id_customer)
@@ -85,10 +85,9 @@ class CustomerController extends Controller
         // Lakukan validasi
         $validate = $request->validate([
             'nama_customer' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'email' => 'required|string|unique:customer,email',
             'password' => 'required|string|min:8',
-            'no_telp' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
             'no_telp' => 'required|string'
         ]);
         // $validate = $request->all();
@@ -96,15 +95,13 @@ class CustomerController extends Controller
 
 
         try {
-            $path = $request->file('foto')->store('foto', 'public');
 
             // Simpan data customer ke dalam database
             $customer = Customer::create([
                 'nama_customer' => $validate['nama_customer'],
-                'foto' => $path,
                 'email' => $validate['email'],
                 'password' => Hash::make($validate['password']),
-                'no_telp' => $validate['no_telp'],
+                'alamat' => $validate['alamat'],
                 'no_telp' => $validate['no_telp'],
             ]);
 
@@ -113,7 +110,13 @@ class CustomerController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Data customer berhasil disimpan',
-                'data' => $customer
+                'data' => [
+                    'nama_customer' => $validate['nama_customer'],
+                    'email' => $validate['email'],
+                    'password' => $validate['password'],
+                    'alamat' => $validate['alamat'],
+                    'no_telp' => $validate['no_telp'],
+                ]
             ], 201);
         } catch (\Exception $e) {
 
@@ -173,30 +176,15 @@ class CustomerController extends Controller
         ]);
     }
 
-    // public function getProfileByEmail(Request $request)
-    // {
-    //     $email = $request->query('email');
-    //     $customer = Customer::where('email', $email)-first();
-
-    //     if (!$customer) {
-    //         return response()->json([
-    //             'message' => 'User not found',
-    //         ], 404);
-    //     }
-
-    //     // Jika ditemukan, kembalikan data profil pengguna
-    //     return response()->json([
-    //         'id' => $customer->id_customer,
-    //         'nama_customer' => $customer->nama_customer,
-    //         'alamat' => $customer->alamat,
-    //         'no_hp' => $customer->no_telp,
-    //     ]);
-    // }
 
     /**
      * Update the specified resource in storage.
 <<<<<<< HEAD
+<<<<<<< HEAD
      */ 
+=======
+     */
+>>>>>>> 9baa34067bfeb42bf111ec422a82a16ab4d5e8b8
     public function update(Request $request, $id_customer)
     {
         // Validasi data yang diterima
@@ -236,6 +224,7 @@ class CustomerController extends Controller
                 'no_telp' => $customer->no_telp,
             ],
         ]);
+<<<<<<< HEAD
 }
 
 
@@ -292,6 +281,10 @@ class CustomerController extends Controller
         ], 200);
     }
 >>>>>>> master
+=======
+    }
+
+>>>>>>> 9baa34067bfeb42bf111ec422a82a16ab4d5e8b8
 
 
     /**

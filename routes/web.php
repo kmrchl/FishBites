@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Produk;
 use App\Models\Artikel;
+use App\Models\Kategori;
 use Tymon\JWTAuth\Claims\Custom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -11,8 +13,8 @@ use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\ArtikelController;
 use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\ProdusenController;
-use App\Models\Produk;
 
 Route::group(['middleware' => 'guest'], function (): void {
 
@@ -25,11 +27,12 @@ Route::group(['middleware' => 'guest'], function (): void {
 
 Route::middleware(['auth:sanctum'])->group(function () {});
 route::get('/admin', [AdminController::class, 'index'])->name('dashboard.index'); //Home
+route::get('/produk', [ProdukController::class, 'show'])->name('produk.show'); //Home
 route::get('/produsen', [ProdusenController::class, 'show'])->name('produsen.index'); //Home
 route::get('/artikel', [ArtikelController::class, 'index'])->name('artikel.index'); //Home
 route::get('/faq', [FaqController::class, 'show'])->name('faq.index'); //Home
 route::get('/customer', [CustomerController::class, 'show'])->name('customer.index'); //Home
-route::get('/produk', [ProdukController::class, 'show'])->name('produk.index'); //Home
+route::get('/kategori', [KategoriController::class, 'show'])->name('kategori.index'); //Home
 
 
 
@@ -67,8 +70,17 @@ Route::post('/cust/login', [CustomerController::class, 'login'])->name('admin.lo
 Route::get('/tambahcust', [CustomerController::class, 'add']);
 Route::get('/customer/{id_customer}/edit', [CustomerController::class, 'edit'])->name('cust.edit');
 
+
+// KATEGORI
+route::get('/kategori/add', [KategoriController::class, 'add'])->name('kategori.add');
+
+
+// KATEGORI 
+
+
+
 // CHAT 
-Route::get('/chat/{id_customer}', [ChatController::class, 'show'])->name('chat.show');
+// Route::get('/chat/{id_customer}', [ChatController::class, 'show'])->name('chat.show');
 
 
 

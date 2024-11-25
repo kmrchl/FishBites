@@ -30,9 +30,9 @@ class KategoriController extends Controller
     {
         $kategori = kategori::all();
 
-        if($kategori->isEmpty()){
+        if ($kategori->isEmpty()) {
             return response()->json([
-                'success' =>'false',
+                'success' => 'false',
                 'message' => 'Data Kategori tidak ditemukan',
                 'data' => [],
             ], 404);
@@ -48,6 +48,12 @@ class KategoriController extends Controller
                 ];
             }),
         ], 200);
+    }
+
+
+    public function add()
+    {
+        return view('kategori.add');
     }
 
     /**
@@ -86,9 +92,12 @@ class KategoriController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $kategori = Kategori::all();
+        return view('kategori.index', [
+            'kategori' => $kategori
+        ]);
     }
 
     /**
@@ -102,8 +111,16 @@ class KategoriController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id_kategori)
     {
-        //
+        $kategori = Kategori::find($id_kategori);
+        if (!$kategori) {
+            return redirect()->back()->with('error', 'ID tidak ditemukan');
+        }
+
+        $kategori->delete();
+
+        // return redirect()->back()->with('success', 'Produsen berhasil dihapus');
+        return redirect('/kategori');
     }
 }

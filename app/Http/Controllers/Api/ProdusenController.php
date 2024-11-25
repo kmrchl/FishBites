@@ -59,32 +59,7 @@ class ProdusenController extends Controller
         }
     }
 
-    public function login(Request $request)
-    {
-        // Validasi data login
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'password' => 'required|string',
-        ]);
 
-        // Mencari customer berdasarkan email
-        $customer = Customer::where('username', $request->username)->first();
-
-        // Memeriksa kredensial
-        if (!$customer || !Hash::check($request->password, $customer->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
-        }
-
-        // Membuat token setelah login
-        $token = $customer->createToken('auth_token')->plainTextToken;
-
-        // Mengirim response JSON
-        return response()->json([
-            'message' => 'Login successful',
-            'customer' => $customer,
-            'token' => $token,
-        ], 200);
-    }
 
     /**
      * Display the specified resource.

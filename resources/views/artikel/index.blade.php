@@ -21,6 +21,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($artikel as $post)
+                                    <tr>
+                                        <td>{{ $post->judul }}</td>
+                                        <td>{{ $post->konten }}</td>
+                                        <td>{{ $post->tgl_upload }}</td>
+                                        <td>
+                                            <a href="{{ route('artikel.edit', $post->id_artikel) }}"
+                                                class="btn btn-primary btn-sm">Edit</a>
+                                            <form method="POST" action="{{ url('/hapusartikel/' . $post->id_artikel) }}"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
