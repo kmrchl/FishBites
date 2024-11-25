@@ -46,11 +46,11 @@ class FaqController extends Controller
         ]);
         Log::info("FaQ berhasil disimpan.");
 
+
         return response()->json([
+            'message' => 'Data berhasil ditambah',
             'artikel' => $artikel
         ]);
-
-        return redirect('/faq');
     }
 
     /**

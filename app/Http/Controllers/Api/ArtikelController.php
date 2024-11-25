@@ -17,9 +17,11 @@ class ArtikelController extends Controller
     {
         $artikel = Artikel::all();
 
-        return response()->json([
-            'artikel' => $artikel
-        ]);
+        return response()->json($artikel);
+
+        // return view('artikel.index', [
+        //     'artikel' => $artikel
+        // ]);
     }
 
     public function showArtikelById(Request $request, $id_artikel)

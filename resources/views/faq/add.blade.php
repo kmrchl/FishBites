@@ -16,7 +16,8 @@
                     </div>
                     <div class="row tm-edit-product-row">
                         <div class="col-12">
-                            <form action="{{ route('faq.store') }}" method="POST" class="tm-edit-product-form">
+                            <form id="tambah-faq" action="{{ route('faq.store') }}" method="POST"
+                                class="tm-edit-product-form" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="id_admin">Admin</label>
@@ -47,3 +48,38 @@
     </div>
 
 @endsection
+
+{{-- <script>
+    $(document).ready(function() {
+        $('#tambah-faq').on('submit', function(e) {
+            e.preventDefault(); // Mencegah refresh halaman
+
+            const formData = new FormData(this); // Membuat FormData untuk menangani file
+
+            $.ajax({
+                url: '/api/faq/add', // Ganti dengan URL API Anda
+                method: 'POST',
+                data: formData,
+                processData: false, // Jangan proses data karena menggunakan FormData
+                contentType: false, // Jangan tentukan jenis konten karena menggunakan FormData
+                success: function(response) {
+                    alert('Produk berhasil ditambahkan.');
+                    $('#tambah-faq', function() {
+                        const editUrl = `/faq`; // URL ke Index Produk
+                        // Redirect ke halaman edit
+                        window.location.href = editUrl;
+                    }); // Reset form setelah berhasil
+                },
+                error: function(xhr, status, error) {
+                    console.error('Terjadi kesalahan:', error);
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        const errors = xhr.responseJSON.errors;
+                        alert('Error: ' + Object.values(errors).join(', '));
+                    } else {
+                        alert('Gagal menambahkan produk.');
+                    }
+                }
+            });
+        });
+    });
+</script> --}}

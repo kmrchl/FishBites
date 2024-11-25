@@ -63,7 +63,6 @@ Route::post('/pesanan/add', [PesananController::class, 'store']); //Menambahkan 
 
 
 // ARTIKEL
-Route::get('/artikel/get', [ArtikelController::class, 'index']); //Tambah Artikel
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
@@ -84,8 +83,12 @@ Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update'
 Route::post('/cust/login', [CustomerController::class, 'login'])->name('cust.login'); //Tambah Customer
 Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah Customer
 Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus Customer
+<<<<<<< HEAD
 Route::put('customer/{id}', [CustomerController::class, 'update']);
 Route::get('/customer/{id_customer}', [CustomerController::class, 'getUserDetails']);
+=======
+Route::put('/cust/edit/{id_customer}', [CustomerController::class, 'update'])->name('cust.update'); //Edit Customer
+>>>>>>> master
 
 
 // ADMIN
