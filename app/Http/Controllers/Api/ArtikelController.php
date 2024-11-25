@@ -143,6 +143,21 @@ class ArtikelController extends Controller
         return redirect('/');
     }
 
+    public function getArtikelDetail($id)
+    {
+    // Mencari artikel berdasarkan id
+        $artikel = Artikel::find($id);
+
+    // Jika artikel ditemukan, kembalikan sebagai response JSON
+        if ($artikel) {
+        return response()->json($artikel);
+        
+        } else {
+        // Jika artikel tidak ditemukan, kirimkan response 404
+        return response()->json(['message' => 'Artikel tidak ditemukan'], 404);
+    }
+    }
+
     /**
      * Remove the specified resource from storage.
      */

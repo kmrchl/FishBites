@@ -23,6 +23,50 @@ class CustomerController extends Controller
         return response()->json($customer);
     }
 
+    public function getByEmail(Request $request)
+    {
+        $email = $request->query('email');
+
+        $customer = Customer::where('email', $email)->first();
+
+        if(!$customer) {
+            return response()->json([
+                        'message'=>'User not found'
+                    ],404);
+                }
+
+                return response()->json([
+                    'id' => $customer->id_customer,
+                    'email' => $customer->email,
+                    'nama_customer' => $customer->nama_customer,
+                    'alamat' => $customer->alamat,
+                    'no_hp' => $customer->no_telp,
+                    
+                    // Sesuaikan dengan kolom tabel Anda
+                ]);
+            }
+
+
+    public function getUserDetails($id_customer)
+    {
+        $customer = Customer::find($id_customer); // Mengambil pelanggan berdasarkan ID
+
+        if ($customer) {
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'nama_customer' => $customer->nama_customer,
+                    'email' => $customer->email
+                ]
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Customer not found'
+            ], 404);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -84,7 +128,7 @@ class CustomerController extends Controller
     {
         // Validasi input
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email' => 'required|email', // Ganti validasi untuk email
             'password' => 'required|string',
         ]);
 
@@ -103,11 +147,17 @@ class CustomerController extends Controller
         $token = $customer->createToken('cust_token')->plainTextToken;
 
         return response()->json([
-            'Message' => 'Login Berhasil. Selamat datang!' . $customer->nama_customer,
+            'Message' => 'Login Berhasil. Selamat datang, ' . $customer->nama_customer . '!',
             'token' => $token,
-            'customer' => $customer->nama_customer
+            'customer' => [
+                'id' => $customer->id_customer,
+                'nama_customer' => $customer->nama_customer,
+                'email' => $customer->email, // Menambahkan email ke respons
+            ]
         ]);
     }
+
+
 
     /**
      * Display the specified resource.
@@ -121,13 +171,71 @@ class CustomerController extends Controller
         ]);
     }
 
+    // public function getProfileByEmail(Request $request)
+    // {
+    //     $email = $request->query('email');
+    //     $customer = Customer::where('email', $email)-first();
+
+    //     if (!$customer) {
+    //         return response()->json([
+    //             'message' => 'User not found',
+    //         ], 404);
+    //     }
+
+    //     // Jika ditemukan, kembalikan data profil pengguna
+    //     return response()->json([
+    //         'id' => $customer->id_customer,
+    //         'nama_customer' => $customer->nama_customer,
+    //         'alamat' => $customer->alamat,
+    //         'no_hp' => $customer->no_telp,
+    //     ]);
+    // }
+
     /**
      * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+     */ 
+    public function update(Request $request, $id_customer)
     {
-        //
-    }
+        // Validasi data yang diterima
+        $validatedData = $request->validate([
+            'nama_customer' => 'required|string|max:255',
+            'email' => 'required|email|unique:customer,email,' . $id_customer . ',id_customer',
+            'alamat' => 'required|string|max:255',
+            'no_telp' => 'required|string|max:15',
+        ]);
+
+        // Cari pelanggan berdasarkan ID
+        $customer = Customer::find($id_customer);
+
+        // Jika pelanggan tidak ditemukan
+        if (!$customer) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
+
+        // Update data profil pelanggan
+        $customer->update([
+            'nama_customer' => $validatedData['nama_customer'],
+            'email' => $validatedData['email'], // Email baru
+            'alamat' => $validatedData['alamat'],
+            'no_telp' => $validatedData['no_telp'],
+        ]);
+
+        // Kembalikan respon berhasil
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'data' => [
+                'id' => $customer->id_customer,
+                'nama_customer' => $customer->nama_customer,
+                'email' => $customer->email, // Email yang baru diperbarui
+                'alamat' => $customer->alamat,
+                'no_telp' => $customer->no_telp,
+            ],
+        ]);
+}
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -26,6 +26,30 @@ class KategoriController extends Controller
         }
     }
 
+    public function kategori()
+    {
+        $kategori = kategori::all();
+
+        if($kategori->isEmpty()){
+            return response()->json([
+                'success' =>'false',
+                'message' => 'Data Kategori tidak ditemukan',
+                'data' => [],
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Kategori berhasil diambil',
+            'data' => $kategori->map(function ($item) {
+                return [
+                    'id_kategori' => $item->id_kategori,
+                    'kategori' => $item->kategori,
+                ];
+            }),
+        ], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
