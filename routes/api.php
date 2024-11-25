@@ -33,6 +33,9 @@ route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
 route::get('/ulasan', [UlasanController::class, 'index']); //Ulasan
 route::get('/pesanan', [PesananController::class, 'index']); //Pesanan
 route::get('/kategori', [KategoriController::class, 'index']); //Pesanan
+route::get('/cust/profile', [CustomerController::class, 'getByEmail']);
+route::get('/profile', [CustomerController::class, 'getByEmail']);
+
 
 
 
@@ -52,17 +55,16 @@ Route::put('/produk/update/{id_produk}  ', [ProdukController::class, 'update'])-
 // KATEGORI
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::post('/kategori/add', [KategoriController::class, 'store']);
+Route::get('/kategoriid', [KategoriController::class, 'kategori']);
 
 // PESANAN
 Route::post('/pesanan/add', [PesananController::class, 'store']); //Menambahkan data ke database
-
-
 
 // ARTIKEL
 Route::post('/artikel/add', [ArtikelController::class, 'store'])->name('artikel.store'); //Tambah Artikel
 Route::delete('/hapusartikel/{id_artikel}', [ArtikelController::class, 'destroy']); //Hapus Artikel
 Route::put('/artikel/{id_artikel}', [ArtikelController::class, 'update'])->name('artikel.update');
-Route::get('/artikel/detail/{id_artikel}', [ArtikelController::class, 'showArtikelById'])->name('artikel.detail');
+route::get('artikel/{id_kategori}', [ArtikelController::class, 'getArtikelDetail']); //Home
 
 
 // FAQ
@@ -75,7 +77,8 @@ Route::put('/faq/{id_faq}', [FaqController::class, 'update'])->name('faq.update'
 Route::post('/cust/login', [CustomerController::class, 'login'])->name('cust.login'); //Tambah Customer
 Route::post('/cust/add', [CustomerController::class, 'store'])->name('cust.store'); //Tambah Customer
 Route::delete('/hapuscust/{id_customer}', [CustomerController::class, 'destroy']); //Hapus Customer
-Route::put('/cust/edit/{id_customer}', [CustomerController::class, 'update'])->name('cust.update'); //Edit Customer
+Route::put('customer/{id}', [CustomerController::class, 'update']);
+Route::get('/customer/{id_customer}', [CustomerController::class, 'getUserDetails']);
 
 
 // ADMIN
@@ -96,7 +99,6 @@ Route::delete('/keranjang/hapus/{id_keranjang}', [KeranjangController::class, 'd
 
 // ULASAN
 Route::post('/ulasan/add', [UlasanController::class, 'store']);
-
 
 // CHAT
 Route::post('/chat/{id_customer}', [ChatController::class, 'store'])->name('chat.store'); // Tambah Chat baru

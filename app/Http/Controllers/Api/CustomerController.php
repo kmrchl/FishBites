@@ -25,6 +25,50 @@ class CustomerController extends Controller
         return response()->json($customer);
     }
 
+    public function getByEmail(Request $request)
+    {
+        $email = $request->query('email');
+
+        $customer = Customer::where('email', $email)->first();
+
+        if (!$customer) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'id' => $customer->id_customer,
+            'email' => $customer->email,
+            'nama_customer' => $customer->nama_customer,
+            'alamat' => $customer->alamat,
+            'no_hp' => $customer->no_telp,
+
+            // Sesuaikan dengan kolom tabel Anda
+        ]);
+    }
+
+
+    public function getUserDetails($id_customer)
+    {
+        $customer = Customer::find($id_customer); // Mengambil pelanggan berdasarkan ID
+
+        if ($customer) {
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'nama_customer' => $customer->nama_customer,
+                    'email' => $customer->email
+                ]
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Customer not found'
+            ], 404);
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -89,7 +133,7 @@ class CustomerController extends Controller
     {
         // Validasi input
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+            'email' => 'required|email', // Ganti validasi untuk email
             'password' => 'required|string',
         ]);
 
@@ -108,11 +152,17 @@ class CustomerController extends Controller
         $token = $customer->createToken('cust_token')->plainTextToken;
 
         return response()->json([
-            'Message' => 'Login Berhasil. Selamat datang!' . $customer->nama_customer,
+            'Message' => 'Login Berhasil. Selamat datang, ' . $customer->nama_customer . '!',
             'token' => $token,
-            'customer' => $customer->nama_customer
+            'customer' => [
+                'id' => $customer->id_customer,
+                'nama_customer' => $customer->nama_customer,
+                'email' => $customer->email, // Menambahkan email ke respons
+            ]
         ]);
     }
+
+
 
     /**
      * Display the specified resource.
@@ -125,6 +175,7 @@ class CustomerController extends Controller
             'customer' => $customer
         ]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -169,6 +220,7 @@ class CustomerController extends Controller
             ],
         ]);
     }
+
 
 
     /**
